@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Calendar</string>
+    <string name="btn_view_calendar">View Calendar</string>
+    <string name="btn_set_a_job">Set a Job</string>
+    <string name="btn_previous">Pre</string>
+    <string name="btn_next">Next</string>
+    <string name="saturday">Sat</string>
+    <string name="sunday">Sun</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesdays">Wen</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
 </resources>
