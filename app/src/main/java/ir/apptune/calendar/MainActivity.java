@@ -1,7 +1,12 @@
 package ir.apptune.calendar;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -58,6 +64,20 @@ public class MainActivity extends AppCompatActivity {
         YEAR = cTool.getIranianYear();
 
         showCalendar();
+        showNotification(this);
+        Log.d("LOG","WE ARE IN SHOW ");
+//        Intent intent = new Intent(MainActivity.this , NotificationActivity.class);
+//        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.SECOND, 0);
+//        calendar.set(Calendar.MINUTE, 49);
+//        calendar.set(Calendar.HOUR_OF_DAY, 1);
+//        Log.d("LOG", calendar.getTime()+"");
+//        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent); //Repeat every 24 hours        Log.d("LOG","WE ARE AT END OF");
+
+        Log.d("LOG","WE ARE UNDER SHOW");
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                             @Override
@@ -367,6 +387,22 @@ Calculates the Month and returns the int Number
 
 
         }
+    }
+    private void showNotification(Context context){
+        Log.d("LOG","WE ARE IN SHOW ");
+        Intent intent = new Intent(MainActivity.this , NotificationActivity.class);
+        intent.putExtra("IranianDay",DAY );
+        intent.putExtra("IranianMonth",MONTH );
+        intent.putExtra("IranianYear",YEAR );
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE,39);
+        calendar.set(Calendar.HOUR_OF_DAY, 2);
+        Log.d("LOG", calendar.getTime()+"");
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent); //Repeat every 24 hours        Log.d("LOG","WE ARE AT END OF");
     }
 
 }
