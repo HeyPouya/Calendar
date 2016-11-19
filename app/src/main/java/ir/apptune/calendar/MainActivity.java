@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -313,63 +312,11 @@ Calculates the Month and returns the int Number
     private void showCalendar() {
         dateModels.clear();
         makingArrayOfDays();
-        showMonthName();
+        String result = PersianMonthName.getName(thisMonth);
+        txtMonthName.setText(thisYear + " " + result);
         CalendarAdapter adapter = new CalendarAdapter(MainActivity.this, dateModels);
         gridView.setAdapter(adapter);
 
-    }
-
-    private void showMonthName() {
-        switch (thisMonth) {
-            case 1:
-                txtMonthName.setText(thisYear + " " + "فروردین");
-                break;
-            case 2:
-                txtMonthName.setText(thisYear + " " + "اردیبهشت");
-                break;
-
-            case 3:
-                txtMonthName.setText(thisYear + " " + "خرداد");
-                break;
-
-            case 4:
-                txtMonthName.setText(thisYear + " " + "تیر");
-                break;
-
-            case 5:
-                txtMonthName.setText(thisYear + " " + "مرداد");
-                break;
-
-            case 6:
-                txtMonthName.setText(thisYear + " " + "شهریور");
-                break;
-
-            case 7:
-                txtMonthName.setText(thisYear + " " + "مهر");
-                break;
-
-            case 8:
-                txtMonthName.setText(thisYear + " " + "آبان");
-                break;
-
-            case 9:
-                txtMonthName.setText(thisYear + " " + "آذر");
-                break;
-
-            case 10:
-                txtMonthName.setText(thisYear + " " + "دی");
-                break;
-
-            case 11:
-                txtMonthName.setText(thisYear + " " + "بهمن");
-                break;
-
-            case 12:
-                txtMonthName.setText(thisYear + " " + "اسفند");
-                break;
-
-
-        }
     }
 
     private void setNotificationAlarmManager(Context context) {
