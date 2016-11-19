@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +53,8 @@ public class CalendarAdapter extends BaseAdapter {
             txt_miladi.setText(dateModels.get(i).getgDay());
             if (dateModels.get(i).getToday())
                 txt_shamsi.setTextColor(Color.parseColor("#00ff00"));
+            if (dateModels.get(i).getDayofWeek()!= "-" && Integer.parseInt(dateModels.get(i).getDayofWeek()) == 4)
+                txt_shamsi.setTextColor(Color.parseColor("#FF4081"));
 
         }
 

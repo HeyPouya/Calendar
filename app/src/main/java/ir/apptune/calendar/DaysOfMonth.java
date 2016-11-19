@@ -15,7 +15,7 @@ public class DaysOfMonth {
             number = 30;
         } else if (thisMonth == 12 && CalculateLeapYear.isLeapYear(thisYear,context)) {
             number = 30;
-        } else if (thisMonth == 12 && CalculateLeapYear.isLeapYear(thisYear,context)) {
+        } else if (thisMonth == 12 && !CalculateLeapYear.isLeapYear(thisYear,context)) {
             number = 29;
         }
 

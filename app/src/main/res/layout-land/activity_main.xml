@@ -15,47 +15,50 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="center"
             android:layout_weight="4"
             android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ir.apptune.calendar.PersianTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
-                android:gravity="center"
                 android:id="@+id/txt_show_today"
-                android:textSize="30sp"
-                android:textColor="@color/white"/>
-
-            <ir.apptune.calendar.PersianTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="5dp"
                 android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <ir.apptune.calendar.PersianTextView
                 android:id="@+id/txt_show_date"
-                android:textSize="60sp"
-                android:textColor="@color/white"
-                />
-
-            <ir.apptune.calendar.PersianTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="5dp"
                 android:gravity="center"
-                android:id="@+id/txt_show_work"
-                android:textSize="12sp"
                 android:textColor="@color/white"
-                android:text="شما امروز کاری برای انجام ندارید!"
+                android:textSize="60sp"
                 />
+
+            <ir.apptune.calendar.PersianTextView
+                android:id="@+id/txt_show_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:text="شما امروز کاری برای انجام ندارید!"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -64,9 +67,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:background="@mipmap/next"
-                />
+                android:gravity="center" />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -80,7 +83,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="#7B7284"
-                    android:textSize="40sp"/>
+                    android:textSize="40sp" />
 
                 <ir.apptune.calendar.PersianTextView
                     android:id="@+id/txt_year"
@@ -89,8 +92,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="#CDCDCD"
-                    android:textSize="15sp"/>
-
+                    android:textSize="15sp" />
 
 
             </LinearLayout>
@@ -100,10 +102,10 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:layout_margin="2dp"
                 android:background="@mipmap/back"
-                android:padding="10dp"
-                android:layout_margin="2dp"/>
+                android:gravity="center"
+                android:padding="10dp" />
         </LinearLayout>
 
 
@@ -189,9 +191,9 @@
             android:id="@+id/grid_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
             android:layout_gravity="center"
             android:layout_margin="3dp"
+            android:layout_weight="4"
             android:gravity="center"
             android:numColumns="7">
 
