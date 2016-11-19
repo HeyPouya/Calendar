@@ -1,11 +1,11 @@
 package ir.apptune.calendar;
 
 /**
- * Created by Pouya on 19/11/2016.
+ * Converts MonthNumber to Its Persian Name
  */
 
-public class PersianMonthName {
-    public static String getName(int monthNumber) {
+class PersianMonthName {
+    static String getName(int monthNumber) {
         String result = "";
         switch (monthNumber) {
             case 1:

@@ -29,13 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
     int numberOfDays; // How many days a month has
     CalendarTool cTool; // An instance of CalendarTool Class that converts Garegorian Date to Persian Date
-    int thisMonth = 0; // The int number of current Month. ex : 8 For Aban
+    int thisMonth = 0; // The int number of current Month that application refers to. ex : 8 For Aban
     int thisYear = 0; // The int number of current year. ex : 1395
-    static int DAY = 0;
-    static int MONTH = 0;
-    static int YEAR = 0;
-
-    //    int dayOfWeek = 0; // The int number of dayOfWeek. ex : 5 stands for sat , 6 for sun ...
+    static int DAY = 0; //Always carries The DAY that we are in.
+    static int MONTH = 0; //Always carries The MONTH that we are in.
+    static int YEAR = 0; //Always carries The YEAR that we are in.
     List<DateModel> dateModels;
     GridView gridView;
     TextView txtMonthName;
@@ -115,21 +113,21 @@ public class MainActivity extends AppCompatActivity {
     Calculates number of days that a month has and returns the int value
      */
 
-    private int countDaysOfMonth() {
-        int number = 0;
-        if (thisMonth <= 6) {
-            number = 31;
-        } else if (thisMonth > 6 && thisMonth < 12) {
-            number = 30;
-        } else if (thisMonth == 12 && isLeapYear()) {
-            number = 30;
-        } else if (thisMonth == 12 && !isLeapYear()) {
-            number = 29;
-        }
-
-        return number;
-
-    }
+//    private int countDaysOfMonth() {
+//        int number = 0;
+//        if (thisMonth <= 6) {
+//            number = 31;
+//        } else if (thisMonth > 6 && thisMonth < 12) {
+//            number = 30;
+//        } else if (thisMonth == 12 && isLeapYear()) {
+//            number = 30;
+//        } else if (thisMonth == 12 && !isLeapYear()) {
+//            number = 29;
+//        }
+//
+//        return number;
+//
+//    }
 
     /*
     This Method add spaces to Array of days. So it can Arranges days of weeks. for ex, if a month
@@ -242,7 +240,7 @@ Calculates the Month and returns the int Number
 
     private void makingArrayOfDays() {
         cTool.setIranianDate(calculateYear(thisYear), calculateMonth(thisMonth), 1);
-        numberOfDays = countDaysOfMonth();
+        numberOfDays = DaysOfMonth.getCount(thisMonth,thisYear,MainActivity.this);
         setArrangeOfWeek(cTool.getDayOfWeek());
         for (int i = 1; i <= numberOfDays; i++) {
             DateModel dateModel = new DateModel();
@@ -266,28 +264,28 @@ Calculates the Month and returns the int Number
 
     }
 
-    private Boolean isLeapYear() {
-        int leapYear = thisYear;
-        Boolean result;
-        if (leapYear > 1395) {
-            while (leapYear > 1395) {
-                leapYear = leapYear - 4;
-            }
-        } else {
-            while (leapYear < 1395) {
-                leapYear = leapYear + 4;
-            }
-
-        }
-
-        if (leapYear == 1395) {
-            result = true;
-            Toast.makeText(MainActivity.this, "امسال، سال کبیسه است", Toast.LENGTH_SHORT).show();
-        } else {
-            result = false;
-        }
-        return result;
-    }
+//    private Boolean isLeapYear() {
+//        int leapYear = thisYear;
+//        Boolean result;
+//        if (leapYear > 1395) {
+//            while (leapYear > 1395) {
+//                leapYear = leapYear - 4;
+//            }
+//        } else {
+//            while (leapYear < 1395) {
+//                leapYear = leapYear + 4;
+//            }
+//
+//        }
+//
+//        if (leapYear == 1395) {
+//            result = true;
+//            Toast.makeText(MainActivity.this, "امسال، سال کبیسه است", Toast.LENGTH_SHORT).show();
+//        } else {
+//            result = false;
+//        }
+//        return result;
+//    }
 
     private void calculateNextMonth() {
         if (Integer.parseInt(dateModels.get(20).getMonth()) + 1 <= 12) {
