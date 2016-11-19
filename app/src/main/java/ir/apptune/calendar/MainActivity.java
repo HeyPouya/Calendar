@@ -1,12 +1,10 @@
 package ir.apptune.calendar;
 
 import android.app.AlarmManager;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -64,51 +62,39 @@ public class MainActivity extends AppCompatActivity {
         YEAR = cTool.getIranianYear();
 
         showCalendar();
-        showNotification(this);
-        Log.d("LOG","WE ARE IN SHOW ");
-//        Intent intent = new Intent(MainActivity.this , NotificationActivity.class);
-//        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.set(Calendar.SECOND, 0);
-//        calendar.set(Calendar.MINUTE, 49);
-//        calendar.set(Calendar.HOUR_OF_DAY, 1);
-//        Log.d("LOG", calendar.getTime()+"");
-//        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent); //Repeat every 24 hours        Log.d("LOG","WE ARE AT END OF");
-
-        Log.d("LOG","WE ARE UNDER SHOW");
+        setNotificationAlarmManager(this);
+        showNotification();
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                            @Override
-                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                                if(dateModels.get(i).getDay() == "-")
-                                                    return;
-                                                new AlertDialog.Builder(MainActivity.this)
-                                                        .setTitle("More Information About This Day :")
-                                                        .setMessage(dateModels.get(i).getDay() + " " +
-                                                                dateModels.get(i).getMonth() + " " +
-                                                                dateModels.get(i).getYear() + "\n"+
-                                                                dateModels.get(i).getgDay()+ " "+
-                                                                dateModels.get(i).getgMonth()+ " "+
-                                                                dateModels.get(i).getgYear()+ " "
-                                                        )
-                                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                                dialogInterface.dismiss();
-                                                            }
-                                                        }).show();
-                                            }
-            });
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (dateModels.get(i).getDay() == "-")
+                    return;
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("More Information About This Day :")
+                        .setMessage(dateModels.get(i).getDay() + " " +
+                                dateModels.get(i).getMonth() + " " +
+                                dateModels.get(i).getYear() + "\n" +
+                                dateModels.get(i).getgDay() + " " +
+                                dateModels.get(i).getgMonth() + " " +
+                                dateModels.get(i).getgYear() + " "
+                        )
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).show();
+            }
+        });
 
-                btn_next.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        calculateNextMonth();
-                        showCalendar();
-                    }
-                });
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calculateNextMonth();
+                showCalendar();
+            }
+        });
 
         btn_previous.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,7 +262,6 @@ Calculates the Month and returns the int Number
                         dateModel.setToday(true);
 
 
-            Log.d("DATE MODEL TO STRING", dateModel.toString());
             dateModels.add(dateModel);
         }
 
@@ -285,11 +270,11 @@ Calculates the Month and returns the int Number
     private Boolean isLeapYear() {
         int leapYear = thisYear;
         Boolean result;
-        if (leapYear>1395) {
+        if (leapYear > 1395) {
             while (leapYear > 1395) {
                 leapYear = leapYear - 4;
             }
-        }else {
+        } else {
             while (leapYear < 1395) {
                 leapYear = leapYear + 4;
             }
@@ -299,7 +284,6 @@ Calculates the Month and returns the int Number
         if (leapYear == 1395) {
             result = true;
             Toast.makeText(MainActivity.this, "امسال، سال کبیسه است", Toast.LENGTH_SHORT).show();
-            Log.d("LOG KABISE", result + "");
         } else {
             result = false;
         }
@@ -336,7 +320,6 @@ Calculates the Month and returns the int Number
     }
 
     private void showMonthName() {
-        Log.d("LOG THIS MONTH", thisMonth + "");
         switch (thisMonth) {
             case 1:
                 txtMonthName.setText(thisYear + " " + "فروردین");
@@ -388,25 +371,33 @@ Calculates the Month and returns the int Number
 
         }
     }
-    private void showNotification(Context context){
-        Log.d("LOG","WE ARE IN SHOW ");
-        Intent intent = new Intent(MainActivity.this , NotificationActivity.class);
-        intent.putExtra("IranianDay",DAY );
-        intent.putExtra("IranianMonth",MONTH );
-        intent.putExtra("IranianYear",YEAR );
+
+    private void setNotificationAlarmManager(Context context) {
+        Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+        intent.putExtra("IranianDay", DAY);
+        intent.putExtra("IranianMonth", MONTH);
+        intent.putExtra("IranianYear", YEAR);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE,39);
-        calendar.set(Calendar.HOUR_OF_DAY, 2);
-        Log.d("LOG", calendar.getTime()+"");
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent); //Repeat every 24 hours        Log.d("LOG","WE ARE AT END OF");
+        calendar.set(Calendar.MINUTE, 22);
+        calendar.set(Calendar.HOUR_OF_DAY, 15);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent); //Repeat every 24 hours
+    }
+
+    private void showNotification() {
+        Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+        intent.putExtra("IranianDay", DAY);
+        intent.putExtra("IranianMonth", MONTH);
+        intent.putExtra("IranianYear", YEAR);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        try {
+            pendingIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
     }
 
 }
-
-
-
-
