@@ -6,38 +6,38 @@ package ir.apptune.calendar;
 
 class DateModel {
 
-    String day;
-    String month;
-    String year;
-    String dayofWeek;
-    String gDay;
+    private String day;
+    private String month;
+    private String year;
+    private String dayofWeek;
+    private String gDay;
+    private String gMonth;
+    private String gYear;
+    private Boolean isToday;
 
-    public String getgMonth() {
+    String getgMonth() {
         return gMonth;
     }
 
-    public void setgMonth(String gMonth) {
+    void setgMonth(String gMonth) {
         this.gMonth = gMonth;
     }
 
-    public String getgYear() {
+    String getgYear() {
         return gYear;
     }
 
-    public void setgYear(String gYear) {
+    void setgYear(String gYear) {
         this.gYear = gYear;
     }
 
-    String gMonth;
-    String gYear;
-    Boolean isToday;
 
 
-    public String getgDay() {
+    String getgDay() {
         return gDay;
     }
 
-    public void setgDay(String gDay) {
+    void setgDay(String gDay) {
         this.gDay = gDay;
     }
 
@@ -89,11 +89,11 @@ class DateModel {
 
     }
 
-    public Boolean getToday() {
+    Boolean getToday() {
         return isToday;
     }
 
-    public void setToday(Boolean today) {
+    void setToday(Boolean today) {
         isToday = today;
     }
 

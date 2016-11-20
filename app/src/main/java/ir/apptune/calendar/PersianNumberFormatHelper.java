@@ -4,10 +4,10 @@ package ir.apptune.calendar;
  * Created by Pouya on 19/11/2016.
  */
 
-public class PersianNumberFormatHelper {
+class PersianNumberFormatHelper {
     private static String[] persianNumbers = new String[]{"۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"};
 
-    public static String toPersianNumber(String text) {
+    static String toPersianNumber(String text) {
         if (text.isEmpty())
             return "";
         String out = "";

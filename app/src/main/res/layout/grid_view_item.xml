@@ -3,7 +3,10 @@
     android:layout_width="50dp"
     android:layout_height="50dp"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/layout_days"
+    android:layout_gravity="center"
+    android:gravity="center">
 
     <ir.apptune.calendar.PersianTextView
         android:id="@+id/txt_shamsi"

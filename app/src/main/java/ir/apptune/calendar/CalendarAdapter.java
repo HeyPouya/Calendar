@@ -2,10 +2,14 @@ package ir.apptune.calendar;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,8 +18,8 @@ import java.util.List;
  * Created by Pouya on 17/11/2016.
  */
 
-public class CalendarAdapter extends BaseAdapter {
-    public CalendarAdapter(Context mContext, List<DateModel> dateModels) {
+class CalendarAdapter extends BaseAdapter {
+    CalendarAdapter(Context mContext, List<DateModel> dateModels) {
         this.mContext = mContext;
         this.dateModels = dateModels;
     }
@@ -42,23 +46,40 @@ public class CalendarAdapter extends BaseAdapter {
 
         TextView txt_shamsi;
         TextView txt_miladi;
+        LinearLayout layout_days;
+
 
         ViewHolder(View view) {
             txt_shamsi = (TextView) view.findViewById(R.id.txt_shamsi);
             txt_miladi = (TextView) view.findViewById(R.id.txt_miladi);
+            layout_days = (LinearLayout) view.findViewById(R.id.layout_days);
         }
 
         private void fill(int i, List<DateModel> dateModels) {
+            Log.d("LOG i", i + "");
             txt_shamsi.setText(dateModels.get(i).getDay());
+            Log.d("LOG", dateModels.get(i).getDay());
             txt_miladi.setText(dateModels.get(i).getgDay());
-            if (dateModels.get(i).getToday())
-                txt_shamsi.setTextColor(Color.parseColor("#00ff00"));
-            if (dateModels.get(i).getDayofWeek()!= "-" && Integer.parseInt(dateModels.get(i).getDayofWeek()) == 4)
+            if (dateModels.get(i).getToday()) {
+                txt_shamsi.setTextColor(Color.parseColor("#ffffff"));
+                txt_miladi.setTextColor(Color.parseColor("#ffffff"));
+                layout_days.setBackgroundResource(R.drawable.today_background);
+
+            }
+            if (dateModels.get(i).getDayofWeek() != "-" && Integer.parseInt(dateModels.get(i).getDayofWeek()) == 4)
                 txt_shamsi.setTextColor(Color.parseColor("#FF4081"));
 
+            ResourceUtils resourceUtils = new ResourceUtils(mContext);
+
+            if (dateModels.get(i).getDay() != "-" ){
+                int temp = Integer.parseInt(dateModels.get(i).getMonth()) * 100;
+                temp +=Integer.parseInt(dateModels.get(i).getDay());
+
+            if(resourceUtils.eventP.containsKey(temp)){
+                    txt_shamsi.setTextColor(Color.parseColor("#00FF00"));
+                }
+            }
         }
-
-
     }
 
     @Override

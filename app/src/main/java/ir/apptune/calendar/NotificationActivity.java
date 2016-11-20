@@ -7,9 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
-
-import com.mohamadamin.persianmaterialdatetimepicker.utils.PersianCalendar;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -27,7 +24,7 @@ public class NotificationActivity extends BroadcastReceiver {
                 .setContentTitle(cTool.getWeekDayStr() + " " + cTool.getIranianDay()
                         + " " + PersianMonthName.getName(cTool.getIranianMonth()) + " " + cTool.getIranianYear())
                 .setContentText(cTool.getGregorianDay() + " " + EnglishMonthName.getName(cTool.getGregorianMonth()) + " " + cTool.getGregorianYear())
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.icon)
                 .setContentIntent(pIntent)
                 .setAutoCancel(false)
                 .setOngoing(true)
@@ -37,9 +34,6 @@ public class NotificationActivity extends BroadcastReceiver {
         NotificationManager notificationCompatManager =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationCompatManager.notify(0, notif);
-
-        Log.d("LOG", "WE ARE IN");
-
 
     }
 }

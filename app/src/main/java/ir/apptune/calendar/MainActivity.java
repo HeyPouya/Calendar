@@ -91,14 +91,21 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (dateModels.get(i).getDay() == "-")
                     return;
+
+                ResourceUtils eventCalendar = new ResourceUtils(MainActivity.this);
+                int temp = Integer.parseInt(dateModels.get(i).getMonth()) * 100;
+                temp +=Integer.parseInt(dateModels.get(i).getDay());
+                String s = "";
+                if (eventCalendar.eventP.containsKey(temp))
+                    s = eventCalendar.eventP.get(temp);
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("More Information About This Day :")
-                        .setMessage(dateModels.get(i).getDay() + " " +
+                .setMessage(dateModels.get(i).getDay() + " " +
                                 dateModels.get(i).getMonth() + " " +
                                 dateModels.get(i).getYear() + "\n" +
                                 dateModels.get(i).getgDay() + " " +
                                 dateModels.get(i).getgMonth() + " " +
-                                dateModels.get(i).getgYear() + " "
+                                dateModels.get(i).getgYear() + " " + s
                         )
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
@@ -106,15 +113,15 @@ public class MainActivity extends AppCompatActivity {
                                 dialogInterface.dismiss();
                             }
                         }).show();
-                Calendar cal = Calendar.getInstance();
-                Intent intent = new Intent(Intent.ACTION_EDIT);
-                intent.setType("vnd.android.cursor.item/event");
-                intent.putExtra("beginTime", cal.getTimeInMillis());
-                intent.putExtra("allDay", true);
-                intent.putExtra("rrule", "FREQ=YEARLY");
-                intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
-                intent.putExtra("title", "A Test Event from android app");
-                startActivity(intent);
+//                Calendar cal = Calendar.getInstance();
+//                Intent intent = new Intent(Intent.ACTION_EDIT);
+//                intent.setType("vnd.android.cursor.item/event");
+//                intent.putExtra("beginTime", cal.getTimeInMillis());
+//                intent.putExtra("allDay", true);
+//                intent.putExtra("rrule", "FREQ=YEARLY");
+//                intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
+//                intent.putExtra("title", "A Test Event from android app");
+//                startActivity(intent);
             }
         });
 
@@ -133,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
                 showCalendar();
             }
         });
+        ResourceUtils resourceUtils = new ResourceUtils(this);
+        Log.d("LOG",resourceUtils.eventP.containsKey(DAY)+"");
 
         //End of onCreate
 
@@ -267,7 +276,7 @@ Calculates the Month and returns the int Number
                     if (i == DAY)
                         dateModel.setToday(true);
 
-
+            Log.d("LOG DAteModel",dateModel.toString());
             dateModels.add(dateModel);
         }
 

@@ -1,15 +1,9 @@
 package ir.apptune.calendar;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.icu.text.NumberFormat;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
-
-import java.util.Locale;
 
 /**
  * Created by Pouya on 19/11/2016.

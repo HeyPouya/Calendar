@@ -6,7 +6,7 @@ import android.content.Context;
  * Calculates the displaying month, contains how many days.
  */
 
-public class DaysOfMonth {
+class DaysOfMonth {
     static int getCount(int thisMonth ,int thisYear , Context context){
         int number = 0;
         if (thisMonth <= 6) {
