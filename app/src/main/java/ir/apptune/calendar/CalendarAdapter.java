@@ -56,29 +56,22 @@ class CalendarAdapter extends BaseAdapter {
         }
 
         private void fill(int i, List<DateModel> dateModels) {
-            Log.d("LOG i", i + "");
             txt_shamsi.setText(dateModels.get(i).getDay());
-            Log.d("LOG", dateModels.get(i).getDay());
             txt_miladi.setText(dateModels.get(i).getgDay());
             if (dateModels.get(i).getToday()) {
                 txt_shamsi.setTextColor(Color.parseColor("#ffffff"));
                 txt_miladi.setTextColor(Color.parseColor("#ffffff"));
                 layout_days.setBackgroundResource(R.drawable.today_background);
-
             }
+            else {
+                txt_shamsi.setTextColor(Color.parseColor("#000000"));
+                txt_miladi.setTextColor(Color.parseColor("#000000"));
+                layout_days.setBackgroundColor(Color.parseColor("#ffffff"));
+            }
+
             if (dateModels.get(i).getDayofWeek() != "-" && Integer.parseInt(dateModels.get(i).getDayofWeek()) == 4)
                 txt_shamsi.setTextColor(Color.parseColor("#FF4081"));
 
-            ResourceUtils resourceUtils = new ResourceUtils(mContext);
-
-            if (dateModels.get(i).getDay() != "-" ){
-                int temp = Integer.parseInt(dateModels.get(i).getMonth()) * 100;
-                temp +=Integer.parseInt(dateModels.get(i).getDay());
-
-            if(resourceUtils.eventP.containsKey(temp)){
-                    txt_shamsi.setTextColor(Color.parseColor("#00FF00"));
-                }
-            }
         }
     }
 
