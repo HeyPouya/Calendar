@@ -15,7 +15,7 @@
         android:textColor="@color/white"
         android:textSize="40sp" />
 
-    <TextView
+    <ir.apptune.calendar.PersianTextView
         android:id="@+id/txt_show_gregorian_date_on_click"
         android:layout_width="match_parent"
         android:layout_height="100dp"

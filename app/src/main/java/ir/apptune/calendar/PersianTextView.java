@@ -16,8 +16,8 @@ public class PersianTextView extends TextView {
     }
     public PersianTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Typeface nabi = Typeface.createFromAsset(context.getAssets(), "BNazanin.ttf");
-        this.setTypeface(nabi);
+        Typeface BNazanin = Typeface.createFromAsset(context.getAssets(), "BNazanin.ttf");
+        this.setTypeface(BNazanin);
     }
 
     @Override

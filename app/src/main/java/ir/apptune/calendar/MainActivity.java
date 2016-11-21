@@ -3,12 +3,10 @@ package ir.apptune.calendar;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -75,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
             thisYear = savedInstanceState.getInt("thisYear");
         }
 
-
-        Configuration configuration = getResources().getConfiguration();
-        configuration.setLayoutDirection(new Locale("fa"));
-        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+        if (Build.MANUFACTURER + "" != "HTC" && (Build.MANUFACTURER + "") != "Htc" && (Build.MANUFACTURER + "" != "htc")){
+            Configuration configuration = getResources().getConfiguration();
+            configuration.setLayoutDirection(new Locale("fa"));
+            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+        }
 
         txtShowToday.setText(STATE_OF_DAY);
         txtshowDate.setText(DAY + "");
@@ -91,11 +90,11 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (dateModels.get(i).getDay() == "-")
                     return;
-                Intent intent = new Intent(MainActivity.this,OnClickDialogActivity.class);
+                Intent intent = new Intent(MainActivity.this, OnClickDialogActivity.class);
 
                 intent.putExtra("IranianDay", dateModels.get(i).getDay());
                 intent.putExtra("IranianMonth", dateModels.get(i).getMonth());
-                intent.putExtra("IranianYear",dateModels.get(i).getYear());
+                intent.putExtra("IranianYear", dateModels.get(i).getYear());
                 startActivity(intent);
 
 //                ResourceUtils eventCalendar = new ResourceUtils(MainActivity.this);
@@ -265,7 +264,7 @@ Calculates the Month and returns the int Number
                     if (i == DAY)
                         dateModel.setToday(true);
 
-            Log.d("LOG DAteModel",dateModel.toString());
+            Log.d("LOG DAteModel", dateModel.toString());
             dateModels.add(dateModel);
         }
 

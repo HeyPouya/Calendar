@@ -29,11 +29,11 @@ public class OnClickDialogActivity extends Activity {
         CalendarTool calendarTool = new CalendarTool();
         calendarTool.setIranianDate(Integer.parseInt(irYear), Integer.parseInt(irMonth), Integer.parseInt(irDay));
 
-        String shamsi = calendarTool.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(irDay) + " " +
-                PersianMonthName.getName(Integer.parseInt(irMonth)) + " " + PersianNumberFormatHelper.toPersianNumber(irYear);
-        String gregorian = PersianNumberFormatHelper.toPersianNumber(calendarTool.getGregorianDay()+"") + " "
+        String shamsi = calendarTool.getWeekDayStr() + " " + irDay + " " +
+                PersianMonthName.getName(Integer.parseInt(irMonth)) + " " + irYear;
+        String gregorian = calendarTool.getGregorianDay() + " "
                 + EnglishMonthName.getName(calendarTool.getGregorianMonth()) + " "
-                + PersianNumberFormatHelper.toPersianNumber(calendarTool.getGregorianYear()+"");
+                + calendarTool.getGregorianYear();
 
         txtShowPersianDateOnclick.setText(shamsi);
         txtShowGregorianDateOnclick.setText(gregorian);

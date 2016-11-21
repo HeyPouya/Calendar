@@ -21,9 +21,9 @@ public class NotificationActivity extends BroadcastReceiver {
         Intent myIntent = new Intent(context, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), myIntent, 0);
         Notification notif = new NotificationCompat.Builder(context)
-                .setContentTitle(cTool.getWeekDayStr() + " " + cTool.getIranianDay()
-                        + " " + PersianMonthName.getName(cTool.getIranianMonth()) + " " + cTool.getIranianYear())
-                .setContentText(cTool.getGregorianDay() + " " + EnglishMonthName.getName(cTool.getGregorianMonth()) + " " + cTool.getGregorianYear())
+                .setContentTitle(cTool.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getIranianDay()+"")
+                        + " " + PersianMonthName.getName(cTool.getIranianMonth()) + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getIranianYear()+""))
+                .setContentText(PersianNumberFormatHelper.toPersianNumber(cTool.getGregorianDay()+"") + " " + EnglishMonthName.getName(cTool.getGregorianMonth()) + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getGregorianYear()+""))
                 .setSmallIcon(R.mipmap.icon)
                 .setContentIntent(pIntent)
                 .setAutoCancel(false)
