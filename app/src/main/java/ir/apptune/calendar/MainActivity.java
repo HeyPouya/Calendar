@@ -91,28 +91,19 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (dateModels.get(i).getDay() == "-")
                     return;
+                Intent intent = new Intent(MainActivity.this,OnClickDialogActivity.class);
 
-                ResourceUtils eventCalendar = new ResourceUtils(MainActivity.this);
-                int temp = Integer.parseInt(dateModels.get(i).getMonth()) * 100;
-                temp +=Integer.parseInt(dateModels.get(i).getDay());
-                String s = "";
-                if (eventCalendar.eventP.containsKey(temp))
-                    s = eventCalendar.eventP.get(temp);
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("More Information About This Day :")
-                .setMessage(dateModels.get(i).getDay() + " " +
-                                dateModels.get(i).getMonth() + " " +
-                                dateModels.get(i).getYear() + "\n" +
-                                dateModels.get(i).getgDay() + " " +
-                                dateModels.get(i).getgMonth() + " " +
-                                dateModels.get(i).getgYear() + " " + s
-                        )
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        }).show();
+                intent.putExtra("IranianDay", dateModels.get(i).getDay());
+                intent.putExtra("IranianMonth", dateModels.get(i).getMonth());
+                intent.putExtra("IranianYear",dateModels.get(i).getYear());
+                startActivity(intent);
+
+//                ResourceUtils eventCalendar = new ResourceUtils(MainActivity.this);
+//                int temp = Integer.parseInt(dateModels.get(i).getMonth()) * 100;
+//                temp +=Integer.parseInt(dateModels.get(i).getDay());
+//                String s = "";
+//                if (eventCalendar.eventP.containsKey(temp))
+//                    s = eventCalendar.eventP.get(temp);
 //                Calendar cal = Calendar.getInstance();
 //                Intent intent = new Intent(Intent.ACTION_EDIT);
 //                intent.setType("vnd.android.cursor.item/event");
@@ -140,8 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 showCalendar();
             }
         });
-        ResourceUtils resourceUtils = new ResourceUtils(this);
-        Log.d("LOG",resourceUtils.eventP.containsKey(DAY)+"");
 
         //End of onCreate
 

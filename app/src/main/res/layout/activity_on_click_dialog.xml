@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="500dp"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <ir.apptune.calendar.PersianTextView
+        android:id="@+id/txt_show_persian_date_on_click"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/txt_show_gregorian_date_on_click"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+</LinearLayout>
