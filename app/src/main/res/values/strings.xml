@@ -11,4 +11,5 @@
     <string name="wednesdays">چهارشنبه</string>
     <string name="thursday">پنجشنبه</string>
     <string name="friday">جمعه</string>
+    <string name="title_activity_app_widget">AppWidget</string>
 </resources>
