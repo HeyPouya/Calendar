@@ -97,12 +97,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("IranianYear", dateModels.get(i).getYear());
                 startActivity(intent);
 
-//                ResourceUtils eventCalendar = new ResourceUtils(MainActivity.this);
-//                int temp = Integer.parseInt(dateModels.get(i).getMonth()) * 100;
-//                temp +=Integer.parseInt(dateModels.get(i).getDay());
-//                String s = "";
-//                if (eventCalendar.eventP.containsKey(temp))
-//                    s = eventCalendar.eventP.get(temp);
 //                Calendar cal = Calendar.getInstance();
 //                Intent intent = new Intent(Intent.ACTION_EDIT);
 //                intent.setType("vnd.android.cursor.item/event");

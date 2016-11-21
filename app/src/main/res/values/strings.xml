@@ -12,4 +12,6 @@
     <string name="thursday">پنجشنبه</string>
     <string name="friday">جمعه</string>
     <string name="title_activity_app_widget">AppWidget</string>
+    <string name="events_of_this_day">مناسبت های این روز :</string>
+    <string name="set_a_work_to_do">کاری برای انجام در این روز تنظیم کنید</string>
 </resources>
