@@ -55,6 +55,7 @@ class CalendarAdapter extends BaseAdapter {
         private void fill(int i, List<DateModel> dateModels) {
             txt_shamsi.setText(dateModels.get(i).getDay());
             txt_miladi.setText(dateModels.get(i).getgDay());
+            ResourceUtils resourceUtils = new ResourceUtils(mContext);
             if (dateModels.get(i).getToday()) {
                 txt_shamsi.setTextColor(Color.parseColor("#ffffff"));
                 txt_miladi.setTextColor(Color.parseColor("#ffffff"));
@@ -65,6 +66,12 @@ class CalendarAdapter extends BaseAdapter {
                 layout_days.setBackgroundColor(Color.parseColor("#ffffff"));
             }
 
+            if (dateModels.get(i).getDay() != "-") {
+                int persianTemp = Integer.parseInt(dateModels.get(i).getMonth()) * 100;
+                persianTemp += Integer.parseInt(dateModels.get(i).getDay());
+                if (resourceUtils.vacationP.containsKey(persianTemp))
+                    txt_shamsi.setTextColor(Color.parseColor("#FF4081"));
+            }
             if (dateModels.get(i).getDayofWeek() != "-" && Integer.parseInt(dateModels.get(i).getDayofWeek()) == 4)
                 txt_shamsi.setTextColor(Color.parseColor("#FF4081"));
 
