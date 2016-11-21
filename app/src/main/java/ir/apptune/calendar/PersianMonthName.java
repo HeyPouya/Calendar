@@ -20,7 +20,7 @@ class PersianMonthName {
                 break;
 
             case 4:
-                result = "اردیبهشت";
+                result = "تیر";
                 break;
 
             case 5:
