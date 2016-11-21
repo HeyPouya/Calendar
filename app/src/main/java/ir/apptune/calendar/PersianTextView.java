@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 /**
- * Created by Pouya on 19/11/2016.
+ * A custom TextView which shows texts in Bnazanin font.
  */
 
 public class PersianTextView extends TextView {
@@ -14,10 +14,11 @@ public class PersianTextView extends TextView {
     public PersianTextView(Context context) {
         super(context);
     }
+
     public PersianTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Typeface BNazanin = Typeface.createFromAsset(context.getAssets(), "BNazanin.ttf");
-        this.setTypeface(BNazanin);
+        Typeface Bnazanin = Typeface.createFromAsset(context.getAssets(), "BNazanin.ttf");
+        this.setTypeface(Bnazanin);
     }
 
     @Override

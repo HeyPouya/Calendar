@@ -1,26 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="500dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+<LinearLayout
+    android:layout_width="300dp"
+    android:layout_height="0dp"
+    android:layout_weight="1"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <ir.apptune.calendar.PersianTextView
         android:id="@+id/txt_show_persian_date_on_click"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="40sp" />
+        android:textSize="30sp"
+        android:layout_margin="5dp"/>
 
     <ir.apptune.calendar.PersianTextView
         android:id="@+id/txt_show_gregorian_date_on_click"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_margin="5dp"/>
 </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+    </LinearLayout>
+    </LinearLayout>

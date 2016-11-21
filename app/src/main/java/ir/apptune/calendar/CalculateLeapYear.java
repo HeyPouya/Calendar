@@ -7,8 +7,8 @@ import android.widget.Toast;
  * Calculates if displaying year, is a Leap (Kabise) year or not.
  */
 
- class CalculateLeapYear {
-    static Boolean isLeapYear(int thisYear , Context context){
+class CalculateLeapYear {
+    static Boolean isLeapYear(int thisYear, Context context) {
         int leapYear = thisYear;
         Boolean result;
         if (leapYear > 1395) {

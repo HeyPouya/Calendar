@@ -32,7 +32,6 @@ class DateModel {
     }
 
 
-
     String getgDay() {
         return gDay;
     }

@@ -4,5 +4,4 @@
     android:minHeight="72dp"
     android:minWidth="292dp"
     android:previewImage="@mipmap/icon"
-    android:updatePeriodMillis="30000" >
-</appwidget-provider>
+    android:updatePeriodMillis="30000" />

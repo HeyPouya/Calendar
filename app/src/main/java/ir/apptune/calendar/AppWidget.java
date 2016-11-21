@@ -5,8 +5,11 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
+
+/**
+ * The CLass that widget uses to show data
+ */
 
 public class AppWidget extends AppWidgetProvider {
 
@@ -16,22 +19,19 @@ public class AppWidget extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
 
-        for (int i=0; i<appWidgetIds.length ; i++){
+        for (int i = 0; i < appWidgetIds.length; i++) {
             int appWidgetId = appWidgetIds[i];
-            Log.d("LOG" , i+"");
-            Intent intent = new Intent(context,MainActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             remoteViews.setOnClickPendingIntent(R.id.txt_widget_show_date, pendingIntent);
             CalendarTool calendar = new CalendarTool();
-            String s =calendar.getWeekDayStr() + " "+ PersianNumberFormatHelper.toPersianNumber(calendar.getIranianDay()+"") + " "+
-        PersianMonthName.getName(calendar.getIranianMonth()) + " "+
-        PersianNumberFormatHelper.toPersianNumber(calendar.getIranianYear()+"");
+            String s = calendar.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(calendar.getIranianDay() + "") + " " +
+                    PersianMonthName.getName(calendar.getIranianMonth()) + " " +
+                    PersianNumberFormatHelper.toPersianNumber(calendar.getIranianYear() + "");
 
             remoteViews.setTextViewText(R.id.txt_widget_show_date, s);
-            Log.d("LOG" , calendar.getIranianDate()+"");
-
-            appWidgetManager.updateAppWidget(appWidgetId,remoteViews);
+            appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 
 
         }

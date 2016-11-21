@@ -29,7 +29,7 @@ public final class ResourceUtils {
 	}
 	
 	public final static void getHashMapResource(Context c, int hashMapResId) {
-	;
+
 		XmlResourceParser parser = c.getResources().getXml(hashMapResId);
 
 		String key = null, value = null;

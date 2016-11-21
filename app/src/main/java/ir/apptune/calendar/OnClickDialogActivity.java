@@ -2,11 +2,13 @@ package ir.apptune.calendar;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
+
+/**
+ * The activity that shows when user clicks on days, in calendar
+ */
 
 public class OnClickDialogActivity extends Activity {
     TextView txtShowPersianDateOnclick;
@@ -25,7 +27,6 @@ public class OnClickDialogActivity extends Activity {
         String irDay = intent.getStringExtra("IranianDay");
         String irMonth = intent.getStringExtra("IranianMonth");
         String irYear = intent.getStringExtra("IranianYear");
-        Log.d("LOG", irDay + "");
         CalendarTool calendarTool = new CalendarTool();
         calendarTool.setIranianDate(Integer.parseInt(irYear), Integer.parseInt(irMonth), Integer.parseInt(irDay));
 

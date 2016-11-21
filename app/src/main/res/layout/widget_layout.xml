@@ -1,19 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="292dp"
     android:layout_height="72dp"
-    android:layout_margin="5dp"
-    android:gravity="center"
-    android:background="@drawable/appwidget_dark_bg"
-    android:orientation="vertical"
     android:layout_gravity="center"
-    >
+    android:layout_margin="5dp"
+    android:background="@drawable/appwidget_dark_bg"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/txt_widget_show_date"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/txt_widget_show_date"
         android:layout_gravity="center"
-        android:gravity="center"
-       />
+        android:gravity="center" />
 
 </LinearLayout>

@@ -2,9 +2,6 @@ package ir.apptune.calendar;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by Pouya on 17/11/2016.
+ * This Adapter sets data of calendar on the main page.
  */
 
 class CalendarAdapter extends BaseAdapter {
@@ -62,8 +59,7 @@ class CalendarAdapter extends BaseAdapter {
                 txt_shamsi.setTextColor(Color.parseColor("#ffffff"));
                 txt_miladi.setTextColor(Color.parseColor("#ffffff"));
                 layout_days.setBackgroundResource(R.drawable.today_background);
-            }
-            else {
+            } else {
                 txt_shamsi.setTextColor(Color.parseColor("#000000"));
                 txt_miladi.setTextColor(Color.parseColor("#000000"));
                 layout_days.setBackgroundColor(Color.parseColor("#ffffff"));

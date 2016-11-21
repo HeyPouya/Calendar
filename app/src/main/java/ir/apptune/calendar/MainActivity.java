@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             thisYear = savedInstanceState.getInt("thisYear");
         }
 
-        if (Build.MANUFACTURER + "" != "HTC" && (Build.MANUFACTURER + "") != "Htc" && (Build.MANUFACTURER + "" != "htc")){
+        if (Build.MANUFACTURER + "" != "HTC" && (Build.MANUFACTURER + "") != "Htc" && (Build.MANUFACTURER + "" != "htc")) {
             Configuration configuration = getResources().getConfiguration();
             configuration.setLayoutDirection(new Locale("fa"));
             getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());

@@ -1,7 +1,7 @@
 package ir.apptune.calendar;
 
 /**
- * Created by Pouya on 19/11/2016.
+ * Turns english numbers to Persian One.
  */
 
 class PersianNumberFormatHelper {
