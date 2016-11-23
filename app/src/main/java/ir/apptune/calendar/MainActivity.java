@@ -1,33 +1,63 @@
 package ir.apptune.calendar;
 
+import android.Manifest;
+import android.accounts.AccountManager;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
+import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.Events;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends AppCompatActivity {
 
-
+public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
     /*
      Declare all variables here :
       */
-
     int numberOfDays; // How many days a month has
     CalendarTool cTool; // An instance of CalendarTool Class that converts Garegorian Date to Persian Date
     int thisMonth = 0; // The int number of current Month that application refers to. ex : 8 For Aban
@@ -44,6 +74,19 @@ public class MainActivity extends AppCompatActivity {
     Button btn_previous;
     Button btn_next;
     TextView txtYear;
+    GoogleAccountCredential mCredential;
+    ProgressDialog mProgress;
+    TextView txtShowWork;
+    static String TODAY_TASKS = "";
+
+    static final int REQUEST_ACCOUNT_PICKER = 1000;
+    static final int REQUEST_AUTHORIZATION = 1001;
+    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
+    static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
+
+    private static final String PREF_ACCOUNT_NAME = "accountName";
+    private static final String[] SCOPES = {CalendarScopes.CALENDAR_READONLY};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         MONTH = cTool.getIranianMonth();
         YEAR = cTool.getIranianYear();
         STATE_OF_DAY = cTool.getWeekDayStr();
+        txtShowWork = (TextView) findViewById(R.id.txt_show_work);
 
 
         if (savedInstanceState != null) {
@@ -91,10 +135,16 @@ public class MainActivity extends AppCompatActivity {
                 if (dateModels.get(i).getDay() == "-")
                     return;
                 Intent intent = new Intent(MainActivity.this, OnClickDialogActivity.class);
-
                 intent.putExtra("IranianDay", dateModels.get(i).getDay());
                 intent.putExtra("IranianMonth", dateModels.get(i).getMonth());
                 intent.putExtra("IranianYear", dateModels.get(i).getYear());
+                String accountName = getPreferences(Context.MODE_PRIVATE)
+                        .getString(PREF_ACCOUNT_NAME, null);
+
+                if (accountName != null) {
+                    intent.putExtra("accountName", accountName);
+                }
+
                 startActivity(intent);
 
 //                Calendar cal = Calendar.getInstance();
@@ -125,85 +175,64 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mCredential = GoogleAccountCredential.usingOAuth2(
+                getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
+        mProgress = new ProgressDialog(this);
+        mProgress.setMessage("در حال اتصال به تقویم گوگل...");
+
+        String accountName = getPreferences(Context.MODE_PRIVATE)
+                .getString(PREF_ACCOUNT_NAME, null);
+
+        if (accountName != null) {
+            mCredential.setSelectedAccountName(accountName);
+            getResultsFromApi();
+        }
+
         //End of onCreate
 
 
     }
+
     /*
     This Method add spaces to Array of days. So it can Arranges days of weeks. for ex, if a month
      starts with Mon, it adds 2 days of "-" to Sets dates Correctly.
-
      */
-
     private void setArrangeOfWeek(int v) {
-        DateModel dateModel = new DateModel();
         switch (v) {
             case 5:
                 break;
             case 6:
-                for (int i = 0; i < 1; i++) {
-                    dateModel.setDay("-");
-                    dateModel.setMonth("-");
-                    dateModel.setYear("-");
-                    dateModel.setDayofWeek("-");
-                    dateModel.setToday(false);
-                    dateModels.add(dateModel);
-                }
+                for (int i = 0; i < 1; i++)
+                    makeDaysNull();
+
                 break;
             case 0:
-                for (int i = 0; i < 2; i++) {
-                    dateModel.setDay("-");
-                    dateModel.setMonth("-");
-                    dateModel.setYear("-");
-                    dateModel.setDayofWeek("-");
-                    dateModel.setToday(false);
-                    dateModels.add(dateModel);
-                }
+                for (int i = 0; i < 2; i++)
+                    makeDaysNull();
+
                 break;
             case 1:
-                for (int i = 0; i < 3; i++) {
-                    dateModel.setDay("-");
-                    dateModel.setMonth("-");
-                    dateModel.setYear("-");
-                    dateModel.setDayofWeek("-");
-                    dateModel.setToday(false);
-                    dateModels.add(dateModel);
-                }
+                for (int i = 0; i < 3; i++)
+                    makeDaysNull();
+
                 break;
             case 2:
-                for (int i = 0; i < 4; i++) {
-                    dateModel.setDay("-");
-                    dateModel.setMonth("-");
-                    dateModel.setYear("-");
-                    dateModel.setDayofWeek("-");
-                    dateModel.setToday(false);
-                    dateModels.add(dateModel);
-                }
+                for (int i = 0; i < 4; i++)
+                    makeDaysNull();
+
                 break;
             case 3:
-                for (int i = 0; i < 5; i++) {
-                    dateModel.setDay("-");
-                    dateModel.setMonth("-");
-                    dateModel.setYear("-");
-                    dateModel.setDayofWeek("-");
-                    dateModel.setToday(false);
-                    dateModels.add(dateModel);
-                }
+                for (int i = 0; i < 5; i++)
+                    makeDaysNull();
+
                 break;
             case 4:
-                for (int i = 0; i < 6; i++) {
-                    dateModel.setDay("-");
-                    dateModel.setMonth("-");
-                    dateModel.setYear("-");
-                    dateModel.setDayofWeek("-");
-                    dateModel.setToday(false);
-                    dateModels.add(dateModel);
-                }
+                for (int i = 0; i < 6; i++)
+                    makeDaysNull();
+
                 break;
-
         }
-
-
     }
 
     /*
@@ -257,8 +286,6 @@ Calculates the Month and returns the int Number
                 if (thisMonth == MONTH)
                     if (i == DAY)
                         dateModel.setToday(true);
-
-            Log.d("LOG DAteModel", dateModel.toString());
             dateModels.add(dateModel);
         }
 
@@ -324,4 +351,263 @@ Calculates the Month and returns the int Number
         outState.putInt("thisYear", Integer.parseInt(dateModels.get(20).getYear()));
     }
 
+    private void makeDaysNull() {
+        DateModel dateModel = new DateModel();
+        dateModel.setDay("-");
+        dateModel.setMonth("-");
+        dateModel.setYear("-");
+        dateModel.setDayofWeek("-");
+        dateModel.setToday(false);
+        dateModels.add(dateModel);
+
+    }
+
+    private void getResultsFromApi() {
+        if (!isGooglePlayServicesAvailable()) {
+            acquireGooglePlayServices();
+        } else if (!isDeviceOnline()) {
+            Toast.makeText(MainActivity.this, "دستگاه شما به اینترنت متصل نیست", Toast.LENGTH_SHORT).show();
+        } else if (mCredential.getSelectedAccountName() == null) {
+            chooseAccount();
+        } else {
+            new MainActivity.MakeRequestTask(mCredential).execute();
+        }
+    }
+
+    private boolean isGooglePlayServicesAvailable() {
+        GoogleApiAvailability apiAvailability =
+                GoogleApiAvailability.getInstance();
+        final int connectionStatusCode =
+                apiAvailability.isGooglePlayServicesAvailable(this);
+        return connectionStatusCode == ConnectionResult.SUCCESS;
+    }
+
+    private boolean isDeviceOnline() {
+        ConnectivityManager connMgr =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    private void acquireGooglePlayServices() {
+        GoogleApiAvailability apiAvailability =
+                GoogleApiAvailability.getInstance();
+        final int connectionStatusCode =
+                apiAvailability.isGooglePlayServicesAvailable(this);
+        if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
+            showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
+        }
+    }
+
+    void showGooglePlayServicesAvailabilityErrorDialog(
+            final int connectionStatusCode) {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        Dialog dialog = apiAvailability.getErrorDialog(
+                MainActivity.this,
+                connectionStatusCode,
+                REQUEST_GOOGLE_PLAY_SERVICES);
+        dialog.show();
+    }
+
+    @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
+    private void chooseAccount() {
+        if (EasyPermissions.hasPermissions(
+                this, Manifest.permission.GET_ACCOUNTS)) {
+            String accountName = getPreferences(Context.MODE_PRIVATE)
+                    .getString(PREF_ACCOUNT_NAME, null);
+            if (accountName != null) {
+                mCredential.setSelectedAccountName(accountName);
+                getResultsFromApi();
+            } else {
+                // Start a dialog from which the user can choose an account
+                startActivityForResult(
+                        mCredential.newChooseAccountIntent(),
+                        REQUEST_ACCOUNT_PICKER);
+            }
+        } else {
+            // Request the GET_ACCOUNTS permission via a user dialog
+            EasyPermissions.requestPermissions(
+                    this,
+                    "برای دریافت اطلاعات تقویم گوگل شما، لطفا دسترسی به اکانت خود را فراهم کنید",
+                    REQUEST_PERMISSION_GET_ACCOUNTS,
+                    Manifest.permission.GET_ACCOUNTS);
+        }
+    }
+
+    private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
+        private com.google.api.services.calendar.Calendar mService = null;
+        private Exception mLastError = null;
+
+        public MakeRequestTask(GoogleAccountCredential credential) {
+            HttpTransport transport = AndroidHttp.newCompatibleTransport();
+            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+            mService = new com.google.api.services.calendar.Calendar.Builder(
+                    transport, jsonFactory, credential)
+                    .setApplicationName("تقویم پارسی")
+                    .build();
+        }
+
+        /**
+         * Background task to call Google Calendar API.
+         *
+         * @param params no parameters needed for this task.
+         */
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            try {
+                return getDataFromApi();
+            } catch (Exception e) {
+                mLastError = e;
+                cancel(true);
+                return null;
+            }
+        }
+
+        /**
+         * Fetch a list of the next 10 events from the primary calendar.
+         *
+         * @return List of Strings describing returned events.
+         * @throws IOException
+         */
+        private List<String> getDataFromApi() throws IOException {
+            // List the next 10 events from the primary calendar.
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(2016, 10, 23);
+            DateTime now = new DateTime(System.currentTimeMillis());
+
+
+            List<String> eventStrings = new ArrayList<String>();
+            Events events = mService.events().list("primary")
+                    .setMaxResults(10)
+                    .setTimeMin(now)
+                    .setOrderBy("startTime")
+                    .setSingleEvents(true)
+                    .execute();
+            List<Event> items = events.getItems();
+
+            for (Event event : items) {
+                DateTime start = event.getStart().getDateTime();
+                //getDateTime();
+                if (start == null) {
+                    // All-day events don't have start times, so just use
+                    // the start date.
+                    start = event.getStart().getDate();
+                }
+                eventStrings.add(
+                        String.format("%s (%s)", event.getSummary(), start));
+            }
+            return eventStrings;
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            mProgress.show();
+        }
+
+        @Override
+        protected void onPostExecute(List<String> output) {
+            mProgress.hide();
+            if (output == null || output.size() == 0) {
+                txtShowWork.setText("شما امروز رویدادی ندارید!");
+            } else {
+                txtShowWork.setText("شما امروز" + output.size() + " " + "رویداد دارید");
+                output.add(0, "Data retrieved using the Google Calendar API:");
+                TODAY_TASKS = TextUtils.join("\n", output);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            mProgress.hide();
+            if (mLastError != null) {
+                if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
+                    showGooglePlayServicesAvailabilityErrorDialog(
+                            ((GooglePlayServicesAvailabilityIOException) mLastError)
+                                    .getConnectionStatusCode());
+                } else if (mLastError instanceof UserRecoverableAuthIOException) {
+                    startActivityForResult(
+                            ((UserRecoverableAuthIOException) mLastError).getIntent(),
+                            OnClickDialogActivity.REQUEST_AUTHORIZATION);
+                } else {
+                    Log.d("LOG", "The following error occurred:\n"
+                            + mLastError.getMessage());
+                }
+            } else {
+                Toast.makeText(MainActivity.this, "درخواست شما لغو شد.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(
+                requestCode, permissions, grantResults, this);
+    }
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> list) {
+        // Do nothing.
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> list) {
+        // Do nothing.
+    }
+
+    @Override
+    protected void onActivityResult(
+            int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_GOOGLE_PLAY_SERVICES:
+                if (resultCode != RESULT_OK) {
+                    Toast.makeText(MainActivity.this, "این عمل برای اجرا نیاز به گوگل پلی سرویس دارد.لطفا گوگل پلی را نصب کنید و دوباره اپلیکیشن را اجرا کنید", Toast.LENGTH_SHORT).show();
+                } else {
+                    getResultsFromApi();
+                }
+                break;
+            case REQUEST_ACCOUNT_PICKER:
+                if (resultCode == RESULT_OK && data != null &&
+                        data.getExtras() != null) {
+                    String accountName =
+                            data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+                    if (accountName != null) {
+                        SharedPreferences settings =
+                                getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString(PREF_ACCOUNT_NAME, accountName);
+                        editor.apply();
+                        mCredential.setSelectedAccountName(accountName);
+                        getResultsFromApi();
+                    }
+                }
+                break;
+            case REQUEST_AUTHORIZATION:
+                if (resultCode == RESULT_OK) {
+                    getResultsFromApi();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == 0) {
+            getResultsFromApi();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 0, 0, "اتصال به تقویم گوگل");
+        return super.onCreateOptionsMenu(menu);
+    }
 }

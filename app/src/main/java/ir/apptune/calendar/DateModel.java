@@ -1,7 +1,7 @@
 package ir.apptune.calendar;
 
 /**
- * Created by Pouya on 17/11/2016.
+ * Data model of dates.
  */
 
 class DateModel {
@@ -95,6 +95,7 @@ class DateModel {
     void setToday(Boolean today) {
         isToday = today;
     }
+
 
     public DateModel(String day, String month, String year, String dayofWeek, String gDay, String gMonth, String gYear, Boolean isToday) {
         this.day = day;

@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="شما امروز کاری برای انجام ندارید!"
+                android:text="@string/no_events_today_google"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 

@@ -14,4 +14,6 @@
     <string name="title_activity_app_widget">AppWidget</string>
     <string name="events_of_this_day">مناسبت های این روز :</string>
     <string name="set_a_work_to_do">کاری برای انجام در این روز تنظیم کنید</string>
+    <string name="no_events_today_google">رویدادهای شما.(نیازمند اتصال به تقویم گوگل)</string>
+    <string name="google_calendar_events">رویدادهای تقویم گوگل :</string>
 </resources>
