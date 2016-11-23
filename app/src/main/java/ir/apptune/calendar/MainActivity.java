@@ -17,11 +17,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -44,6 +44,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -55,9 +56,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 
 public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
-    /*
-     Declare all variables here :
-      */
+    /**
+     * Declare all variables here :
+     */
     int numberOfDays; // How many days a month has
     CalendarTool cTool; // An instance of CalendarTool Class that converts Garegorian Date to Persian Date
     int thisMonth = 0; // The int number of current Month that application refers to. ex : 8 For Aban
@@ -77,13 +78,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     GoogleAccountCredential mCredential;
     ProgressDialog mProgress;
     TextView txtShowWork;
-    static String TODAY_TASKS = "";
-
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
-
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {CalendarScopes.CALENDAR_READONLY};
 
@@ -92,9 +90,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*
-        Instantiate all variables Here :
+        /**
+         Instantiate all variables Here :
          */
         dateModels = new ArrayList<>();
         cTool = new CalendarTool();
@@ -110,12 +107,21 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         YEAR = cTool.getIranianYear();
         STATE_OF_DAY = cTool.getWeekDayStr();
         txtShowWork = (TextView) findViewById(R.id.txt_show_work);
+        mCredential = GoogleAccountCredential.usingOAuth2(
+                getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
+        mProgress = new ProgressDialog(this);
 
-
+        /**
+         * Check if phone has rotated, so show the month that user were looking at
+         */
         if (savedInstanceState != null) {
             thisMonth = savedInstanceState.getInt("thisMonth");
             thisYear = savedInstanceState.getInt("thisYear");
         }
+        /**
+         * Check if the phone has maid by HTC , so dont forcely make the page RTL to prevent from crash
+         */
 
         if (Build.MANUFACTURER + "" != "HTC" && (Build.MANUFACTURER + "") != "Htc" && (Build.MANUFACTURER + "" != "htc")) {
             Configuration configuration = getResources().getConfiguration();
@@ -175,18 +181,31 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             }
         });
 
-        mCredential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES))
-                .setBackOff(new ExponentialBackOff());
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("در حال اتصال به تقویم گوگل...");
+        mProgress.setMessage(getString(R.string.connecting_to_google_calendar));
 
         String accountName = getPreferences(Context.MODE_PRIVATE)
                 .getString(PREF_ACCOUNT_NAME, null);
+        /**
+         *  Check if user has loged in to his Google account or not
+         */
 
         if (accountName != null) {
             mCredential.setSelectedAccountName(accountName);
             getResultsFromApi();
+        }
+
+        /**
+         * force All phone SPECIALLY HUAWEI ONES to show 3dots menu
+         */
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            if (menuKeyField != null) {
+                menuKeyField.setAccessible(true);
+                menuKeyField.setBoolean(config, false);
+            }
+        } catch (Exception ex) {
+            // Ignore
         }
 
         //End of onCreate
@@ -194,9 +213,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     }
 
-    /*
-    This Method add spaces to Array of days. So it can Arranges days of weeks. for ex, if a month
-     starts with Mon, it adds 2 days of "-" to Sets dates Correctly.
+    /**
+     * This Method add spaces to Array of days. So it can Arranges days of weeks. for ex, if a month
+     * starts with Mon, it adds 2 days of "-" to Sets dates Correctly.
      */
     private void setArrangeOfWeek(int v) {
         switch (v) {
@@ -235,8 +254,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
-    /*
-    Calculates the Year and returns the int Number
+    /**
+     * Calculates the Year and returns the int Number
      */
     private int calculateYear(int i) {
         int calclateYearNumber;
@@ -249,9 +268,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         return calclateYearNumber;
     }
 
-    /*
-Calculates the Month and returns the int Number
- */
+    /**
+     * Calculates the Month and returns the int Number
+     */
     private int calculateMonth(int i) {
         int calclateMonthNumber;
         if (i == 0) {
@@ -263,8 +282,8 @@ Calculates the Month and returns the int Number
         return calclateMonthNumber;
     }
 
-    /*
-    Makes Array Of Days to pass to the Adapter
+    /**
+     * Makes Array Of Days to pass to the Adapter
      */
 
     private void makingArrayOfDays() {
@@ -322,6 +341,12 @@ Calculates the Month and returns the int Number
 
     }
 
+    /**
+     * Sets an alarmManager to change the notification content at 24:00 every night
+     *
+     * @param context
+     */
+
     private void setNotificationAlarmManager(Context context) {
         Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -334,6 +359,10 @@ Calculates the Month and returns the int Number
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent); //Repeat every 24 hours
     }
 
+    /**
+     * shows the Notification immidately after user opens the app
+     */
+
     private void showNotification() {
         Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
@@ -344,6 +373,11 @@ Calculates the Month and returns the int Number
         }
     }
 
+    /**
+     * Saves instance of app when user rotates the phone, to prevent data restart
+     *
+     * @param outState
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -351,6 +385,9 @@ Calculates the Month and returns the int Number
         outState.putInt("thisYear", Integer.parseInt(dateModels.get(20).getYear()));
     }
 
+    /**
+     * adds "-" to days that are not a part of this month
+     */
     private void makeDaysNull() {
         DateModel dateModel = new DateModel();
         dateModel.setDay("-");
@@ -362,11 +399,44 @@ Calculates the Month and returns the int Number
 
     }
 
+    /**
+     * if user clicks on the 3dot menu and choose the item, this method will be called
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == 0) {
+            getResultsFromApi();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * adds a 3dot menu
+     *
+     * @param menu
+     * @return
+     */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, 0, 0, "اتصال به تقویم گوگل");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    /**
+     * And All the rest, are Google Calendar Stuff :
+     */
+
     private void getResultsFromApi() {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (!isDeviceOnline()) {
-            Toast.makeText(MainActivity.this, "دستگاه شما به اینترنت متصل نیست", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else {
@@ -428,7 +498,7 @@ Calculates the Month and returns the int Number
             // Request the GET_ACCOUNTS permission via a user dialog
             EasyPermissions.requestPermissions(
                     this,
-                    "برای دریافت اطلاعات تقویم گوگل شما، لطفا دسترسی به اکانت خود را فراهم کنید",
+                    getString(R.string.provide_permission),
                     REQUEST_PERMISSION_GET_ACCOUNTS,
                     Manifest.permission.GET_ACCOUNTS);
         }
@@ -438,7 +508,7 @@ Calculates the Month and returns the int Number
         private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
 
-        public MakeRequestTask(GoogleAccountCredential credential) {
+        MakeRequestTask(GoogleAccountCredential credential) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.calendar.Calendar.Builder(
@@ -471,16 +541,18 @@ Calculates the Month and returns the int Number
          */
         private List<String> getDataFromApi() throws IOException {
             // List the next 10 events from the primary calendar.
-
             Calendar calendar = Calendar.getInstance();
-            calendar.set(2016, 10, 23);
-            DateTime now = new DateTime(System.currentTimeMillis());
-
+            CalendarTool calendarTool = new CalendarTool();
+            calendar.set(calendarTool.getGregorianYear(), calendarTool.getGregorianMonth() - 1, calendarTool.getGregorianDay(), 0, 0);
+            DateTime today = new DateTime(calendar.getTimeInMillis());
+            calendar.set(calendarTool.getGregorianYear(), calendarTool.getGregorianMonth() - 1, calendarTool.getGregorianDay(), 23, 59);
+            DateTime tonight = new DateTime(calendar.getTimeInMillis());
 
             List<String> eventStrings = new ArrayList<String>();
             Events events = mService.events().list("primary")
-                    .setMaxResults(10)
-                    .setTimeMin(now)
+                    .setMaxResults(50)
+                    .setTimeMin(today)
+                    .setTimeMax(tonight)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
@@ -510,11 +582,9 @@ Calculates the Month and returns the int Number
         protected void onPostExecute(List<String> output) {
             mProgress.hide();
             if (output == null || output.size() == 0) {
-                txtShowWork.setText("شما امروز رویدادی ندارید!");
+                txtShowWork.setText(R.string.you_have_no_events_today);
             } else {
                 txtShowWork.setText("شما امروز" + output.size() + " " + "رویداد دارید");
-                output.add(0, "Data retrieved using the Google Calendar API:");
-                TODAY_TASKS = TextUtils.join("\n", output);
             }
         }
 
@@ -535,7 +605,7 @@ Calculates the Month and returns the int Number
                             + mLastError.getMessage());
                 }
             } else {
-                Toast.makeText(MainActivity.this, "درخواست شما لغو شد.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.your_request_cancelled, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -567,7 +637,7 @@ Calculates the Month and returns the int Number
         switch (requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    Toast.makeText(MainActivity.this, "این عمل برای اجرا نیاز به گوگل پلی سرویس دارد.لطفا گوگل پلی را نصب کنید و دوباره اپلیکیشن را اجرا کنید", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.install_google_play_service), Toast.LENGTH_LONG).show();
                 } else {
                     getResultsFromApi();
                 }
@@ -596,18 +666,4 @@ Calculates the Month and returns the int Number
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == 0) {
-            getResultsFromApi();
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, 0, 0, "اتصال به تقویم گوگل");
-        return super.onCreateOptionsMenu(menu);
-    }
 }
