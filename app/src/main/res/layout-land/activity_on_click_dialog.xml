@@ -20,23 +20,23 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
         <ir.apptune.calendar.PersianTextView
             android:id="@+id/txt_show_gregorian_date_on_click"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10">
+        android:layout_weight="20">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:layout_marginRight="10dp"
                 android:text="@string/events_of_this_day"
                 android:textColor="@color/colorAccent"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
 
             <ir.apptune.calendar.PersianTextView
                 android:id="@+id/txt_show_events"
@@ -58,7 +58,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="right"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <ir.apptune.calendar.PersianTextView
                 android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                 android:layout_marginRight="10dp"
                 android:text="@string/google_calendar_events"
                 android:textColor="@color/colorAccent"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
 
             <ir.apptune.calendar.PersianTextView
                 android:id="@+id/txt_show_google_events"
@@ -83,10 +83,11 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/set_a_work_to_do" />
+
 
 </LinearLayout>

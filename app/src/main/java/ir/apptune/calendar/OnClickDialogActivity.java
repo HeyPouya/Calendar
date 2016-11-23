@@ -58,12 +58,10 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
     ProgressDialog mProgress;
     CalendarTool calendarTool;
     TextView txt_show_google_events;
-
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
-
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {CalendarScopes.CALENDAR_READONLY};
 
@@ -120,7 +118,7 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
         mProgress = new ProgressDialog(this);
-        mProgress.setMessage("در حال اتصال به تقویم گوگل...");
+        mProgress.setMessage(getResources().getString(R.string.connecting_to_google_calendar));
 
         if (accountName != null) {
             mCredential.setSelectedAccountName(accountName);
@@ -133,7 +131,7 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (!isDeviceOnline()) {
-            Toast.makeText(OnClickDialogActivity.this, "دستگاه به اینترنت متصل نیست", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OnClickDialogActivity.this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
         } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else {
@@ -195,7 +193,7 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
             // Request the GET_ACCOUNTS permission via a user dialog
             EasyPermissions.requestPermissions(
                     this,
-                    "برای دریافت اطلاعات تقویم گوگل شما، لطفا دسترسی به اکانت خود را فراهم کنید",
+                    getResources().getString(R.string.provide_permission),
                     REQUEST_PERMISSION_GET_ACCOUNTS,
                     Manifest.permission.GET_ACCOUNTS);
         }
@@ -247,7 +245,7 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
 
             List<String> eventStrings = new ArrayList<String>();
             Events events = mService.events().list("primary")
-                    .setMaxResults(10)
+                    .setMaxResults(50)
                     .setTimeMin(today)
                     .setTimeMax(tonight)
                     .setOrderBy("startTime")
@@ -278,7 +276,7 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
         protected void onPostExecute(List<String> output) {
             mProgress.hide();
             if (output == null || output.size() == 0) {
-                txt_show_google_events.setText("شما در این روز ریدادی ندارید");
+                txt_show_google_events.setText(R.string.you_have_no_events_in_this_day);
             } else {
 
 //                output.add(0, "Data retrieved using the Google Calendar API:");
@@ -303,7 +301,7 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
                             + mLastError.getMessage());
                 }
             } else {
-                Toast.makeText(OnClickDialogActivity.this, "درخواست شما لغو شد.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OnClickDialogActivity.this, getResources().getString(R.string.your_request_cancelled), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -335,8 +333,8 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
         switch (requestCode) {
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
-                    Toast.makeText(OnClickDialogActivity.this, "این عمل برای اجرا نیاز به گوگل پلی سرویس دارد.لطفا گوگل پلی را نصب کنید و دوباره اپلیکیشن را اجرا کنید "
-                            , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OnClickDialogActivity.this, R.string.install_google_play_service
+                            , Toast.LENGTH_LONG).show();
                 } else {
                     getResultsFromApi();
                 }

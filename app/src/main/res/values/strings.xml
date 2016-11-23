@@ -1,9 +1,5 @@
 <resources>
     <string name="app_name">تقویم ایرانی</string>
-    <string name="btn_view_calendar">View Calendar</string>
-    <string name="btn_set_a_job">Set a Job</string>
-    <string name="btn_previous">قبل</string>
-    <string name="btn_next">بعد</string>
     <string name="saturday">شنبه</string>
     <string name="sunday">یکشنبه</string>
     <string name="monday">دوشنبه</string>
@@ -11,9 +7,16 @@
     <string name="wednesdays">چهارشنبه</string>
     <string name="thursday">پنجشنبه</string>
     <string name="friday">جمعه</string>
-    <string name="title_activity_app_widget">AppWidget</string>
+    <string name="title_activity_app_widget">ویجت</string>
     <string name="events_of_this_day">مناسبت های این روز :</string>
     <string name="set_a_work_to_do">کاری برای انجام در این روز تنظیم کنید</string>
-    <string name="no_events_today_google">رویدادهای شما.(نیازمند اتصال به تقویم گوگل)</string>
+    <string name="no_events_today_google">رویدادهای شما(نیازمند اتصال به تقویم گوگل)</string>
     <string name="google_calendar_events">رویدادهای تقویم گوگل :</string>
+    <string name="connecting_to_google_calendar">در حال اتصال به تقویم گوگل...</string>
+    <string name="no_internet_connection">دستگاه به اینترنت متصل نیست</string>
+    <string name="provide_permission">برای دریافت اطلاعات تقویم گوگل شما، لطفا دسترسی به اکانت خود را فراهم کنید</string>
+    <string name="you_have_no_events_today">شما امروز رویدادی ندارید!</string>
+    <string name="your_request_cancelled">درخواست شما لغو شد.</string>
+    <string name="you_have_no_events_in_this_day">شما در این روز رویدادی ندارید</string>
+    <string name="install_google_play_service">این عمل برای اجرا نیاز به گوگل پلی سرویس دارد.لطفا گوگل پلی را نصب کنید و دوباره اپلیکیشن را اجرا کنید</string>
 </resources>
