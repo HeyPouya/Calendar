@@ -3,15 +3,26 @@
     android:layout_height="72dp"
     android:layout_gravity="center"
     android:layout_margin="5dp"
-    android:background="@drawable/appwidget_dark_bg"
+    android:background="@drawable/widget_back_ground"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/layout_widget">
 
     <TextView
-        android:id="@+id/txt_widget_show_date"
+        android:id="@+id/txt_widget_show_persian_date"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_margin="2dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/txt_widget_show_miladi_date"
+        android:textSize="15sp"/>
+
 
 </LinearLayout>

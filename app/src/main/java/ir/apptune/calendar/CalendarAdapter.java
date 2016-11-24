@@ -2,6 +2,7 @@ package ir.apptune.calendar;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ class CalendarAdapter extends BaseAdapter {
         private void fill(int i, List<DateModel> dateModels) {
             txt_shamsi.setText(dateModels.get(i).getDay());
             txt_miladi.setText(dateModels.get(i).getgDay());
+            Log.d("LOGL",dateModels.get(i).gethDay()+"");
             ResourceUtils resourceUtils = new ResourceUtils(mContext);
             if (dateModels.get(i).getToday()) {
                 txt_shamsi.setTextColor(Color.parseColor("#ffffff"));

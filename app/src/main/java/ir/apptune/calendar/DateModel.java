@@ -12,6 +12,34 @@ class DateModel {
     private String dayofWeek;
     private String gDay;
     private String gMonth;
+    private String hYear;
+    private String hMonth;
+    private String hDay;
+
+    public String gethYear() {
+        return hYear;
+    }
+
+    public void sethYear(String hYear) {
+        this.hYear = hYear;
+    }
+
+    public String gethMonth() {
+        return hMonth;
+    }
+
+    public void sethMonth(String hMonth) {
+        this.hMonth = hMonth;
+    }
+
+    public String gethDay() {
+        return hDay;
+    }
+
+    public void sethDay(String hDay) {
+        this.hDay = hDay;
+    }
+
     private String gYear;
     private Boolean isToday;
 
@@ -97,13 +125,16 @@ class DateModel {
     }
 
 
-    public DateModel(String day, String month, String year, String dayofWeek, String gDay, String gMonth, String gYear, Boolean isToday) {
+    public DateModel(String day, String month, String year, String dayofWeek, String gDay, String gMonth, String hYear, String hMonth, String hDay, String gYear, Boolean isToday) {
         this.day = day;
         this.month = month;
         this.year = year;
         this.dayofWeek = dayofWeek;
         this.gDay = gDay;
         this.gMonth = gMonth;
+        this.hYear = hYear;
+        this.hMonth = hMonth;
+        this.hDay = hDay;
         this.gYear = gYear;
         this.isToday = isToday;
     }

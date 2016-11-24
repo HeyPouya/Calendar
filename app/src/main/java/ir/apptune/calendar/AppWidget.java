@@ -24,13 +24,15 @@ public class AppWidget extends AppWidgetProvider {
             Intent intent = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-            remoteViews.setOnClickPendingIntent(R.id.txt_widget_show_date, pendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.layout_widget, pendingIntent);
             CalendarTool calendar = new CalendarTool();
-            String s = calendar.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(calendar.getIranianDay() + "") + " " +
+            String ps = calendar.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(calendar.getIranianDay() + "") + " " +
                     PersianMonthName.getName(calendar.getIranianMonth()) + " " +
                     PersianNumberFormatHelper.toPersianNumber(calendar.getIranianYear() + "");
-
-            remoteViews.setTextViewText(R.id.txt_widget_show_date, s);
+            String ms = PersianNumberFormatHelper.toPersianNumber(calendar.getGregorianDay()+"") + " " + EnglishMonthName.getName(calendar.getGregorianMonth()) + " " +
+                        PersianNumberFormatHelper.toPersianNumber(calendar.getGregorianYear()+"");
+            remoteViews.setTextViewText(R.id.txt_widget_show_persian_date, ps);
+            remoteViews.setTextViewText(R.id.txt_widget_show_miladi_date,ms);
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 
 

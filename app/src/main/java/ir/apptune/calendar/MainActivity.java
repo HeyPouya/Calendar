@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     GoogleAccountCredential mCredential;
     ProgressDialog mProgress;
     TextView txtShowWork;
+    Calendar instanceOfCalendar;
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
         mProgress = new ProgressDialog(this);
+        instanceOfCalendar = Calendar.getInstance();
 
         /**
          * Check if phone has rotated, so show the month that user were looking at
@@ -131,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         txtShowToday.setText(STATE_OF_DAY);
         txtshowDate.setText(DAY + "");
+
         showCalendar();
         setNotificationAlarmManager(this);
         showNotification();
@@ -207,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         } catch (Exception ex) {
             // Ignore
         }
+
 
         //End of onCreate
 
@@ -394,6 +398,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         dateModel.setMonth("-");
         dateModel.setYear("-");
         dateModel.setDayofWeek("-");
+        dateModel.sethDay("-");
         dateModel.setToday(false);
         dateModels.add(dateModel);
 

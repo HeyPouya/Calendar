@@ -24,7 +24,7 @@ public class NotificationActivity extends BroadcastReceiver {
                 .setContentTitle(cTool.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getIranianDay() + "")
                         + " " + PersianMonthName.getName(cTool.getIranianMonth()) + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getIranianYear() + ""))
                 .setContentText(PersianNumberFormatHelper.toPersianNumber(cTool.getGregorianDay() + "") + " " + EnglishMonthName.getName(cTool.getGregorianMonth()) + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getGregorianYear() + ""))
-                .setSmallIcon(R.mipmap.icon)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pIntent)
                 .setAutoCancel(false)
                 .setOngoing(true)
