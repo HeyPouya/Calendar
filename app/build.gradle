@@ -41,4 +41,5 @@ dependencies {
     compile('com.google.apis:google-api-services-calendar:v3-rev225-1.22.0') {
         exclude group: 'org.apache.httpcomponents'
     }
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }
