@@ -100,6 +100,18 @@ public class SetJobToDoActivity extends AppCompatActivity {
                     Toast.makeText(SetJobToDoActivity.this, R.string.please_fill_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (Integer.parseInt(startH)<10){
+                    startH= "0"+ startH;
+                }
+                if (Integer.parseInt(startM)<10){
+                    startM="0"+startM;
+                }
+                if (Integer.parseInt(endH)<10){
+                   endH = "0" + endH;
+                }
+                if (Integer.parseInt(endM)<10){
+                    endM = "0" + endM;
+                }
 
                 if (Integer.parseInt(startH) > 24 || Integer.parseInt(startM) > 60 || Integer.parseInt(endH) > 24 || Integer.parseInt(endM) > 60) {
                     Toast.makeText(SetJobToDoActivity.this, R.string.please_insert_correct_time, Toast.LENGTH_SHORT).show();
