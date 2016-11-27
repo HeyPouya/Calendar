@@ -11,7 +11,7 @@ import android.support.v7.app.NotificationCompat;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
- * Shows Date Notification.
+ * Shows Date Sticky Notification that contains Today's data..
  */
 
 public class NotificationActivity extends BroadcastReceiver {

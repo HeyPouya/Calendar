@@ -9,7 +9,9 @@ import com.loopj.android.http.SyncHttpClient;
 import cz.msebera.android.httpclient.Header;
 
 /**
- * Created by Pouya on 24/11/2016.
+ * This class connects to the Internet and sends the event data that user has created inside app
+ * to google calendar webServers. it returns true if the response in successful or false in failure
+ * situation
  */
 
 class CallingGoogleWebservice {

@@ -153,18 +153,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 if (accountName != null) {
                     intent.putExtra("accountName", accountName);
                 }
-
                 startActivity(intent);
-
-//                Calendar cal = Calendar.getInstance();
-//                Intent intent = new Intent(Intent.ACTION_EDIT);
-//                intent.setType("vnd.android.cursor.item/event");
-//                intent.putExtra("beginTime", cal.getTimeInMillis());
-//                intent.putExtra("allDay", true);
-//                intent.putExtra("rrule", "FREQ=YEARLY");
-//                intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
-//                intent.putExtra("title", "A Test Event from android app");
-//                startActivity(intent);
             }
         });
 
@@ -189,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         String accountName = getPreferences(Context.MODE_PRIVATE)
                 .getString(PREF_ACCOUNT_NAME, null);
         /**
-         *  Check if user has loged in to his Google account or not
+         *  Check if user has logged in to his Google account or not
          */
 
         if (accountName != null) {
@@ -398,7 +387,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         dateModel.setMonth("-");
         dateModel.setYear("-");
         dateModel.setDayofWeek("-");
-        dateModel.sethDay("-");
         dateModel.setToday(false);
         dateModels.add(dateModel);
 

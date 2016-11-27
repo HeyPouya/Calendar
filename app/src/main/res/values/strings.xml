@@ -39,4 +39,5 @@
     <string name="event_has_set_successfully">رویداد با موفقیت تنظیم شد.</string>
     <string name="harcoding_date_string">:00+03:30</string>
     <string name="all_day">تمام روز</string>
+    <string name="please_login_from_main_page">لطفا ابتدا از صفحه ی اصلی به تقویم گوگل خود متصل شوید</string>
 </resources>

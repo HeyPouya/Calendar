@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * This Adapter sets data of calendar on the main page.
+ * This Adapter sets data of calendar on the main page gridView.
  */
 
 class CalendarAdapter extends BaseAdapter {
@@ -56,8 +56,9 @@ class CalendarAdapter extends BaseAdapter {
         private void fill(int i, List<DateModel> dateModels) {
             txt_shamsi.setText(dateModels.get(i).getDay());
             txt_miladi.setText(dateModels.get(i).getgDay());
-            Log.d("LOGL",dateModels.get(i).gethDay()+"");
             ResourceUtils resourceUtils = new ResourceUtils(mContext);
+
+            //Changes Today Background
             if (dateModels.get(i).getToday()) {
                 txt_shamsi.setTextColor(Color.parseColor("#ffffff"));
                 txt_miladi.setTextColor(Color.parseColor("#ffffff"));
@@ -68,6 +69,7 @@ class CalendarAdapter extends BaseAdapter {
                 layout_days.setBackgroundColor(Color.parseColor("#ffffff"));
             }
 
+            //Changes color of holidays to RedPink
             if (dateModels.get(i).getDay() != "-") {
                 int persianTemp = Integer.parseInt(dateModels.get(i).getMonth()) * 100;
                 persianTemp += Integer.parseInt(dateModels.get(i).getDay());

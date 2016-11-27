@@ -28,6 +28,10 @@ import com.google.api.services.calendar.model.EventReminder;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * This class gets event data from user and sets the data in His google calendar.
+ */
+
 public class SetJobToDoActivity extends AppCompatActivity {
     GoogleAccountCredential mCredential;
     private static final String[] SCOPES = {CalendarScopes.CALENDAR};
@@ -81,7 +85,7 @@ public class SetJobToDoActivity extends AppCompatActivity {
         if (accountName != null) {
             mCredential.setSelectedAccountName(accountName);
         } else {
-            Toast.makeText(this, "لطفا ابتدا از صفحه ی اصلی به تقویم گوگل خود متصل شوید", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.please_login_from_main_page, Toast.LENGTH_LONG).show();
             finish();
         }
 

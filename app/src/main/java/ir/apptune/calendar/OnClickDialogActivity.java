@@ -52,7 +52,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * The activity that shows when user clicks on days, in calendar
+ * The activity that Pops-Up when user clicks on days, in MainPage calendar.
  */
 
 public class OnClickDialogActivity extends Activity implements EasyPermissions.PermissionCallbacks {
@@ -151,6 +151,22 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
         });
 
     }
+
+    /**
+     * This will reload the task page when the user comes back from setting event Page
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (accountName1 != null) {
+            mCredential.setSelectedAccountName(accountName1);
+            getResultsFromApi();
+        }
+    }
+
+    /**
+     * The rest are google calendar stuff:
+     */
 
 
     private void getResultsFromApi() {

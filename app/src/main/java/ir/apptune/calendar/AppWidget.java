@@ -29,10 +29,10 @@ public class AppWidget extends AppWidgetProvider {
             String ps = calendar.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(calendar.getIranianDay() + "") + " " +
                     PersianMonthName.getName(calendar.getIranianMonth()) + " " +
                     PersianNumberFormatHelper.toPersianNumber(calendar.getIranianYear() + "");
-            String ms = PersianNumberFormatHelper.toPersianNumber(calendar.getGregorianDay()+"") + " " + EnglishMonthName.getName(calendar.getGregorianMonth()) + " " +
-                        PersianNumberFormatHelper.toPersianNumber(calendar.getGregorianYear()+"");
+            String ms = PersianNumberFormatHelper.toPersianNumber(calendar.getGregorianDay() + "") + " " + EnglishMonthName.getName(calendar.getGregorianMonth()) + " " +
+                    PersianNumberFormatHelper.toPersianNumber(calendar.getGregorianYear() + "");
             remoteViews.setTextViewText(R.id.txt_widget_show_persian_date, ps);
-            remoteViews.setTextViewText(R.id.txt_widget_show_miladi_date,ms);
+            remoteViews.setTextViewText(R.id.txt_widget_show_miladi_date, ms);
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 
 

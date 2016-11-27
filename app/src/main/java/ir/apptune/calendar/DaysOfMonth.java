@@ -3,7 +3,8 @@ package ir.apptune.calendar;
 import android.content.Context;
 
 /**
- * Calculates the displaying month, contains how many days.
+ * Calculates how many days are included in displaying month.
+ * 29 or 30 or 31
  */
 
 class DaysOfMonth {

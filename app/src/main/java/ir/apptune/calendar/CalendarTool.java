@@ -1,52 +1,21 @@
 package ir.apptune.calendar;
 
 /**
- * Created by info on 9/30/2016.
+ * The Class THat converts Gregorian calendar to Shamsi calendar
  */
 
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * Title: Calender Conversion class
- * Description: Convert Iranian (Jalali), Julian, and Gregorian dates to
- * each other
- * Public Methods Summary:
- * -----------------------
- * JavaSource_Calendar();
- * JavaSource_Calendar(int year, int month, int day);
- * int getIranianYear();
- * int getIranianMonth();
- * int getIranianDay();
- * int getGregorianYear();
- * int getGregorianMonth();
- * int getGregorianDay();
- * int getJulianYear();
- * int getJulianMonth();
- * int getJulianDay();
- * String getIranianDate();
- * String getGregorianDate();
- * String getJulianDate();
- * String getWeekDayStr();
- * String toString();
- * int getDayofWeek();
- * void nextDay();
- * void nextDay(int days);
- * void previousDay();
- * void previousDay(int days);
- * void setIranianDate(int year, int month, int day);
- * void setGregorianDate(int year, int month, int day);
- * void setJulianDate(int year, int month, int day);
- */
-public class CalendarTool {
+class CalendarTool {
 
     /**
      * JavaSource_Calendar:
      * The default constructor uses the current Gregorian date to initialize the
      * other private memebers of the class (Iranian and Julian dates).
      */
-    public CalendarTool() {
+    CalendarTool() {
         Calendar calendar = new GregorianCalendar();
         setGregorianDate(calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH) + 1,
@@ -73,7 +42,7 @@ public class CalendarTool {
      *
      * @return int
      */
-    public int getIranianYear() {
+    int getIranianYear() {
         return irYear;
     }
 
@@ -83,7 +52,7 @@ public class CalendarTool {
      *
      * @return int
      */
-    public int getIranianMonth() {
+    int getIranianMonth() {
         return irMonth;
     }
 
@@ -93,7 +62,7 @@ public class CalendarTool {
      *
      * @return int
      */
-    public int getIranianDay() {
+    int getIranianDay() {
         return irDay;
     }
 
@@ -103,7 +72,7 @@ public class CalendarTool {
      *
      * @return int
      */
-    public int getGregorianYear() {
+    int getGregorianYear() {
         return gYear;
     }
 
@@ -113,7 +82,7 @@ public class CalendarTool {
      *
      * @return int
      */
-    public int getGregorianMonth() {
+    int getGregorianMonth() {
         return gMonth;
     }
 
@@ -123,7 +92,7 @@ public class CalendarTool {
      *
      * @return int
      */
-    public int getGregorianDay() {
+    int getGregorianDay() {
         return gDay;
     }
 
@@ -163,7 +132,7 @@ public class CalendarTool {
      *
      * @return String
      */
-    public String getIranianDate() {
+    private String getIranianDate() {
         return (irYear + "/" + irMonth + "/" + irDay);
     }
 
@@ -181,7 +150,7 @@ public class CalendarTool {
      *
      * @return String
      */
-    public String getGregorianDate() {
+    private String getGregorianDate() {
         return (gYear + "/" + gMonth + "/" + gDay);
     }
 
@@ -191,7 +160,7 @@ public class CalendarTool {
      *
      * @return String
      */
-    public String getJulianDate() {
+    private String getJulianDate() {
         return (juYear + "/" + juMonth + "/" + juDay);
     }
 
@@ -201,7 +170,7 @@ public class CalendarTool {
      *
      * @return String
      */
-    public String getWeekDayStr() {
+    String getWeekDayStr() {
         String weekDayStr[] = {
                 "دوشنبه",
                 "سه شنبه",
@@ -233,7 +202,7 @@ public class CalendarTool {
      *
      * @return int
      */
-    public int getDayOfWeek() {
+    int getDayOfWeek() {
         return (JDN % 7);
     }
 
@@ -295,7 +264,7 @@ public class CalendarTool {
      * @param month int
      * @param day   int
      */
-    public void setIranianDate(int year, int month, int day) {
+    void setIranianDate(int year, int month, int day) {
         irYear = year;
         irMonth = month;
         irDay = day;
@@ -313,7 +282,7 @@ public class CalendarTool {
      * @param month int
      * @param day   int
      */
-    public void setGregorianDate(int year, int month, int day) {
+    private void setGregorianDate(int year, int month, int day) {
         gYear = year;
         gMonth = month;
         gDay = day;
