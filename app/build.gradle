@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'Calendar'
             keyPassword 'P0uy@147'
-            storeFile file('C:/Users/Pouya/CalendarKeyStore.jks')
+            storeFile file('./CalendarKeyStore.jks')
             storePassword 'P0uy@147'
         }
     }
