@@ -100,16 +100,16 @@ public class SetJobToDoActivity extends AppCompatActivity {
                     Toast.makeText(SetJobToDoActivity.this, R.string.please_fill_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (Integer.parseInt(startH)<10){
-                    startH= "0"+ startH;
+                if (Integer.parseInt(startH) < 10 && !startH.contains("0")) {
+                    startH = "0" + startH;
                 }
-                if (Integer.parseInt(startM)<10){
-                    startM="0"+startM;
+                if (Integer.parseInt(startM) < 10 && !startM.contains("0")) {
+                    startM = "0" + startM;
                 }
-                if (Integer.parseInt(endH)<10){
-                   endH = "0" + endH;
+                if (Integer.parseInt(endH) < 10 && !endH.contains("0")) {
+                    endH = "0" + endH;
                 }
-                if (Integer.parseInt(endM)<10){
+                if (Integer.parseInt(endM) < 10 && !endM.contains("0")) {
                     endM = "0" + endM;
                 }
 
@@ -149,13 +149,13 @@ public class SetJobToDoActivity extends AppCompatActivity {
                                 .setLocation(location)
                                 .setDescription(summary);
 
-                        DateTime startDateTime = new DateTime(gYear + "-" + gMonth + "-" + gDay + "T" + startH + ":" + startM + ":00+03:30");
+                        DateTime startDateTime = new DateTime(gYear + "-" + gMonth + "-" + gDay + "T" + startH + ":" + startM + getString(R.string.harcoding_date_string));
                         EventDateTime start = new EventDateTime()
                                 .setDateTime(startDateTime)
                                 .setTimeZone("Asia/Tehran");
                         event.setStart(start);
 
-                        DateTime endDateTime = new DateTime(gYear + "-" + gMonth + "-" + gDay + "T" + endH + ":" + endM + ":00+03:30");
+                        DateTime endDateTime = new DateTime(gYear + "-" + gMonth + "-" + gDay + "T" + endH + ":" + endM + getString(R.string.harcoding_date_string));
                         EventDateTime end = new EventDateTime()
                                 .setDateTime(endDateTime)
                                 .setTimeZone("Asia/Tehran");

@@ -37,4 +37,6 @@
     <string name="start_time_cannot_be_greater_than_end_time">ساعت شروع نمیتواند از ساعت پایان بیشتر باشد</string>
     <string name="some_thing_happend_try_again">متاسفانه مشکلی رخ داد، لطفا دوباره تلاش کنید.</string>
     <string name="event_has_set_successfully">رویداد با موفقیت تنظیم شد.</string>
+    <string name="harcoding_date_string">:00+03:30</string>
+    <string name="all_day">تمام روز</string>
 </resources>

@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TimeUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -39,8 +40,12 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -107,14 +112,14 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
         int gregorianTemp = calendarTool.getGregorianMonth() * 100 + calendarTool.getGregorianDay();
         String s = "";
         String g = "";
-        if (eventCalendar.eventP.containsKey(persianTemp))
-            s = eventCalendar.eventP.get(persianTemp);
+        if (ResourceUtils.eventP.containsKey(persianTemp))
+            s = ResourceUtils.eventP.get(persianTemp);
 
-        if (eventCalendar.eventG.containsKey(gregorianTemp))
-            g = eventCalendar.eventG.get(gregorianTemp);
+        if (ResourceUtils.eventG.containsKey(gregorianTemp))
+            g = ResourceUtils.eventG.get(gregorianTemp);
 
         txtShowEvents.setText(s + "\n" + g);
-        if (calendarTool.getDayOfWeek() == 4 || eventCalendar.vacationP.containsKey(persianTemp)) {
+        if (calendarTool.getDayOfWeek() == 4 || ResourceUtils.vacationP.containsKey(persianTemp)) {
             layoutShowDayColor.setBackgroundColor(Color.parseColor("#FF4081"));
         }
 
@@ -131,21 +136,21 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
         btnInsertJobToCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Intent intent1 = new Intent(OnClickDialogActivity.this,SetJobToDoActivity.class);
-                if (calendarTool.getGregorianDay()<10){
-                    day ="0" + calendarTool.getGregorianDay();
+                Intent intent1 = new Intent(OnClickDialogActivity.this, SetJobToDoActivity.class);
+                if (calendarTool.getGregorianDay() < 10) {
+                    day = "0" + calendarTool.getGregorianDay();
+                } else {
+                    day = calendarTool.getGregorianDay() + "";
                 }
-                else
-                {day = calendarTool.getGregorianDay()+"";}
-                intent1.putExtra("gDay",day);
-                intent1.putExtra("gMonth",calendarTool.getGregorianMonth());
-                intent1.putExtra("gYear",calendarTool.getGregorianYear());
-                intent1.putExtra("accountName",accountName1);
+                intent1.putExtra("gDay", day);
+                intent1.putExtra("gMonth", calendarTool.getGregorianMonth());
+                intent1.putExtra("gYear", calendarTool.getGregorianYear());
+                intent1.putExtra("accountName", accountName1);
                 startActivity(intent1);
             }
-            });
+        });
 
-        }
+    }
 
 
     private void getResultsFromApi() {
@@ -271,18 +276,41 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
                     .setTimeMax(tonight)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
+                    .setTimeZone("Asia/Tehran")
                     .execute();
             List<Event> items = events.getItems();
 
             for (Event event : items) {
+
                 DateTime start = event.getStart().getDateTime();
+                DateTime end = event.getEnd().getDateTime();
+                String dateToString = start + "";
+                String dateToString1 = end + "";
+
+                Calendar calS = Calendar.getInstance();
+                SimpleDateFormat sdfS = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+                Calendar calE = Calendar.getInstance();
+                SimpleDateFormat sdfE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+                try {
+                    calS.setTime(sdfS.parse(dateToString));
+                    calE.setTime(sdfE.parse(dateToString1));
+                    dateToString = "از" + " " + calS.get(Calendar.HOUR_OF_DAY) + "" + ":" + calS.get(Calendar.MINUTE) + ":" + "00" + " " +
+                            "تا" + " " + calE.get(Calendar.HOUR_OF_DAY) + "" + ":" + calE.get(Calendar.MINUTE) + ":" + "00";
+
+                } catch (ParseException e) {
+
+                }
+
                 if (start == null) {
                     // All-day events don't have start times, so just use
                     // the start date.
-                    start = event.getStart().getDate();
+                    dateToString = getString(R.string.all_day);
                 }
                 eventStrings.add(
-                        String.format("%s (%s)", event.getSummary(), start));
+                        //String.format("%s (%s)", event.getSummary(), start)
+                        event.getSummary() + " :" + "\n" + "(" + dateToString + ")");
             }
             return eventStrings;
         }
@@ -384,4 +412,4 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
         }
     }
 
- }
+}

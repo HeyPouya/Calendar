@@ -1,15 +1,10 @@
 package ir.apptune.calendar;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
-
-import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -18,7 +13,7 @@ import cz.msebera.android.httpclient.Header;
  */
 
 class CallingGoogleWebservice {
-    static Boolean result;
+    private static Boolean result;
 
     static Boolean getUrl(String url, final Context mContext) {
         AsyncHttpClient client = new SyncHttpClient();

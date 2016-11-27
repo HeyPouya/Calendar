@@ -15,3 +15,22 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class com.google.** { *;}
+-keep interface com.google.** { *;}
+-dontwarn com.google.**
+-keep class cz.msebera.android.httpclient.** { *; }
+-keep class com.loopj.android.http.** { *; }
+-keepattributes EnclosingMethod
+-dontwarn sun.misc.Unsafe
+-dontwarn com.google.common.collect.MinMaxPriorityQueue
+-keepattributes *Annotation*,Signature
+-keep class * extends com.google.api.client.json.GenericJson {
+*;
+}
+-keep class com.google.api.services.drive.** {
+*;
+}
+-optimizationpasses 3
+-overloadaggressively
+-repackageclasses ''
+-allowaccessmodification
