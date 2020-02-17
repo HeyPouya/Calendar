@@ -30,6 +30,9 @@
 -keep class com.google.api.services.drive.** {
 *;
 }
+-keep public class ir.adad.client.** {
+   *;
+}
 -optimizationpasses 3
 -overloadaggressively
 -repackageclasses ''

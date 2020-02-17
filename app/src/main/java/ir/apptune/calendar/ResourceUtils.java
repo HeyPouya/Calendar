@@ -14,14 +14,16 @@ import java.util.HashMap;
  * please look at xml folder
  */
 
-final class ResourceUtils {
+public final class ResourceUtils {
     private final static String XCalendarH = "ObservedHijriCalendar";
     private final static String XCalendarG = "GregorianCalendar";
     private final static String XCalendarP = "PersianCalendar";
     static HashMap<Integer, String> eventG, eventH, eventP;
-    static HashMap<Integer, Boolean> vacationG, vacationH, vacationP;
+    static HashMap<Integer, Boolean> vacationG;
+    static HashMap<Integer, Boolean> vacationH;
+    public static HashMap<Integer, Boolean> vacationP;
 
-    ResourceUtils(Context c) {
+    public ResourceUtils(Context c) {
         eventP = new HashMap<Integer, String>();
         eventH = new HashMap<Integer, String>();
         eventG = new HashMap<Integer, String>();

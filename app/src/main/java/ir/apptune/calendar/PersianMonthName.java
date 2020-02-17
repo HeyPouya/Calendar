@@ -4,59 +4,35 @@ package ir.apptune.calendar;
  * Converts MonthNumber to Its Persian Name
  */
 
-class PersianMonthName {
-    static String getName(int monthNumber) {
-        String result = "";
+public class PersianMonthName {
+    public static String getName(int monthNumber) {
         switch (monthNumber) {
             case 1:
-                result = "فروردین";
-                break;
+                return "فروردین";
             case 2:
-                result = "اردیبهشت";
-                break;
-
+                return "اردیبهشت";
             case 3:
-                result = "خرداد";
-                break;
-
+                return "خرداد";
             case 4:
-                result = "تیر";
-                break;
-
+                return "تیر";
             case 5:
-                result = "مرداد";
-                break;
-
+                return "مرداد";
             case 6:
-                result = "شهریور";
-                break;
-
+                return "شهریور";
             case 7:
-                result = "مهر";
-                break;
-
+                return "مهر";
             case 8:
-                result = "آبان";
-                break;
-
+                return "آبان";
             case 9:
-                result = "آذر";
-                break;
-
+                return "آذر";
             case 10:
-                result = "دی";
-                break;
-
+                return "دی";
             case 11:
-                result = "بهمن";
-                break;
-
+                return "بهمن";
             case 12:
-                result = "اسفند";
-                break;
-
+                return "اسفند";
         }
-        return result;
+        return "";
 
     }
 }

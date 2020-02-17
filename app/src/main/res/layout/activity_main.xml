@@ -1,54 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="ir.apptune.calendar.MainActivity">
+    tools:context="ir.apptune.calendar.MainActivity"
+    android:layout_gravity="center"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+            <include layout="@layout/toolbar_layout"
+                android:id="@+id/toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+
+
+
+        <ir.adad.client.Banner
+            android:id="@+id/banner_ad_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical">
+            android:layout_marginBottom="10dp" />
 
-            <ir.apptune.calendar.PersianTextView
-                android:id="@+id/txt_show_today"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|top"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
-
-            <ir.apptune.calendar.PersianTextView
-                android:id="@+id/txt_show_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="60sp" />
-
-            <ir.apptune.calendar.PersianTextView
-                android:id="@+id/txt_show_work"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="@string/no_events_today_google"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +55,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ir.apptune.calendar.PersianTextView
+                <ir.apptune.calendar.customViews.PersianTextView
                     android:id="@+id/txt_month_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,7 +64,7 @@
                     android:textColor="#7B7284"
                     android:textSize="40sp" />
 
-                <ir.apptune.calendar.PersianTextView
+                <ir.apptune.calendar.customViews.PersianTextView
                     android:id="@+id/txt_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="1dp">
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -119,7 +102,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -129,7 +112,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -139,7 +122,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -149,7 +132,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -159,7 +142,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -169,7 +152,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -182,17 +165,13 @@
         </LinearLayout>
 
 
-        <GridView
-            android:id="@+id/grid_view"
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:gravity="center"
-            android:numColumns="7">
-
-        </GridView>
+            android:id="@+id/grid_view"/>
+    </LinearLayout>
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

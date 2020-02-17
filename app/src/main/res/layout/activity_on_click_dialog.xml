@@ -5,14 +5,20 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:minHeight="?android:attr/actionBarSize"
+        android:elevation="5dp"
+        android:background="@color/colorPrimary">
     <LinearLayout
         android:id="@+id/layout_show_day_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
-        <ir.apptune.calendar.PersianTextView
+        <ir.apptune.calendar.customViews.PersianTextView
             android:id="@+id/txt_show_persian_date_on_click"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +28,7 @@
             android:textColor="@color/white"
             android:textSize="30sp" />
 
-        <ir.apptune.calendar.PersianTextView
+        <ir.apptune.calendar.customViews.PersianTextView
             android:id="@+id/txt_show_gregorian_date_on_click"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,6 +38,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
     </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,7 +50,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -51,7 +58,7 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="15sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:id="@+id/txt_show_events"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,7 +67,7 @@
                 android:gravity="right"
                 android:textSize="18sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -68,7 +75,7 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="15sp" />
 
-            <ir.apptune.calendar.PersianTextView
+            <ir.apptune.calendar.customViews.PersianTextView
                 android:id="@+id/txt_show_google_events"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -9,18 +9,17 @@ import android.content.Context;
 
 class DaysOfMonth {
     static int getCount(int thisMonth, int thisYear, Context context) {
-        int number = 0;
         if (thisMonth <= 6) {
-            number = 31;
+            return 31;
         } else if (thisMonth > 6 && thisMonth < 12) {
-            number = 30;
+            return 30;
         } else if (thisMonth == 12 && CalculateLeapYear.isLeapYear(thisYear, context)) {
-            number = 30;
+            return 30;
         } else if (thisMonth == 12 && !CalculateLeapYear.isLeapYear(thisYear, context)) {
-            number = 29;
+            return 29;
         }
 
-        return number;
+        return 0;
 
     }
 }

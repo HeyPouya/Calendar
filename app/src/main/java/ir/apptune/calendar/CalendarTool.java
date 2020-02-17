@@ -8,14 +8,14 @@ package ir.apptune.calendar;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-class CalendarTool {
+public class CalendarTool {
 
     /**
      * JavaSource_Calendar:
      * The default constructor uses the current Gregorian date to initialize the
      * other private memebers of the class (Iranian and Julian dates).
      */
-    CalendarTool() {
+    public CalendarTool() {
         Calendar calendar = new GregorianCalendar();
         setGregorianDate(calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH) + 1,
@@ -42,7 +42,7 @@ class CalendarTool {
      *
      * @return int
      */
-    int getIranianYear() {
+    public int getIranianYear() {
         return irYear;
     }
 
@@ -52,7 +52,7 @@ class CalendarTool {
      *
      * @return int
      */
-    int getIranianMonth() {
+    public int getIranianMonth() {
         return irMonth;
     }
 
@@ -62,7 +62,7 @@ class CalendarTool {
      *
      * @return int
      */
-    int getIranianDay() {
+    public int getIranianDay() {
         return irDay;
     }
 
@@ -72,7 +72,7 @@ class CalendarTool {
      *
      * @return int
      */
-    int getGregorianYear() {
+    public int getGregorianYear() {
         return gYear;
     }
 
@@ -82,7 +82,7 @@ class CalendarTool {
      *
      * @return int
      */
-    int getGregorianMonth() {
+    public int getGregorianMonth() {
         return gMonth;
     }
 
@@ -92,7 +92,7 @@ class CalendarTool {
      *
      * @return int
      */
-    int getGregorianDay() {
+    public int getGregorianDay() {
         return gDay;
     }
 
@@ -170,7 +170,7 @@ class CalendarTool {
      *
      * @return String
      */
-    String getWeekDayStr() {
+    public String getWeekDayStr() {
         String weekDayStr[] = {
                 "دوشنبه",
                 "سه شنبه",

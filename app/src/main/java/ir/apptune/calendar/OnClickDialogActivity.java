@@ -2,21 +2,24 @@ package ir.apptune.calendar;
 
 import android.Manifest;
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.transition.Fade;
 import android.util.Log;
-import android.util.TimeUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -45,9 +48,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -55,36 +59,51 @@ import pub.devrel.easypermissions.EasyPermissions;
  * The activity that Pops-Up when user clicks on days, in MainPage calendar.
  */
 
-public class OnClickDialogActivity extends Activity implements EasyPermissions.PermissionCallbacks {
+public class OnClickDialogActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+    @BindView(R.id.txt_show_persian_date_on_click)
     TextView txtShowPersianDateOnclick;
+    @BindView(R.id.txt_show_gregorian_date_on_click)
     TextView txtShowGregorianDateOnclick;
+    @BindView(R.id.txt_show_events)
     TextView txtShowEvents;
+    @BindView(R.id.layout_show_day_color)
     LinearLayout layoutShowDayColor;
+    @BindView(R.id.txt_show_google_events)
+    TextView txt_show_google_events;
+    @BindView(R.id.btn_insert_job_to_calendar)
+    Button btnInsertJobToCalendar;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     GoogleAccountCredential mCredential;
     ProgressDialog mProgress;
     CalendarTool calendarTool;
-    TextView txt_show_google_events;
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {CalendarScopes.CALENDAR};
-    Button btnInsertJobToCalendar;
     String day;
     String accountName1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         setContentView(R.layout.activity_on_click_dialog);
-        txtShowPersianDateOnclick = (TextView) findViewById(R.id.txt_show_persian_date_on_click);
-        txtShowGregorianDateOnclick = (TextView) findViewById(R.id.txt_show_gregorian_date_on_click);
-        txtShowEvents = (TextView) findViewById(R.id.txt_show_events);
-        layoutShowDayColor = (LinearLayout) findViewById(R.id.layout_show_day_color);
-        txt_show_google_events = (TextView) findViewById(R.id.txt_show_google_events);
-        btnInsertJobToCalendar = (Button) findViewById(R.id.btn_insert_job_to_calendar);
+        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+        setFinishOnTouchOutside(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Fade explode = new Fade();
+            explode.setDuration(500);
+            getWindow().setEnterTransition(explode);
+        }
+
+
 
         final Intent intent = getIntent();
         String irDay = intent.getStringExtra("IranianDay");
@@ -120,7 +139,7 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
 
         txtShowEvents.setText(s + "\n" + g);
         if (calendarTool.getDayOfWeek() == 4 || ResourceUtils.vacationP.containsKey(persianTemp)) {
-            layoutShowDayColor.setBackgroundColor(Color.parseColor("#FF4081"));
+            toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.colorAccent));
         }
 
         mCredential = GoogleAccountCredential.usingOAuth2(
@@ -245,7 +264,7 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
         private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
 
-        public MakeRequestTask(GoogleAccountCredential credential) {
+        MakeRequestTask(GoogleAccountCredential credential) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.calendar.Calendar.Builder(
@@ -426,6 +445,25 @@ public class OnClickDialogActivity extends Activity implements EasyPermissions.P
                 }
                 break;
         }
+
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        ActivityCompat.finishAfterTransition(this);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        ActivityCompat.finishAfterTransition(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ActivityCompat.finishAfterTransition(this);
+        if (mProgress != null)
+            mProgress.dismiss();
+        super.onDestroy();
+    }
 }

@@ -4,19 +4,17 @@ package ir.apptune.calendar;
  * Turns english numbers to Persian One.
  */
 
-class PersianNumberFormatHelper {
+public class PersianNumberFormatHelper {
     private static String[] persianNumbers = new String[]{"۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"};
 
-    static String toPersianNumber(String text) {
+    public static String toPersianNumber(String text) {
         if (text.isEmpty())
             return "";
         String out = "";
-        int length = text.length();
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             if ('0' <= c && c <= '9') {
-                int number = Integer.parseInt(String.valueOf(c));
-                out += persianNumbers[number];
+                out += persianNumbers[Integer.parseInt(String.valueOf(c))];
             } else if (c == '٫') {
                 out += '،';
             } else {

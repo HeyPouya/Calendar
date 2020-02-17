@@ -16,15 +16,19 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +55,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import ir.adad.client.Adad;
+import ir.apptune.calendar.notification.NotificationActivity;
+import ir.apptune.calendar.adapters.CalendarMainAdapter;
+import ir.apptune.calendar.models.DateModel;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -59,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     /**
      * Declare all variables here :
      */
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     int numberOfDays; // How many days a month has
     CalendarTool cTool; // An instance of CalendarTool Class that converts Garegorian Date to Persian Date
     int thisMonth = 0; // The int number of current Month that application refers to. ex : 8 For Aban
@@ -68,17 +80,26 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     static int YEAR = 0; //Always carries The YEAR that we are in.
     static String STATE_OF_DAY;
     List<DateModel> dateModels;
-    GridView gridView;
+    @BindView(R.id.txt_month_name)
     TextView txtMonthName;
+    @BindView(R.id.txt_show_today)
     TextView txtShowToday;
+    @BindView(R.id.txt_show_date)
     TextView txtshowDate;
+    @BindView(R.id.btn_previous)
     Button btn_previous;
+    @BindView(R.id.btn_next)
     Button btn_next;
+    @BindView(R.id.txt_year)
     TextView txtYear;
+    @BindView(R.id.grid_view)
+    RecyclerView gridView;
+    @BindView(R.id.txt_show_work)
+    TextView txtShowWork;
     GoogleAccountCredential mCredential;
     ProgressDialog mProgress;
-    TextView txtShowWork;
     Calendar instanceOfCalendar;
+    CalendarMainAdapter adapter;
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
@@ -91,28 +112,25 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        Adad.initialize(getApplicationContext());
         /**
          Instantiate all variables Here :
          */
         dateModels = new ArrayList<>();
+        adapter = new CalendarMainAdapter(this, dateModels);
         cTool = new CalendarTool();
-        txtMonthName = (TextView) findViewById(R.id.txt_month_name);
-        txtShowToday = (TextView) findViewById(R.id.txt_show_today);
-        txtshowDate = (TextView) findViewById(R.id.txt_show_date);
-        txtYear = (TextView) findViewById(R.id.txt_year);
-        gridView = (GridView) findViewById(R.id.grid_view);
-        btn_next = (Button) findViewById(R.id.btn_next);
-        btn_previous = (Button) findViewById(R.id.btn_previous);
         DAY = cTool.getIranianDay();
         MONTH = cTool.getIranianMonth();
         YEAR = cTool.getIranianYear();
         STATE_OF_DAY = cTool.getWeekDayStr();
-        txtShowWork = (TextView) findViewById(R.id.txt_show_work);
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
         mProgress = new ProgressDialog(this);
         instanceOfCalendar = Calendar.getInstance();
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
 
         /**
          * Check if phone has rotated, so show the month that user were looking at
@@ -133,29 +151,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         txtShowToday.setText(STATE_OF_DAY);
         txtshowDate.setText(DAY + "");
-
         showCalendar();
+        gridView.setAdapter(adapter);
+        gridView.setLayoutManager(new GridLayoutManager(this, 7));
         setNotificationAlarmManager(this);
         showNotification();
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (dateModels.get(i).getDay() == "-")
-                    return;
-                Intent intent = new Intent(MainActivity.this, OnClickDialogActivity.class);
-                intent.putExtra("IranianDay", dateModels.get(i).getDay());
-                intent.putExtra("IranianMonth", dateModels.get(i).getMonth());
-                intent.putExtra("IranianYear", dateModels.get(i).getYear());
-                String accountName = getPreferences(Context.MODE_PRIVATE)
-                        .getString(PREF_ACCOUNT_NAME, null);
-
-                if (accountName != null) {
-                    intent.putExtra("accountName", accountName);
-                }
-                startActivity(intent);
-            }
-        });
 
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,6 +199,33 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         } catch (Exception ex) {
             // Ignore
         }
+
+        gridView.addOnItemTouchListener(new RecyclerTouchListener(this, gridView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                if (dateModels.get(position).getDay() == "-")
+                    return;
+
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this);
+                Intent intent = new Intent(MainActivity.this, OnClickDialogActivity.class);
+                intent.putExtra("IranianDay", dateModels.get(position).getDay());
+                intent.putExtra("IranianMonth", dateModels.get(position).getMonth());
+                intent.putExtra("IranianYear", dateModels.get(position).getYear());
+                String accountName = getPreferences(Context.MODE_PRIVATE)
+                        .getString(PREF_ACCOUNT_NAME, null);
+
+                if (accountName != null) {
+                    intent.putExtra("accountName", accountName);
+                }
+                startActivity(intent, options.toBundle());
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
 
         //End of onCreate
@@ -326,11 +353,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private void showCalendar() {
         dateModels.clear();
         makingArrayOfDays();
-        String result = PersianMonthName.getName(thisMonth);
-        txtMonthName.setText(result);
+        txtMonthName.setText(PersianMonthName.getName(thisMonth));
         txtYear.setText(thisYear + "");
-        CalendarAdapter adapter = new CalendarAdapter(MainActivity.this, dateModels);
-        gridView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -353,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     /**
-     * shows the Notification immidately after user opens the app
+     * shows the Notification immediately after user opens the app
      */
 
     private void showNotification() {
@@ -659,4 +684,61 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
+
+    class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+        GestureDetector detector;
+        ClickListener clickListener;
+
+        RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
+            this.clickListener = clickListener;
+            detector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clickListener != null) {
+                        clickListener.onLongClick(child, recyclerView.getChildLayoutPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && detector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildLayoutPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
+
+    public static interface ClickListener {
+        public void onClick(View view, int position);
+
+        public void onLongClick(View view, int position);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mProgress != null)
+            mProgress.dismiss();
+        super.onDestroy();
+    }
 }
+

@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,10 @@ import com.google.api.services.calendar.model.EventReminder;
 import java.io.IOException;
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import ir.apptune.calendar.webservice.CallingGoogleWebservice;
+
 /**
  * This class gets event data from user and sets the data in His google calendar.
  */
@@ -38,13 +43,23 @@ public class SetJobToDoActivity extends AppCompatActivity {
     String gDay;
     String gMonth;
     String gYear;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.edt_event_name)
     EditText edtEventName;
+    @BindView(R.id.edt_event_summary)
     EditText edtEventSummary;
+    @BindView(R.id.edt_event_location)
     EditText edtEventLocation;
+    @BindView(R.id.time_event_start_hour)
     EditText timeEventStartHour;
+    @BindView(R.id.time_event_start_minute)
     EditText timeEventStartMinute;
+    @BindView(R.id.time_event_end_hour)
     EditText timeEventEndHour;
+    @BindView(R.id.time_event_end_minute)
     EditText timeEventEndMinute;
+    @BindView(R.id.btn_save)
     Button btnSave;
     String name;
     String summary;
@@ -60,6 +75,14 @@ public class SetJobToDoActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_job_to_do);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException e) {
+        }
+
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
@@ -69,15 +92,6 @@ public class SetJobToDoActivity extends AppCompatActivity {
         gMonth = intent.getIntExtra("gMonth", 0) + "";
         gYear = intent.getIntExtra("gYear", 0) + "";
         String accountName = intent.getStringExtra("accountName");
-        // getResultsFromApi();
-        edtEventName = (EditText) findViewById(R.id.edt_event_name);
-        edtEventSummary = (EditText) findViewById(R.id.edt_event_summary);
-        edtEventLocation = (EditText) findViewById(R.id.edt_event_location);
-        timeEventStartHour = (EditText) findViewById(R.id.time_event_start_hour);
-        timeEventStartMinute = (EditText) findViewById(R.id.time_event_start_minute);
-        timeEventEndHour = (EditText) findViewById(R.id.time_event_end_hour);
-        timeEventEndMinute = (EditText) findViewById(R.id.time_event_end_minute);
-        btnSave = (Button) findViewById(R.id.btn_save);
         mProgress = new ProgressDialog(this);
         mProgress.setMessage(getString(R.string.please_wait));
 
@@ -115,6 +129,12 @@ public class SetJobToDoActivity extends AppCompatActivity {
                 }
                 if (Integer.parseInt(endM) < 10 && !endM.contains("0")) {
                     endM = "0" + endM;
+                }
+                if (Integer.parseInt(gDay) < 10 && !gDay.contains("0")) {
+                    gDay = "0" + gDay;
+                }
+                if (Integer.parseInt(gMonth) < 10 && !gMonth.contains("0")) {
+                    gMonth = "0" + gMonth;
                 }
 
                 if (Integer.parseInt(startH) > 24 || Integer.parseInt(startM) > 60 || Integer.parseInt(endH) > 24 || Integer.parseInt(endM) > 60) {
@@ -177,7 +197,7 @@ public class SetJobToDoActivity extends AppCompatActivity {
                         String calendarId = "primary";
                         try {
                             event = service.events().insert(calendarId, event).execute();
-                            result = CallingGoogleWebservice.getUrl(event.getHtmlLink(), SetJobToDoActivity.this);
+                            result = CallingGoogleWebservice.getUrl(event.getHtmlLink());
                         } catch (IOException e) {
                             e.printStackTrace();
 

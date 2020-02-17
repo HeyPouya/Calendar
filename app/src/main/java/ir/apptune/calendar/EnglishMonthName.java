@@ -4,59 +4,36 @@ package ir.apptune.calendar;
  * Returns English Month names in persian.
  */
 
-class EnglishMonthName {
+public class EnglishMonthName {
 
-    static String getName(int monthNumber) {
-        String result = "";
+    public static String getName(int monthNumber) {
         switch (monthNumber) {
             case 1:
-                result = "ژانویه";
-                break;
+                return "ژانویه";
             case 2:
-                result = "فوریه";
-                break;
-
+                return "فوریه";
             case 3:
-                result = "مارس";
-                break;
-
+                return "مارس";
             case 4:
-                result = "آوریل";
-                break;
-
+                return "آوریل";
             case 5:
-                result = "مه";
-                break;
-
+                return "مه";
             case 6:
-                result = "ژوئن";
-                break;
-
+                return "ژوئن";
             case 7:
-                result = "ژوئیه";
-                break;
+                return "ژوئیه";
 
             case 8:
-                result = "اوت";
-                break;
-
+                return "اوت";
             case 9:
-                result = "سپتامبر";
-                break;
-
+                return "سپتامبر";
             case 10:
-                result = "اکتبر";
-                break;
-
+                return "اکتبر";
             case 11:
-                result = "نوامبر";
-                break;
-
+                return "نوامبر";
             case 12:
-                result = "دسامبر";
-                break;
-
+                return "دسامبر";
         }
-        return result;
+        return "";
     }
 }
