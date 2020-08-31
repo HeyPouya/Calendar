@@ -6,7 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.NotificationCompat;
+
+import androidx.core.app.NotificationCompat;
 
 import ir.apptune.calendar.CalendarTool;
 import ir.apptune.calendar.EnglishMonthName;

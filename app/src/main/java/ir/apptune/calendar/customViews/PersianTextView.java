@@ -4,13 +4,15 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 import ir.apptune.calendar.PersianNumberFormatHelper;
 
 /**
  * A custom TextView which shows texts in Bnazanin font.
  */
 
-public class PersianTextView extends android.support.v7.widget.AppCompatTextView {
+public class PersianTextView extends AppCompatTextView {
 
     public PersianTextView(Context context) {
         super(context);

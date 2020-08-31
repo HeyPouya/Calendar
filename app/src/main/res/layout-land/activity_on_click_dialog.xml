@@ -5,41 +5,41 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:minHeight="?android:attr/actionBarSize"
-        android:elevation="5dp"
-        android:background="@color/colorPrimary">
-
-    <LinearLayout
-        android:id="@+id/layout_show_day_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/colorPrimary"
+        android:elevation="5dp"
+        android:minHeight="?android:attr/actionBarSize">
 
-        <ir.apptune.calendar.customViews.PersianTextView
-            android:id="@+id/txt_show_persian_date_on_click"
+        <LinearLayout
+            android:id="@+id/layout_show_day_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:orientation="vertical">
 
-        <ir.apptune.calendar.customViews.PersianTextView
-            android:id="@+id/txt_show_gregorian_date_on_click"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-    </LinearLayout>
-    </android.support.v7.widget.Toolbar>
+            <ir.apptune.calendar.customViews.PersianTextView
+                android:id="@+id/txt_show_persian_date_on_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <ir.apptune.calendar.customViews.PersianTextView
+                android:id="@+id/txt_show_gregorian_date_on_click"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
