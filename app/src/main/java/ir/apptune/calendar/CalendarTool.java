@@ -202,7 +202,7 @@ public class CalendarTool {
      *
      * @return int
      */
-    int getDayOfWeek() {
+    public int getDayOfWeek() {
         return (JDN % 7);
     }
 
@@ -264,7 +264,7 @@ public class CalendarTool {
      * @param month int
      * @param day   int
      */
-    void setIranianDate(int year, int month, int day) {
+    public void setIranianDate(int year, int month, int day) {
         irYear = year;
         irMonth = month;
         irDay = day;

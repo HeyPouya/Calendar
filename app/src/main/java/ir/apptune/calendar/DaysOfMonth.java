@@ -7,8 +7,8 @@ import android.content.Context;
  * 29 or 30 or 31
  */
 
-class DaysOfMonth {
-    static int getCount(int thisMonth, int thisYear, Context context) {
+public class DaysOfMonth {
+   public static int getCount(int thisMonth, int thisYear, Context context) {
         if (thisMonth <= 6) {
             return 31;
         } else if (thisMonth > 6 && thisMonth < 12) {

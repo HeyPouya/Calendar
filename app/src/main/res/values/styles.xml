@@ -7,8 +7,4 @@
         <item name="fontFamily">@font/vazir</item>
     </style>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="windowNoTitle">true</item>
-    </style>
-
 </resources>

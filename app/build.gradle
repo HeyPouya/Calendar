@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
@@ -50,5 +51,13 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+
+    // ViewModel + LiveData
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07'
+
+    // Navigation Components
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
 }
