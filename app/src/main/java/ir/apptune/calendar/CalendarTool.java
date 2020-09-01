@@ -208,7 +208,7 @@ public class CalendarTool {
 
     /**
      * nextDay:
-     * Go to next julian day number (JDN) and adjusts the other dates.
+     * Go to icNext julian day number (JDN) and adjusts the other dates.
      */
     public void nextDay() {
         JDN++;

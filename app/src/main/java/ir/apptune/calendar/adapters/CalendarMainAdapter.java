@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +20,7 @@ import ir.apptune.calendar.R;
 import ir.apptune.calendar.ResourceUtils;
 import ir.apptune.calendar.models.DateModel;
 
-import static ir.apptune.calendar.R.id.txt_shamsi;
+import static ir.apptune.calendar.R.id.txtIranianDate;
 
 
 public class CalendarMainAdapter extends RecyclerView.Adapter<CalendarMainAdapter.MyViewHolder> {
@@ -78,12 +79,12 @@ public class CalendarMainAdapter extends RecyclerView.Adapter<CalendarMainAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        @BindView(txt_shamsi)
+        @BindView(txtIranianDate)
         TextView txtShamsi;
-        @BindView(R.id.txt_miladi)
+        @BindView(R.id.txtGregorianDate)
         TextView txtMiladi;
         @BindView(R.id.layout_days)
-        LinearLayout layoutDays;
+        ConstraintLayout layoutDays;
 
 
         public MyViewHolder(View itemView) {

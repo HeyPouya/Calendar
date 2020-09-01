@@ -173,7 +173,7 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
     }
 
     /**
-     * This will reload the task page when the user comes back from setting event Page
+     * This will reload the task page when the user comes icPrevious from setting event Page
      */
     @Override
     protected void onResume() {
@@ -291,13 +291,13 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
         }
 
         /**
-         * Fetch a list of the next 10 events from the primary calendar.
+         * Fetch a list of the icNext 10 events from the primary calendar.
          *
          * @return List of Strings describing returned events.
          * @throws IOException
          */
         private List<String> getDataFromApi() throws IOException {
-            // List the next 10 events from the primary calendar.
+            // List the icNext 10 events from the primary calendar.
 
             java.util.Calendar calendar = java.util.Calendar.getInstance();
             calendar.set(calendarTool.getGregorianYear(), calendarTool.getGregorianMonth() - 1, calendarTool.getGregorianDay(), 0, 0);

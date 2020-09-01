@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -45,7 +45,9 @@
                 android:resource="@xml/widget" />
         </receiver>
 
-        <activity android:name=".SetJobToDoActivity" android:parentActivityName=".MainActivity">
+        <activity
+            android:name=".SetJobToDoActivity"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />

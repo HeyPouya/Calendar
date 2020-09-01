@@ -9,11 +9,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -22,13 +20,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,8 +65,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     /**
      * Declare all variables here :
      */
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     int numberOfDays; // How many days a month has
     CalendarTool cTool; // An instance of CalendarTool Class that converts Garegorian Date to Persian Date
     int thisMonth = 0; // The int number of current Month that application refers to. ex : 8 For Aban
@@ -80,19 +74,19 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     static int YEAR = 0; //Always carries The YEAR that we are in.
     static String STATE_OF_DAY;
     List<DateModel> dateModels;
-    @BindView(R.id.txt_month_name)
+    @BindView(R.id.txtMonthName)
     TextView txtMonthName;
-    @BindView(R.id.txt_show_today)
+    @BindView(R.id.txtWeekDay)
     TextView txtShowToday;
-    @BindView(R.id.txt_show_date)
+    @BindView(R.id.txtMonthDate)
     TextView txtshowDate;
-    @BindView(R.id.btn_previous)
-    Button btn_previous;
-    @BindView(R.id.btn_next)
-    Button btn_next;
-    @BindView(R.id.txt_year)
+    @BindView(R.id.imgPreviousMonth)
+    ImageView btn_previous;
+    @BindView(R.id.imgNextMonth)
+    ImageView btn_next;
+    @BindView(R.id.txtYear)
     TextView txtYear;
-    @BindView(R.id.grid_view)
+    @BindView(R.id.recyclerCalendar)
     RecyclerView gridView;
     @BindView(R.id.txt_show_work)
     TextView txtShowWork;
@@ -128,8 +122,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 .setBackOff(new ExponentialBackOff());
         mProgress = new ProgressDialog(this);
         instanceOfCalendar = Calendar.getInstance();
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
 
         /**
          * Check if phone has rotated, so show the month that user were looking at
@@ -137,15 +129,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (savedInstanceState != null) {
             thisMonth = savedInstanceState.getInt("thisMonth");
             thisYear = savedInstanceState.getInt("thisYear");
-        }
-        /**
-         * Check if the phone has maid by HTC , so dont forcely make the page RTL to prevent from crash
-         */
-
-        if (Build.MANUFACTURER + "" != "HTC" && (Build.MANUFACTURER + "") != "Htc" && (Build.MANUFACTURER + "" != "htc")) {
-            Configuration configuration = getResources().getConfiguration();
-            configuration.setLayoutDirection(new Locale("fa"));
-            getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
         }
 
         txtShowToday.setText(STATE_OF_DAY);
@@ -551,13 +534,13 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
 
         /**
-         * Fetch a list of the next 10 events from the primary calendar.
+         * Fetch a list of the icNext 10 events from the primary calendar.
          *
          * @return List of Strings describing returned events.
          * @throws IOException
          */
         private List<String> getDataFromApi() throws IOException {
-            // List the next 10 events from the primary calendar.
+            // List the icNext 10 events from the primary calendar.
             Calendar calendar = Calendar.getInstance();
             CalendarTool calendarTool = new CalendarTool();
             calendar.set(calendarTool.getGregorianYear(), calendarTool.getGregorianMonth() - 1, calendarTool.getGregorianDay(), 0, 0);
