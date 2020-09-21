@@ -27,7 +27,7 @@ fun Int.toPersianWeekDay(context: Context): String = when (this) {
     4 -> context.getString(R.string.friday)
     5 -> context.getString(R.string.saturday)
     6 -> context.getString(R.string.sunday)
-    else -> throw IllegalArgumentException("Week day number is grater than 6")
+    else -> throw IllegalArgumentException("Week day number is grater than 6: $this")
 }
 
 fun Int.toEnglishMonth(context: Context): String = when (this) {

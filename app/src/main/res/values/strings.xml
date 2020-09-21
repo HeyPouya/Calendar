@@ -66,4 +66,6 @@
     <string name="october">اکتبر</string>
     <string name="november">نوامبر</string>
     <string name="december">دسامبر</string>
+    <string name="widget_persian_date">%s %s/%s/%s</string>
+    <string name="widget_gregorian_date">%s %s %s</string>
 </resources>
