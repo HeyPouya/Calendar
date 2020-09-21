@@ -1,4 +1,4 @@
-package ir.apptune.calendar.base.extensions
+package ir.apptune.calendar.utils.extensions
 
 import android.content.Context
 import ir.apptune.calendar.R

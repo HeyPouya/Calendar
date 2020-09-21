@@ -11,8 +11,8 @@ import androidx.core.app.NotificationCompat;
 
 import ir.apptune.calendar.MainActivity;
 import ir.apptune.calendar.R;
-import ir.apptune.calendar.base.extensions.IntExtensionsKt;
-import ir.apptune.calendar.repository.local.CalendarTool;
+import ir.apptune.calendar.utils.extensions.IntExtensionsKt;
+import ir.apptune.calendar.utils.CalendarTool;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 

@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="ir.apptune.calendar.calendar.CalendarFragment"
+        android:name="ir.apptune.calendar.features.calendar.CalendarFragment"
         android:label="CalendarFragment" />
 </navigation>

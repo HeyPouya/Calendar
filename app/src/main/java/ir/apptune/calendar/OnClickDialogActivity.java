@@ -51,8 +51,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ir.apptune.calendar.base.extensions.IntExtensionsKt;
-import ir.apptune.calendar.repository.local.CalendarTool;
+import ir.apptune.calendar.utils.extensions.IntExtensionsKt;
+import ir.apptune.calendar.utils.CalendarTool;
 
 /**
  * The activity that Pops-Up when user clicks on days, in MainPage calendar.

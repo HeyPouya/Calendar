@@ -1,4 +1,4 @@
-package ir.apptune.calendar.widget;
+package ir.apptune.calendar.features.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -9,8 +9,8 @@ import android.widget.RemoteViews;
 
 import ir.apptune.calendar.MainActivity;
 import ir.apptune.calendar.R;
-import ir.apptune.calendar.base.extensions.IntExtensionsKt;
-import ir.apptune.calendar.repository.local.CalendarTool;
+import ir.apptune.calendar.utils.extensions.IntExtensionsKt;
+import ir.apptune.calendar.utils.CalendarTool;
 
 /**
  * The CLass that widget uses to show data

@@ -1,4 +1,4 @@
-package ir.apptune.calendar.calendar
+package ir.apptune.calendar.features.calendar
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -11,10 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ir.apptune.calendar.R
-import ir.apptune.calendar.adapters.CalendarAdapter
-import ir.apptune.calendar.base.extensions.toPersianMonth
-import ir.apptune.calendar.base.extensions.toPersianNumber
-import ir.apptune.calendar.base.extensions.toPersianWeekDay
+import ir.apptune.calendar.utils.extensions.toPersianMonth
+import ir.apptune.calendar.utils.extensions.toPersianNumber
+import ir.apptune.calendar.utils.extensions.toPersianWeekDay
 import ir.apptune.calendar.notification.NotificationActivity
 import ir.apptune.calendar.pojo.CalendarModel
 import kotlinx.android.synthetic.main.calendar_fragment.*

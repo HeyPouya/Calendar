@@ -1,6 +1,6 @@
 package ir.apptune.calendar.di
 
-import ir.apptune.calendar.repository.local.CalendarTool
+import ir.apptune.calendar.utils.CalendarTool
 import ir.apptune.calendar.repository.local.MonthGeneratorClass
 import org.koin.dsl.module
 

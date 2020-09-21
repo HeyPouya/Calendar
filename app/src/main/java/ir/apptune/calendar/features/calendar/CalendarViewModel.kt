@@ -1,4 +1,4 @@
-package ir.apptune.calendar.calendar
+package ir.apptune.calendar.features.calendar
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

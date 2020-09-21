@@ -1,4 +1,4 @@
-package ir.apptune.calendar.adapters
+package ir.apptune.calendar.features.calendar
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ir.apptune.calendar.R
-import ir.apptune.calendar.adapters.CalendarAdapter.CalendarViewHolder
-import ir.apptune.calendar.base.extensions.toPersianNumber
+import ir.apptune.calendar.features.calendar.CalendarAdapter.CalendarViewHolder
+import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.pojo.CalendarModel
 import kotlinx.android.synthetic.main.calendar_item.view.*
 
