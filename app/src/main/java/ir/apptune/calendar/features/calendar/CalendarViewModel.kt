@@ -13,6 +13,7 @@ class CalendarViewModel(private val monthGenerator: MonthGeneratorClass) : ViewM
     private val monthLiveData = MutableLiveData<List<CalendarModel>>()
 
     init {
+        monthGenerator.getMonthList(PREVIOUS_MONTH)
         monthLiveData.value = monthGenerator.getMonthList(NEXT_MONTH)
     }
 

@@ -15,14 +15,6 @@ import ir.apptune.calendar.utils.CalendarTool
 class MonthGeneratorClass(private var calendar: CalendarTool) {
 
     /**
-     * We set the previous month instantly, because the app will request for the next month
-     * immediately as the user opens it, So we will have the current month in the end
-     */
-    init {
-        getPreviousMonthDate()
-    }
-
-    /**
      * Generates list of all days of the next or previous month
      *
      * @param monthType: it can be [NEXT_MONTH] or [PREVIOUS_MONTH]
