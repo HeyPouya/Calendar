@@ -31,14 +31,12 @@
         app:layout_constraintTop_toBottomOf="@id/txtWeekDay" />
 
     <TextView
-        android:id="@+id/txt_show_work"
+        android:id="@+id/txtCurrentMonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginBottom="8dp"
-        android:text="@string/no_events_today_google"
         android:textColor="@android:color/primary_text_dark"
-        android:textSize="12sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,11 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ir.apptune.calendar.R
+import ir.apptune.calendar.notification.NotificationActivity
+import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.utils.extensions.toPersianMonth
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
-import ir.apptune.calendar.notification.NotificationActivity
-import ir.apptune.calendar.pojo.CalendarModel
 import kotlinx.android.synthetic.main.calendar_fragment.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.koin.android.ext.android.inject
@@ -37,6 +37,7 @@ class CalendarFragment : Fragment() {
 
         txtWeekDay.text = today.dayOfWeek.toPersianWeekDay(requireContext())
         txtMonthDate.text = today.iranianDay.toPersianNumber()
+        txtCurrentMonth.text = today.iranianMonth.toPersianMonth(requireContext())
 
         viewModel.getMonthLiveData().observe(viewLifecycleOwner, {
             showCalendar(it.toMutableList())
