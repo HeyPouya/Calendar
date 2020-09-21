@@ -9,12 +9,10 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
-import ir.apptune.calendar.CalendarTool;
-import ir.apptune.calendar.EnglishMonthName;
 import ir.apptune.calendar.MainActivity;
-import ir.apptune.calendar.PersianMonthName;
-import ir.apptune.calendar.PersianNumberFormatHelper;
 import ir.apptune.calendar.R;
+import ir.apptune.calendar.base.extensions.IntExtensionsKt;
+import ir.apptune.calendar.repository.local.CalendarTool;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -29,9 +27,9 @@ public class NotificationActivity extends BroadcastReceiver {
         Intent myIntent = new Intent(context, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), myIntent, 0);
         Notification notif = new NotificationCompat.Builder(context)
-                .setContentTitle(cTool.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getIranianDay() + "")
-                        + " " + PersianMonthName.getName(cTool.getIranianMonth()) + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getIranianYear() + ""))
-                .setContentText(PersianNumberFormatHelper.toPersianNumber(cTool.getGregorianDay() + "") + " " + EnglishMonthName.getName(cTool.getGregorianMonth()) + " " + PersianNumberFormatHelper.toPersianNumber(cTool.getGregorianYear() + ""))
+                .setContentTitle(cTool.getWeekDayStr() + " " + IntExtensionsKt.toPersianNumber(cTool.getIranianDay())
+                        + " " + IntExtensionsKt.toPersianWeekDay(cTool.getIranianMonth(), context) + " " + IntExtensionsKt.toPersianNumber(cTool.getIranianYear()))
+                .setContentText(IntExtensionsKt.toPersianNumber(cTool.getGregorianDay()) + " " + IntExtensionsKt.toEnglishMonth(cTool.getGregorianMonth(), context) + " " + IntExtensionsKt.toPersianNumber(cTool.getGregorianYear()))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pIntent)
                 .setAutoCancel(false)

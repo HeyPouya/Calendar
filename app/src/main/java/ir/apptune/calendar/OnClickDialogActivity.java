@@ -1,6 +1,5 @@
 package ir.apptune.calendar;
 
-import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -22,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -53,14 +51,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
+import ir.apptune.calendar.base.extensions.IntExtensionsKt;
+import ir.apptune.calendar.repository.local.CalendarTool;
 
 /**
  * The activity that Pops-Up when user clicks on days, in MainPage calendar.
  */
 
-public class OnClickDialogActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+public class OnClickDialogActivity extends AppCompatActivity {
     @BindView(R.id.txt_show_persian_date_on_click)
     TextView txtShowPersianDateOnclick;
     @BindView(R.id.txt_show_gregorian_date_on_click)
@@ -90,7 +88,7 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
@@ -105,7 +103,6 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
         }
 
 
-
         final Intent intent = getIntent();
         String irDay = intent.getStringExtra("IranianDay");
         String irMonth = intent.getStringExtra("IranianMonth");
@@ -116,9 +113,9 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
         calendarTool.setIranianDate(Integer.parseInt(irYear), Integer.parseInt(irMonth), Integer.parseInt(irDay));
 
         String shamsi = calendarTool.getWeekDayStr() + " " + irDay + " " +
-                PersianMonthName.getName(Integer.parseInt(irMonth)) + " " + irYear;
+                IntExtensionsKt.toPersianWeekDay(Integer.parseInt(irMonth), this) + " " + irYear;
         String gregorian = calendarTool.getGregorianDay() + " "
-                + EnglishMonthName.getName(calendarTool.getGregorianMonth()) + " "
+                + IntExtensionsKt.toEnglishMonth(calendarTool.getGregorianMonth(), this) + " "
                 + calendarTool.getGregorianYear();
 
 
@@ -140,7 +137,7 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
 
         txtShowEvents.setText(s + "\n" + g);
         if (calendarTool.getDayOfWeek() == 4 || ResourceUtils.vacationP.containsKey(persianTemp)) {
-            toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.colorAccent));
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
         }
 
         mCredential = GoogleAccountCredential.usingOAuth2(
@@ -195,7 +192,7 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
         } else if (!isDeviceOnline()) {
             Toast.makeText(OnClickDialogActivity.this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
         } else if (mCredential.getSelectedAccountName() == null) {
-            chooseAccount();
+//            chooseAccount();
         } else {
             new OnClickDialogActivity.MakeRequestTask(mCredential).execute();
         }
@@ -236,30 +233,29 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
         dialog.show();
     }
 
-    @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
-    private void chooseAccount() {
-        if (EasyPermissions.hasPermissions(
-                this, Manifest.permission.GET_ACCOUNTS)) {
-            String accountName = getPreferences(Context.MODE_PRIVATE)
-                    .getString(PREF_ACCOUNT_NAME, null);
-            if (accountName != null) {
-                mCredential.setSelectedAccountName(accountName);
-                getResultsFromApi();
-            } else {
-                // Start a dialog from which the user can choose an account
-                startActivityForResult(
-                        mCredential.newChooseAccountIntent(),
-                        REQUEST_ACCOUNT_PICKER);
-            }
-        } else {
-            // Request the GET_ACCOUNTS permission via a user dialog
-            EasyPermissions.requestPermissions(
-                    this,
-                    getResources().getString(R.string.provide_permission),
-                    REQUEST_PERMISSION_GET_ACCOUNTS,
-                    Manifest.permission.GET_ACCOUNTS);
-        }
-    }
+//    private void chooseAccount() {
+//        if (EasyPermissions.hasPermissions(
+//                this, Manifest.permission.GET_ACCOUNTS)) {
+//            String accountName = getPreferences(Context.MODE_PRIVATE)
+//                    .getString(PREF_ACCOUNT_NAME, null);
+//            if (accountName != null) {
+//                mCredential.setSelectedAccountName(accountName);
+//                getResultsFromApi();
+//            } else {
+//                // Start a dialog from which the user can choose an account
+//                startActivityForResult(
+//                        mCredential.newChooseAccountIntent(),
+//                        REQUEST_ACCOUNT_PICKER);
+//            }
+//        } else {
+//            // Request the GET_ACCOUNTS permission via a user dialog
+//            EasyPermissions.requestPermissions(
+//                    this,
+//                    getResources().getString(R.string.provide_permission),
+//                    REQUEST_PERMISSION_GET_ACCOUNTS,
+//                    Manifest.permission.GET_ACCOUNTS);
+//        }
+//    }
 
     private class MakeRequestTask extends AsyncTask<Void, Void, List<String>> {
         private com.google.api.services.calendar.Calendar mService = null;
@@ -389,26 +385,6 @@ public class OnClickDialogActivity extends AppCompatActivity implements EasyPerm
                 Toast.makeText(OnClickDialogActivity.this, getResources().getString(R.string.your_request_cancelled), Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(
-                requestCode, permissions, grantResults, this);
-    }
-
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> list) {
-        // Do nothing.
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> list) {
-        // Do nothing.
     }
 
     @Override

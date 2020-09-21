@@ -41,7 +41,6 @@ dependencies {
 
     // Play
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'pub.devrel:easypermissions:0.1.5'
     implementation('com.google.api-client:google-api-client-android:1.30.10') {
         exclude group: 'org.apache.httpcomponents'
     }
@@ -59,5 +58,10 @@ dependencies {
     // Navigation Components
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Koin for Android
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
 
 }

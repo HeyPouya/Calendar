@@ -7,12 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import ir.apptune.calendar.CalendarTool;
-import ir.apptune.calendar.EnglishMonthName;
 import ir.apptune.calendar.MainActivity;
-import ir.apptune.calendar.PersianMonthName;
-import ir.apptune.calendar.PersianNumberFormatHelper;
 import ir.apptune.calendar.R;
+import ir.apptune.calendar.base.extensions.IntExtensionsKt;
+import ir.apptune.calendar.repository.local.CalendarTool;
 
 /**
  * The CLass that widget uses to show data
@@ -33,11 +31,11 @@ public class AppWidget extends AppWidgetProvider {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             remoteViews.setOnClickPendingIntent(R.id.layout_widget, pendingIntent);
             CalendarTool calendar = new CalendarTool();
-            String ps = calendar.getWeekDayStr() + " " + PersianNumberFormatHelper.toPersianNumber(calendar.getIranianDay() + "") + " " +
-                    PersianMonthName.getName(calendar.getIranianMonth()) + " " +
-                    PersianNumberFormatHelper.toPersianNumber(calendar.getIranianYear() + "");
-            String ms = PersianNumberFormatHelper.toPersianNumber(calendar.getGregorianDay() + "") + " " + EnglishMonthName.getName(calendar.getGregorianMonth()) + " " +
-                    PersianNumberFormatHelper.toPersianNumber(calendar.getGregorianYear() + "");
+            String ps = calendar.getWeekDayStr() + " " + IntExtensionsKt.toPersianNumber(calendar.getIranianDay()) + " " +
+                    IntExtensionsKt.toPersianWeekDay(calendar.getIranianMonth(), context) + " " +
+                    IntExtensionsKt.toPersianNumber(calendar.getIranianYear());
+            String ms = IntExtensionsKt.toPersianNumber(calendar.getGregorianDay()) + " " + IntExtensionsKt.toEnglishMonth(calendar.getGregorianMonth(), context) + " " +
+                    IntExtensionsKt.toPersianNumber(calendar.getGregorianYear());
             remoteViews.setTextViewText(R.id.txt_widget_show_persian_date, ps);
             remoteViews.setTextViewText(R.id.txt_widget_show_miladi_date, ms);
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
