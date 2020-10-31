@@ -43,6 +43,7 @@ class CalendarFragment : Fragment() {
             showCalendar(it.toMutableList())
         })
         recyclerCalendar.adapter = adapter
+        recyclerCalendar.itemAnimator = null
         setNotificationAlarmManager(requireContext())
         showNotification()
 
