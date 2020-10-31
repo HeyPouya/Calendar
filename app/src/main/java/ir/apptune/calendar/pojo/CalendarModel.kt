@@ -12,5 +12,12 @@ data class CalendarModel(
         val gMonth: Int,
         val gYear: Int,
         var isHoliday: Boolean = false,
-        val today: Boolean = false
-)
+        var today: Boolean = false
+) {
+    override fun equals(other: Any?): Boolean {
+        return other is CalendarModel &&
+                other.iranianYear == iranianYear &&
+                other.iranianMonth == iranianMonth &&
+                other.iranianDay == iranianDay
+    }
+}

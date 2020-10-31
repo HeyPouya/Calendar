@@ -41,7 +41,7 @@ class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<
                 if (today) {
                     txtIranianDate.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
                     txtGregorianDate.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
-                    cardDays.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
+                    cardDays.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
                 }
 
                 if (isHoliday)

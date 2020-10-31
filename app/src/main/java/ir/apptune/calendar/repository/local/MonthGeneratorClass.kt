@@ -7,8 +7,6 @@ import ir.apptune.calendar.pojo.MonthType
 import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
 import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
 import ir.apptune.calendar.utils.CalendarTool
-import org.koin.java.KoinJavaComponent.get
-import org.koin.java.KoinJavaComponent.inject
 
 const val MONDAY = 0
 const val TUESDAY = 1
@@ -23,9 +21,8 @@ const val SUNDAY = 6
  *
  * @property calendar: The object that holds the current date that the user is looking
  */
-class MonthGeneratorClass(private var calendar: CalendarTool) {
+class MonthGeneratorClass(private var calendar: CalendarTool, private val events: ResourceUtils, private val today: CalendarModel) {
 
-    val events:ResourceUtils = get(ResourceUtils::class.java)
     /**
      * Generates list of all days of the next or previous month
      *
@@ -41,10 +38,15 @@ class MonthGeneratorClass(private var calendar: CalendarTool) {
                 setIranianDate(month.year, month.month, i)
                 list.add(CalendarModel(iranianDay, iranianMonth, iranianYear, dayOfWeek, gregorianDay, gregorianMonth, gregorianYear).apply {
                     checkIsHoliday(this)
+                    checkIsToday(this)
                 })
             }
         }
         return list
+    }
+
+    private fun checkIsToday(calendarModel: CalendarModel) {
+        calendarModel.today = today == calendarModel
     }
 
     private fun checkIsHoliday(calendarModel: CalendarModel) = with(calendarModel) {
