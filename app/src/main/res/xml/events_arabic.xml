@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XCalendarEvents Version="1.0.0">
+    <Event
+        Day="21"
+        IsVacation="1"
+        Month="1"
+        Title="ولادت حضرت قائم (عج لالله تعالی) و روز جهانی مستضعفین"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="26"
+        IsVacation="1"
+        Month="2"
+        Title="شهادت امیرالمومنین امام علی (علیه السلام) (۴۰ ه ق)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="4"
+        IsVacation="1"
+        Month="3"
+        Title="عید سعید فطر"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="5"
+        IsVacation="1"
+        Month="3"
+        Title="عید سعید فطر"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="28"
+        IsVacation="1"
+        Month="3"
+        Title="شهادت امام صادق (علیه السلام) (۱۴۸ ه ق)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="10"
+        IsVacation="1"
+        Month="5"
+        Title="عید سعید قربان (تعطیل)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="18"
+        IsVacation="1"
+        Month="5"
+        Title="عید سعید غدیر خم (۱۰ ه ق) (تعطیل)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="8"
+        IsVacation="1"
+        Month="6"
+        Title="تاسوعای حسینی (تعطیل)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="9"
+        IsVacation="1"
+        Month="6"
+        Title="عاشورای حسینی (تعطیل)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="17"
+        IsVacation="1"
+        Month="7"
+        Title="اربعین حسینی ( تعطیل)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="25"
+        IsVacation="1"
+        Month="7"
+        Title="رحلت حضرت رسول اکرم (صلی الله علیه و آله) (۱۱ ه ق)، شهادت حضرت امام حسن مجتبی (علیه السلام) (۵۰ ه ق)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="26"
+        IsVacation="1"
+        Month="7"
+        Title="شهادت امام رضا (علیه السلام)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="4"
+        IsVacation="1"
+        Month="8"
+        Title="شهادت امام حسن عسکری(ع) و آغاز امامت امام زمان(عج)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="13"
+        IsVacation="1"
+        Month="8"
+        Title="ولادت حضرت رسول اکرم (صلی الله علیه و آله) (۵۴ سال قبل از هجرت) و روز اخلاق و مهرورزی ؛ ولادت حضرت امام جعفر صادق(علیه السلام) مؤسس مذهب جعفری (۸۳ ه ق)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="28"
+        IsVacation="1"
+        Month="10"
+        Title="شهادت حضرت فاطمه زهرا (سلام الله علیها) (۱۱ ه ق)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="7"
+        IsVacation="1"
+        Month="12"
+        Title="ولادت حضرت امام علی علیه السلام (۲۳ سال قبل از هجرت) (تعطیل)"
+        XCalendar="PersianCalendar" />
+    <Event
+        Day="21"
+        IsVacation="1"
+        Month="12"
+        Title="مبعث رسول اکرم(ص)"
+        XCalendar="PersianCalendar" />
+</XCalendarEvents>

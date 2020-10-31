@@ -33,6 +33,7 @@ public final class ResourceUtils {
         getHashMapResource(c, R.xml.events_gregorian);
         getHashMapResource(c, R.xml.events_persian);
         getHashMapResource(c, R.xml.events_misc);
+        getHashMapResource(c, R.xml.events_arabic);
     }
 
     private void getHashMapResource(Context c, int hashMapResId) {
