@@ -12,7 +12,8 @@ import ir.apptune.calendar.R
 import ir.apptune.calendar.features.calendar.CalendarAdapter.CalendarViewHolder
 import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.utils.extensions.toPersianNumber
-import kotlinx.android.synthetic.main.calendar_item.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.calendar_item.*
 
 class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<CalendarModel, CalendarViewHolder>(CalendarDiffUtils()) {
 
@@ -24,31 +25,27 @@ class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) =
             holder.onBind(getItem(position))
 
-    inner class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CalendarViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun onBind(dateModel: CalendarModel) {
-            with(itemView) {
-                with(dateModel) {
-                    txtIranianDate.isVisible = iranianDay != -1
-                    txtGregorianDate.isVisible = iranianDay != -1
-                    if (iranianDay == -1) return
+            with(dateModel) {
+                txtIranianDate.isVisible = iranianDay != -1
+                txtGregorianDate.isVisible = iranianDay != -1
+                if (iranianDay == -1) return
 
-                    setOnClickListener { clickListener(dateModel) }
-                    txtIranianDate.text = iranianDay.toPersianNumber()
-                    txtGregorianDate.text = gDay.toString()
+                itemView.setOnClickListener { clickListener(dateModel) }
+                txtIranianDate.text = iranianDay.toPersianNumber()
+                txtGregorianDate.text = gDay.toString()
+                txtIranianDate.setTextColor(ContextCompat.getColor(itemView.context, R.color.primaryTextColor))
 
-
-                    if (today) {
-                        txtIranianDate.setTextColor(ContextCompat.getColor(context, android.R.color.white))
-                        txtGregorianDate.setTextColor(ContextCompat.getColor(context, android.R.color.white))
-                        cardDays.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                    }
-
-                    if (isHoliday)
-                        txtIranianDate.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
-                    else
-                        txtIranianDate.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+                if (today) {
+                    txtIranianDate.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
+                    txtGregorianDate.setTextColor(ContextCompat.getColor(itemView.context, android.R.color.white))
+                    cardDays.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorPrimary))
                 }
+
+                if (isHoliday)
+                    txtIranianDate.setTextColor(ContextCompat.getColor(itemView.context, R.color.colorAccent))
             }
         }
 
