@@ -1,11 +1,22 @@
 package ir.apptune.calendar.repository.local
 
+import ir.apptune.calendar.ResourceUtils
 import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.pojo.DateModel
 import ir.apptune.calendar.pojo.MonthType
 import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
 import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
 import ir.apptune.calendar.utils.CalendarTool
+import org.koin.java.KoinJavaComponent.get
+import org.koin.java.KoinJavaComponent.inject
+
+const val MONDAY = 0
+const val TUESDAY = 1
+const val WEDNESDAY = 2
+const val THURSDAY = 3
+const val FRIDAY = 4
+const val SATURDAY = 5
+const val SUNDAY = 6
 
 /**
  * This class generated a month before or after the current month that the user is looking at
@@ -14,6 +25,7 @@ import ir.apptune.calendar.utils.CalendarTool
  */
 class MonthGeneratorClass(private var calendar: CalendarTool) {
 
+    val events:ResourceUtils = get(ResourceUtils::class.java)
     /**
      * Generates list of all days of the next or previous month
      *
@@ -27,10 +39,17 @@ class MonthGeneratorClass(private var calendar: CalendarTool) {
         for (i in 1..month.dayNumber) {
             with(calendar) {
                 setIranianDate(month.year, month.month, i)
-                list.add(CalendarModel(iranianDay, iranianMonth, iranianYear, dayOfWeek, gregorianDay, gregorianMonth, gregorianYear))
+                list.add(CalendarModel(iranianDay, iranianMonth, iranianYear, dayOfWeek, gregorianDay, gregorianMonth, gregorianYear).apply {
+                    checkIsHoliday(this)
+                })
             }
         }
         return list
+    }
+
+    private fun checkIsHoliday(calendarModel: CalendarModel) = with(calendarModel) {
+        if (dayOfWeek == FRIDAY || events.vacationP.containsKey(iranianMonth * 100 + iranianDay))
+            isHoliday = true
     }
 
     private fun getNextMonthDate(): DateModel {
@@ -53,9 +72,9 @@ class MonthGeneratorClass(private var calendar: CalendarTool) {
         var month = calendar.iranianMonth
         var year = calendar.iranianYear
 
-        if (month - 1 > 1) {
+        if (month - 1 > 1)
             month--
-        } else {
+        else {
             month = 12
             year--
         }
@@ -66,13 +85,13 @@ class MonthGeneratorClass(private var calendar: CalendarTool) {
     }
 
     private fun addEmptyDays(dayOfWeek: Int): ArrayList<CalendarModel> = when (dayOfWeek) {
-        0 -> emptyDayMaker(2)
-        1 -> emptyDayMaker(3)
-        2 -> emptyDayMaker(4)
-        3 -> emptyDayMaker(5)
-        4 -> emptyDayMaker(6)
-        5 -> emptyDayMaker(0)
-        6 -> emptyDayMaker(1)
+        MONDAY -> emptyDayMaker(2)
+        TUESDAY -> emptyDayMaker(3)
+        WEDNESDAY -> emptyDayMaker(4)
+        THURSDAY -> emptyDayMaker(5)
+        FRIDAY -> emptyDayMaker(6)
+        SATURDAY -> emptyDayMaker(0)
+        SUNDAY -> emptyDayMaker(1)
         else -> throw IllegalArgumentException("Day is not defined in the week!")
     }
 

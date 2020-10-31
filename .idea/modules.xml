@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Calendar.iml" filepath="$PROJECT_DIR$/Calendar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Calendar-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Calendar-app.iml" group="Calendar/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StudioProjects-Calendar.iml" filepath="$PROJECT_DIR$/.idea/modules/StudioProjects-Calendar.iml" group="Calendar" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Calendar.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Calendar.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StudioProjects.Calendar.iml" filepath="$PROJECT_DIR$/.idea/modules/StudioProjects.Calendar.iml" />
     </modules>
   </component>
 </project>

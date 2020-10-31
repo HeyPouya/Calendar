@@ -21,7 +21,7 @@ public final class ResourceUtils {
     static HashMap<Integer, String> eventG, eventH, eventP;
     static HashMap<Integer, Boolean> vacationG;
     static HashMap<Integer, Boolean> vacationH;
-    public static HashMap<Integer, Boolean> vacationP;
+    public HashMap<Integer, Boolean> vacationP;
 
     public ResourceUtils(Context c) {
         eventP = new HashMap<Integer, String>();
@@ -35,7 +35,7 @@ public final class ResourceUtils {
         getHashMapResource(c, R.xml.events_misc);
     }
 
-    private static void getHashMapResource(Context c, int hashMapResId) {
+    private void getHashMapResource(Context c, int hashMapResId) {
 
         XmlResourceParser parser = c.getResources().getXml(hashMapResId);
 

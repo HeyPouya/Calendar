@@ -11,6 +11,6 @@ data class CalendarModel(
         var gDay: Int,
         val gMonth: Int,
         val gYear: Int,
-        val isHoliday: Boolean = false,
+        var isHoliday: Boolean = false,
         val today: Boolean = false
 )

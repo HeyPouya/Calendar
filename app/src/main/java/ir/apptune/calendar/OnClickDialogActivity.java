@@ -136,9 +136,9 @@ public class OnClickDialogActivity extends AppCompatActivity {
             g = ResourceUtils.eventG.get(gregorianTemp);
 
         txtShowEvents.setText(s + "\n" + g);
-        if (calendarTool.getDayOfWeek() == 4 || ResourceUtils.vacationP.containsKey(persianTemp)) {
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
-        }
+//        if (calendarTool.getDayOfWeek() == 4 || ResourceUtils.vacationP.containsKey(persianTemp)) {
+//            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
+//        }
 
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))

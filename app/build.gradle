@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "ir.apptune.calendar"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 4
         versionName "4.0"
     }
@@ -24,20 +24,24 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Kotlin
-    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.core:core-ktx:1.3.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Support
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'com.google.android.material:material:1.3.0-alpha02'
-    implementation 'androidx.fragment:fragment:1.2.5'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'com.google.android.material:material:1.3.0-alpha03'
+    implementation 'androidx.fragment:fragment-ktx:1.2.5'
 
     // Play
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
@@ -53,7 +57,6 @@ dependencies {
 
     // ViewModel + LiveData
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07'
 
     // Navigation Components
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

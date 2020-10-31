@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ir.apptune.calendar.R
 import ir.apptune.calendar.features.calendar.CalendarAdapter.CalendarViewHolder
-import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.pojo.CalendarModel
+import ir.apptune.calendar.utils.extensions.toPersianNumber
 import kotlinx.android.synthetic.main.calendar_item.view.*
 
 class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<CalendarModel, CalendarViewHolder>(CalendarDiffUtils()) {
@@ -28,11 +29,10 @@ class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<
         fun onBind(dateModel: CalendarModel) {
             with(itemView) {
                 with(dateModel) {
-                    if (iranianDay == -1) {
-                        txtIranianDate.visibility = View.INVISIBLE
-                        txtGregorianDate.visibility = View.INVISIBLE
-                        return
-                    }
+                    txtIranianDate.isVisible = iranianDay != -1
+                    txtGregorianDate.isVisible = iranianDay != -1
+                    if (iranianDay == -1) return
+
                     setOnClickListener { clickListener(dateModel) }
                     txtIranianDate.text = iranianDay.toPersianNumber()
                     txtGregorianDate.text = gDay.toString()
@@ -46,6 +46,8 @@ class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<
 
                     if (isHoliday)
                         txtIranianDate.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+                    else
+                        txtIranianDate.setTextColor(ContextCompat.getColor(context, android.R.color.black))
                 }
             }
         }
