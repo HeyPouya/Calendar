@@ -1,4 +1,4 @@
-package ir.apptune.calendar.features.calendar
+package ir.apptune.calendar.features.calendar.main
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -10,9 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import ir.apptune.calendar.R
 import ir.apptune.calendar.notification.NotificationActivity
 import ir.apptune.calendar.pojo.CalendarModel
+import ir.apptune.calendar.utils.SELECTED_DAY_DETAILS
 import ir.apptune.calendar.utils.extensions.toPersianMonth
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
@@ -25,7 +28,12 @@ class CalendarFragment : Fragment() {
 
     private val viewModel: CalendarViewModel by viewModel()
     private val today: CalendarModel by inject()
-    private val adapter: CalendarAdapter = CalendarAdapter {}
+    private val adapter: CalendarAdapter = CalendarAdapter {
+        val data = Bundle().apply {
+            putParcelable(SELECTED_DAY_DETAILS, it)
+        }
+        findNavController().navigate(R.id.action_calendarFragment_to_onClickDialogActivity, data)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -34,7 +42,6 @@ class CalendarFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         txtWeekDay.text = today.dayOfWeek.toPersianWeekDay(requireContext())
         txtMonthDate.text = today.iranianDay.toPersianNumber()
         txtCurrentMonth.text = today.iranianMonth.toPersianMonth(requireContext())

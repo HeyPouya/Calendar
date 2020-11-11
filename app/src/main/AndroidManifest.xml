@@ -31,7 +31,7 @@
 
         <receiver android:name=".notification.NotificationActivity" />
 
-        <activity android:name=".OnClickDialogActivity">
+        <activity android:name=".features.calendar.details.DateDetailsDialogFragment">
             <meta-data
                 android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />
@@ -47,13 +47,6 @@
                 android:resource="@xml/widget" />
         </receiver>
 
-        <activity
-            android:name=".SetJobToDoActivity"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version" />
-        </activity>
     </application>
 
 </manifest>

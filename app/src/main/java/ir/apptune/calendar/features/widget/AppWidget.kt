@@ -28,12 +28,12 @@ class AppWidget : AppWidgetProvider() {
 
 
         with(today) {
-            remoteViews.setTextViewText(R.id.txtWidgetPersianDate, context.getString(R.string.widget_persian_date,
+            remoteViews.setTextViewText(R.id.txtWidgetPersianDate, context.getString(R.string.persian_full_date,
                     weekDayStr,
                     iranianYear.toPersianNumber(),
                     iranianMonth.toPersianNumber(),
                     iranianDay.toPersianNumber()))
-            remoteViews.setTextViewText(R.id.txtWidgetGregorianDate, context.getString(R.string.widget_gregorian_date,
+            remoteViews.setTextViewText(R.id.txtWidgetGregorianDate, context.getString(R.string.gregorian_full_date,
                     gregorianDay.toPersianNumber(),
                     gregorianMonth.toEnglishMonth(context),
                     gregorianYear.toPersianNumber()))

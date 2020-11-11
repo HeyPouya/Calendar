@@ -18,9 +18,9 @@ public final class ResourceUtils {
     private final static String XCalendarH = "ObservedHijriCalendar";
     private final static String XCalendarG = "GregorianCalendar";
     private final static String XCalendarP = "PersianCalendar";
-    static HashMap<Integer, String> eventG, eventH, eventP;
-    static HashMap<Integer, Boolean> vacationG;
-    static HashMap<Integer, Boolean> vacationH;
+    public static HashMap<Integer, String> eventG, eventH, eventP;
+    public static HashMap<Integer, Boolean> vacationG;
+    public static HashMap<Integer, Boolean> vacationH;
     public HashMap<Integer, Boolean> vacationP;
 
     public ResourceUtils(Context c) {
