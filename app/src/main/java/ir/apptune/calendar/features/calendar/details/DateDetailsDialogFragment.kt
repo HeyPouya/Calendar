@@ -16,7 +16,7 @@ import ir.apptune.calendar.utils.extensions.toEnglishMonth
 import ir.apptune.calendar.utils.extensions.toPersianMonth
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
-import kotlinx.android.synthetic.main.activity_on_click_dialog.*
+import kotlinx.android.synthetic.main.fragment_dialog_date_details.*
 import java.util.*
 
 /**

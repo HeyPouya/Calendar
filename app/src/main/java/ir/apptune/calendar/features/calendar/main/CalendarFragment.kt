@@ -1,19 +1,12 @@
 package ir.apptune.calendar.features.calendar.main
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.app.PendingIntent.CanceledException
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import ir.apptune.calendar.R
-import ir.apptune.calendar.notification.NotificationActivity
 import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.utils.SELECTED_DAY_DETAILS
 import ir.apptune.calendar.utils.extensions.toPersianMonth
@@ -36,26 +29,27 @@ class CalendarFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.calendar_fragment, container, false)
-    }
+                              savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.calendar_fragment, container, false)
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        txtWeekDay.text = today.dayOfWeek.toPersianWeekDay(requireContext())
-        txtMonthDate.text = today.iranianDay.toPersianNumber()
-        txtCurrentMonth.text = today.iranianMonth.toPersianMonth(requireContext())
+        setUpToolbarTexts()
 
         viewModel.getMonthLiveData().observe(viewLifecycleOwner, {
             showCalendar(it.toMutableList())
         })
         recyclerCalendar.adapter = adapter
         recyclerCalendar.itemAnimator = null
-        setNotificationAlarmManager(requireContext())
-        showNotification()
-
         imgNextMonth.setOnClickListener { viewModel.getNextMonth() }
         imgPreviousMonth.setOnClickListener { viewModel.getPreviousMonth() }
+    }
+
+    private fun setUpToolbarTexts() = with(today) {
+        txtWeekDay.text = dayOfWeek.toPersianWeekDay(requireContext())
+        txtMonthDate.text = iranianDay.toPersianNumber()
+        txtCurrentMonth.text = iranianMonth.toPersianMonth(requireContext())
     }
 
     private fun showCalendar(list: List<CalendarModel>) {
@@ -64,34 +58,5 @@ class CalendarFragment : Fragment() {
         adapter.submitList(list)
     }
 
-    /**
-     * Sets an alarmManager to change the notification content at 24:00 every night
-     *
-     * @param context
-     */
-    private fun setNotificationAlarmManager(context: Context) {
-        val intent = Intent(requireContext(), NotificationActivity::class.java)
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val calendar = java.util.Calendar.getInstance()
-        calendar.timeInMillis = System.currentTimeMillis()
-        calendar[java.util.Calendar.SECOND] = 0
-        calendar[java.util.Calendar.MINUTE] = 0
-        calendar[java.util.Calendar.HOUR_OF_DAY] = 24
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent) //Repeat every 24 hours
-    }
-
-    /**
-     * shows the Notification immediately after user opens the app
-     */
-    private fun showNotification() {
-        val intent = Intent(requireContext(), NotificationActivity::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
-        try {
-            pendingIntent.send()
-        } catch (e: CanceledException) {
-            e.printStackTrace()
-        }
-    }
 
 }
