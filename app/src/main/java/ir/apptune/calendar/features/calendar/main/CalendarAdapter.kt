@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.apptune.calendar.R
 import ir.apptune.calendar.features.calendar.main.CalendarAdapter.CalendarViewHolder
 import ir.apptune.calendar.pojo.CalendarModel
+import ir.apptune.calendar.utils.EMPTY_DATE
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.calendar_item.*
@@ -29,9 +30,9 @@ class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<
 
         fun onBind(dateModel: CalendarModel) {
             with(dateModel) {
-                txtIranianDate.isVisible = iranianDay != -1
-                txtGregorianDate.isVisible = iranianDay != -1
-                if (iranianDay == -1) return
+                txtIranianDate.isVisible = iranianDay != EMPTY_DATE
+                txtGregorianDate.isVisible = iranianDay != EMPTY_DATE
+                if (iranianDay == EMPTY_DATE) return
 
                 itemView.setOnClickListener { clickListener(dateModel) }
                 txtIranianDate.text = iranianDay.toPersianNumber()

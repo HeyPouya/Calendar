@@ -7,6 +7,7 @@ import ir.apptune.calendar.pojo.MonthType
 import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
 import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
 import ir.apptune.calendar.utils.CalendarTool
+import ir.apptune.calendar.utils.EMPTY_DATE
 
 const val MONDAY = 0
 const val TUESDAY = 1
@@ -66,7 +67,7 @@ class MonthGeneratorClass(private var calendar: CalendarTool, private val events
         }
 
         calendar.setIranianDate(year, month, 1)
-        val dayNumber = if (month <= 6) 31 else if (month == 12 && !calendar.IsLeap(calendar.iranianYear)) 29 else 30
+        val dayNumber = if (month <= 6) 31 else if (month == 12 && !calendar.isLeap(calendar.iranianYear)) 29 else 30
         return DateModel(year, month, dayNumber)
     }
 
@@ -82,7 +83,7 @@ class MonthGeneratorClass(private var calendar: CalendarTool, private val events
         }
 
         calendar.setIranianDate(year, month, 1)
-        val dayNumber = if (month <= 6) 31 else if (month == 12 && !calendar.IsLeap(calendar.iranianYear)) 29 else 30
+        val dayNumber = if (month <= 6) 31 else if (month == 12 && !calendar.isLeap(calendar.iranianYear)) 29 else 30
         return DateModel(year, month, dayNumber)
     }
 
@@ -100,7 +101,7 @@ class MonthGeneratorClass(private var calendar: CalendarTool, private val events
     private fun emptyDayMaker(dayOfWeek: Int): ArrayList<CalendarModel> {
         val list = arrayListOf<CalendarModel>()
         for (i in 1..dayOfWeek) {
-            list.add(CalendarModel(-1, -1, -1, -1, -1, -1, -1))
+            list.add(CalendarModel(EMPTY_DATE, EMPTY_DATE, EMPTY_DATE, EMPTY_DATE, EMPTY_DATE, EMPTY_DATE, EMPTY_DATE))
         }
         return list
     }

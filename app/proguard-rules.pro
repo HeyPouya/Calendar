@@ -15,11 +15,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--dontwarn com.google.**
 -keepattributes EnclosingMethod
--dontwarn sun.misc.Unsafe
--dontwarn com.google.common.collect.MinMaxPriorityQueue
 -keepattributes *Annotation*,Signature
--keep class * extends com.google.api.client.json.GenericJson {
-*;
-}
+
