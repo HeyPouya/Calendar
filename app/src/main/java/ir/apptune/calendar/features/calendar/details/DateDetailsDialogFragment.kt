@@ -11,8 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.snackbar.Snackbar
 import ir.apptune.calendar.R
-import ir.apptune.calendar.ResourceUtils
 import ir.apptune.calendar.pojo.CalendarModel
+import ir.apptune.calendar.pojo.DateModel
 import ir.apptune.calendar.utils.CALENDAR_INTENT_TYPE
 import ir.apptune.calendar.utils.SELECTED_DAY_DETAILS
 import ir.apptune.calendar.utils.extensions.toEnglishMonth
@@ -20,6 +20,8 @@ import ir.apptune.calendar.utils.extensions.toPersianMonth
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
 import kotlinx.android.synthetic.main.fragment_dialog_date_details.*
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.util.*
 
 /**
@@ -27,15 +29,22 @@ import java.util.*
  */
 class DateDetailsDialogFragment : DialogFragment() {
 
+    private val viewModel: DateDetailsViewModel by viewModel { parametersOf(date) }
+    private lateinit var date: CalendarModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_dialog_date_details, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val date = requireArguments().getParcelable<CalendarModel>(SELECTED_DAY_DETAILS)
+        date = requireArguments().getParcelable(SELECTED_DAY_DETAILS)
                 ?: throw IllegalArgumentException("You must provide the selected date")
 
+        viewModel.getEventsLiveData().observe(viewLifecycleOwner, {
+            txtDayEvents.text =
+                    if (it.isNotEmpty()) it else getString(R.string.no_events)
+        })
         with(date) {
             txtPersianDate.text = getString(R.string.persian_full_date,
                     dayOfWeek.toPersianWeekDay(requireContext()), date.iranianDay.toPersianNumber(),
@@ -50,19 +59,6 @@ class DateDetailsDialogFragment : DialogFragment() {
         if (date.isHoliday)
             setHolidayColors()
 
-        var persianTemp = date.iranianMonth * 100
-        persianTemp += date.iranianDay
-        val gregorianTemp = date.gMonth * 100 + date.gDay
-        var s: String? = null
-        var g: String? = null
-        if (ResourceUtils.eventP.containsKey(persianTemp)) s = ResourceUtils.eventP[persianTemp]
-        if (ResourceUtils.eventG.containsKey(gregorianTemp)) g = ResourceUtils.eventG[gregorianTemp]
-        txtDayEvents.text = buildString {
-            if (!s.isNullOrEmpty()) append(s)
-            if (!g.isNullOrEmpty()) append("\n$g")
-            if (s.isNullOrEmpty() && g.isNullOrEmpty()) append(getString(R.string.no_events))
-        }
-
         btnAddEvent.setOnClickListener {
             Intent(Intent.ACTION_EDIT).apply {
                 type = CALENDAR_INTENT_TYPE
@@ -74,7 +70,6 @@ class DateDetailsDialogFragment : DialogFragment() {
                     e.printStackTrace()
                     Snackbar.make(requireView(), getString(R.string.google_calendar_is_not_installed), Snackbar.LENGTH_LONG).show()
                 }
-
             }
         }
     }
