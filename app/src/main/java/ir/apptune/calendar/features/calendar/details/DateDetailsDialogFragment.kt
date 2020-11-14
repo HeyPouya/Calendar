@@ -1,5 +1,6 @@
 package ir.apptune.calendar.features.calendar.details
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.snackbar.Snackbar
 import ir.apptune.calendar.R
 import ir.apptune.calendar.ResourceUtils
 import ir.apptune.calendar.pojo.CalendarModel
@@ -62,7 +64,13 @@ class DateDetailsDialogFragment : DialogFragment() {
                 type = CALENDAR_INTENT_TYPE
                 putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
                         GregorianCalendar(date.gYear, date.gMonth - 1, date.gDay).timeInMillis)
-                startActivity(this)
+                try {
+                    startActivity(this)
+                } catch (e: ActivityNotFoundException) {
+                    e.printStackTrace()
+                    Snackbar.make(requireView(), getString(R.string.google_calendar_is_not_installed), Snackbar.LENGTH_LONG).show()
+                }
+
             }
         }
     }

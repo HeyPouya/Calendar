@@ -40,6 +40,7 @@
     <string name="november">نوامبر</string>
     <string name="december">دسامبر</string>
     <string name="no_events">مناسبتی برای این روز وجود ندارد</string>
+    <string name="google_calendar_is_not_installed">برای استفاده از این ویژگی نیاز است که برنامه تقویم گوگل را نصب نمایید</string>
     <string name="persian_full_date">%s %s %s %s</string>
     <string name="gregorian_full_date">%s %s %s</string>
 </resources>
