@@ -47,8 +47,8 @@ class DateDetailsDialogFragment : DialogFragment() {
         var persianTemp = date.iranianMonth * 100
         persianTemp += date.iranianDay
         val gregorianTemp = date.gMonth * 100 + date.gDay
-        var s: String? = ""
-        var g: String? = ""
+        var s: String? = null
+        var g: String? = null
         if (ResourceUtils.eventP.containsKey(persianTemp)) s = ResourceUtils.eventP[persianTemp]
         if (ResourceUtils.eventG.containsKey(gregorianTemp)) g = ResourceUtils.eventG[gregorianTemp]
         txtDayEvents.text = buildString {

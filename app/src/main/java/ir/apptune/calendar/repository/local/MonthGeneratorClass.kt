@@ -22,7 +22,7 @@ const val SUNDAY = 6
  *
  * @property calendar: The object that holds the current date that the user is looking
  */
-class MonthGeneratorClass(private var calendar: CalendarTool, private val events: ResourceUtils, private val currentDate: CalendarModel) {
+class MonthGeneratorClass(private var calendar: CalendarTool, private val currentDate: CalendarModel) {
 
     /**
      * Generates list of all days of the next or previous month
@@ -51,7 +51,7 @@ class MonthGeneratorClass(private var calendar: CalendarTool, private val events
     }
 
     private fun checkIsHoliday(calendarModel: CalendarModel) = with(calendarModel) {
-        if (dayOfWeek == FRIDAY || (iranianYear == currentDate.iranianYear && events.vacationP.containsKey(iranianMonth * 100 + iranianDay)))
+        if (dayOfWeek == FRIDAY || (iranianYear == currentDate.iranianYear && ResourceUtils.vacationP.containsKey(iranianMonth * 100 + iranianDay)))
             isHoliday = true
     }
 

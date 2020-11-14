@@ -2,6 +2,7 @@ package ir.apptune.calendar
 
 import android.content.Context
 import android.util.Log
+import org.koin.java.KoinJavaComponent
 import org.xmlpull.v1.XmlPullParser
 
 /**
@@ -21,6 +22,7 @@ private const val X_CALENDAR = "XCalendar"
 private const val IS_VACATION = "1"
 
 class ResourceUtils(c: Context) {
+
     private fun getHashMapResource(c: Context, hashMapResId: Int) {
         val parser = c.resources.getXml(hashMapResId)
         var key: String? = null
