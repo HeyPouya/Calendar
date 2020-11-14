@@ -7,6 +7,7 @@ import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.snackbar.Snackbar
 import ir.apptune.calendar.R
@@ -46,6 +47,9 @@ class DateDetailsDialogFragment : DialogFragment() {
                     gYear.toPersianNumber())
         }
 
+        if (date.isHoliday)
+            setHolidayColors()
+
         var persianTemp = date.iranianMonth * 100
         persianTemp += date.iranianDay
         val gregorianTemp = date.gMonth * 100 + date.gDay
@@ -73,5 +77,10 @@ class DateDetailsDialogFragment : DialogFragment() {
 
             }
         }
+    }
+
+    private fun setHolidayColors() {
+        txtPersianDate.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+        txtGregorianDate.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
     }
 }
