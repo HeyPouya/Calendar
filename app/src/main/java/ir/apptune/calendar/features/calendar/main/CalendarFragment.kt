@@ -9,19 +9,19 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.R
+import ir.apptune.calendar.databinding.CalendarFragmentBinding
 import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.utils.SELECTED_DAY_DETAILS
 import ir.apptune.calendar.utils.extensions.toPersianMonth
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
-import kotlinx.android.synthetic.main.calendar_fragment.*
-import kotlinx.android.synthetic.main.toolbar_layout.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class CalendarFragment : Fragment() {
 
     private val viewModel: CalendarViewModel by viewModels()
+    private lateinit var binding: CalendarFragmentBinding
 
     @Inject
     lateinit var today: CalendarModel
@@ -33,8 +33,10 @@ class CalendarFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.calendar_fragment, container, false)
+                              savedInstanceState: Bundle?): View {
+        binding = CalendarFragmentBinding.inflate(inflater)
+        return binding.root
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,22 +46,21 @@ class CalendarFragment : Fragment() {
         viewModel.getMonthLiveData().observe(viewLifecycleOwner, {
             showCalendar(it.toMutableList())
         })
-        recyclerCalendar.adapter = adapter
-        recyclerCalendar.itemAnimator = null
-        imgNextMonth.setOnClickListener { viewModel.getNextMonth() }
-        imgPreviousMonth.setOnClickListener { viewModel.getPreviousMonth() }
-
+        binding.recyclerCalendar.adapter = adapter
+        binding.recyclerCalendar.itemAnimator = null
+        binding.imgNextMonth.setOnClickListener { viewModel.getNextMonth() }
+        binding.imgPreviousMonth.setOnClickListener { viewModel.getPreviousMonth() }
     }
 
     private fun setUpToolbarTexts() = with(today) {
-        txtWeekDay.text = dayOfWeek.toPersianWeekDay(requireContext())
-        txtMonthDate.text = iranianDay.toPersianNumber()
-        txtCurrentMonth.text = iranianMonth.toPersianMonth(requireContext())
+        binding.topBar.txtWeekDay.text = dayOfWeek.toPersianWeekDay(requireContext())
+        binding.topBar.txtMonthDate.text = iranianDay.toPersianNumber()
+        binding.topBar.txtCurrentMonth.text = iranianMonth.toPersianMonth(requireContext())
     }
 
     private fun showCalendar(list: List<CalendarModel>) {
-        txtMonthName.text = list.last().iranianMonth.toPersianMonth(requireContext())
-        txtYear.text = list.last().iranianYear.toPersianNumber()
+        binding.txtMonthName.text = list.last().iranianMonth.toPersianMonth(requireContext())
+        binding.txtYear.text = list.last().iranianYear.toPersianNumber()
         adapter.submitList(list)
     }
 

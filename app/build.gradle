@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
@@ -11,8 +11,8 @@ android {
         applicationId "ir.apptune.calendar"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 400
-        versionName "4.0.0"
+        versionCode 500
+        versionName "5.0.0"
     }
     buildTypes {
         release {
@@ -20,6 +20,9 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    buildFeatures {
+        dataBinding true
     }
 
     compileOptions {
@@ -30,10 +33,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
-    androidExtensions {
-        experimental = true
-    }
-
 }
 
 dependencies {

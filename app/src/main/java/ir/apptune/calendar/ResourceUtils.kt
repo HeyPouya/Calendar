@@ -24,8 +24,6 @@ class ResourceUtils(c: Context) {
 
     private fun getHashMapResource(c: Context, hashMapResId: Int) {
         val parser = c.resources.getXml(hashMapResId)
-        var key: String? = null
-        var value: String? = null
         var title: String?
         var day: String?
         var month: String?
@@ -62,15 +60,6 @@ class ResourceUtils(c: Context) {
                                 if (vacation) vacationG[dayMonth] = true
                             }
                         }
-                    }
-                } else if (eventType == XmlPullParser.END_TAG) {
-                    if (parser.name == EVENT) {
-                        key = null
-                        value = null
-                    }
-                } else if (eventType == XmlPullParser.TEXT) {
-                    if (null != key) {
-                        value = parser.text
                     }
                 }
                 eventType = parser.next()

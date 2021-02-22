@@ -1,7 +1,7 @@
 package ir.apptune.calendar.pojo
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Data model of dates, to pass to the Adapter to Create the gridView.
@@ -17,11 +17,4 @@ data class CalendarModel(
         val gYear: Int,
         var isHoliday: Boolean = false,
         var today: Boolean = false
-) : Parcelable {
-    override fun equals(other: Any?): Boolean {
-        return other is CalendarModel &&
-                other.iranianYear == iranianYear &&
-                other.iranianMonth == iranianMonth &&
-                other.iranianDay == iranianDay
-    }
-}
+) : Parcelable

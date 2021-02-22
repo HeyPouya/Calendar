@@ -37,7 +37,7 @@ class CalendarTool {
      * @return String
      */
     private val iranianDate: String
-        private get() = "$iranianYear/$iranianMonth/$iranianDay"
+        get() = "$iranianYear/$iranianMonth/$iranianDay"
     val iranianLongDate: Long
         get() {
             val year = iranianYear.toString()

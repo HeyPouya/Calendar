@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.R
+import ir.apptune.calendar.databinding.FragmentDialogDateDetailsBinding
 import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.utils.CALENDAR_INTENT_TYPE
 import ir.apptune.calendar.utils.SELECTED_DAY_DETAILS
@@ -20,7 +21,6 @@ import ir.apptune.calendar.utils.extensions.toEnglishMonth
 import ir.apptune.calendar.utils.extensions.toPersianMonth
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
-import kotlinx.android.synthetic.main.fragment_dialog_date_details.*
 import java.util.*
 
 /**
@@ -30,9 +30,12 @@ import java.util.*
 class DateDetailsDialogFragment : DialogFragment() {
 
     private val viewModel: DateDetailsViewModel by viewModels()
+    private lateinit var binding: FragmentDialogDateDetailsBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_dialog_date_details, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentDialogDateDetailsBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,15 +44,15 @@ class DateDetailsDialogFragment : DialogFragment() {
 
         viewModel.getEvents(date)
         viewModel.getEventsLiveData().observe(viewLifecycleOwner, {
-            txtDayEvents.text =
+            binding.txtDayEvents.text =
                     if (it.isNotEmpty()) it else getString(R.string.no_events)
         })
         with(date) {
-            txtPersianDate.text = getString(R.string.persian_full_date,
+            binding.txtPersianDate.text = getString(R.string.persian_full_date,
                     dayOfWeek.toPersianWeekDay(requireContext()), date.iranianDay.toPersianNumber(),
                     iranianMonth.toPersianMonth(requireContext()),
                     date.iranianYear.toPersianNumber())
-            txtGregorianDate.text = getString(R.string.gregorian_full_date,
+            binding.txtGregorianDate.text = getString(R.string.gregorian_full_date,
                     gDay.toPersianNumber(),
                     gMonth.toEnglishMonth(requireContext()),
                     gYear.toPersianNumber())
@@ -58,7 +61,7 @@ class DateDetailsDialogFragment : DialogFragment() {
         if (date.isHoliday)
             setHolidayColors()
 
-        btnAddEvent.setOnClickListener {
+        binding.btnAddEvent.setOnClickListener {
             Intent(Intent.ACTION_EDIT).apply {
                 type = CALENDAR_INTENT_TYPE
                 putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
@@ -75,7 +78,7 @@ class DateDetailsDialogFragment : DialogFragment() {
     }
 
     private fun setHolidayColors() {
-        txtPersianDate.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
-        txtGregorianDate.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+        binding.txtPersianDate.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+        binding.txtGregorianDate.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
     }
 }
