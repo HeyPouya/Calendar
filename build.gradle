@@ -5,7 +5,7 @@ buildscript {
     ext {
         koin_version = "2.1.6"
         nav_version = "2.3.3"
-        hilt_version = '2.31.2-alpha'
+        hilt_version = '2.32-alpha'
         kotlin_version = '1.4.30'
         hilt_viewModel_version = '1.0.0-alpha03'
     }
