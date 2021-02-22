@@ -2,7 +2,6 @@ package ir.apptune.calendar
 
 import android.content.Context
 import android.util.Log
-import org.koin.java.KoinJavaComponent
 import org.xmlpull.v1.XmlPullParser
 
 /**

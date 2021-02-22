@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
+import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.MainActivity
 import ir.apptune.calendar.R
 import ir.apptune.calendar.pojo.CalendarModel
@@ -13,14 +14,16 @@ import ir.apptune.calendar.utils.extensions.toEnglishMonth
 import ir.apptune.calendar.utils.extensions.toPersianMonth
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
-import org.koin.java.KoinJavaComponent
+import javax.inject.Inject
 
 /**
  * The CLass that widget uses to show data
  */
+@AndroidEntryPoint
 class AppWidget : AppWidgetProvider() {
 
-    private val today: CalendarModel by KoinJavaComponent.inject(CalendarModel::class.java)
+    @Inject
+    lateinit var today: CalendarModel
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)

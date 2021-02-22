@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.R
 import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.utils.SELECTED_DAY_DETAILS
@@ -14,13 +16,15 @@ import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
 import kotlinx.android.synthetic.main.calendar_fragment.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
-import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CalendarFragment : Fragment() {
 
-    private val viewModel: CalendarViewModel by viewModel()
-    private val today: CalendarModel by inject()
+    private val viewModel: CalendarViewModel by viewModels()
+
+    @Inject
+    lateinit var today: CalendarModel
     private val adapter: CalendarAdapter = CalendarAdapter {
         val data = Bundle().apply {
             putParcelable(SELECTED_DAY_DETAILS, it)
@@ -33,8 +37,8 @@ class CalendarFragment : Fragment() {
             inflater.inflate(R.layout.calendar_fragment, container, false)
 
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setUpToolbarTexts()
 
         viewModel.getMonthLiveData().observe(viewLifecycleOwner, {
@@ -44,6 +48,7 @@ class CalendarFragment : Fragment() {
         recyclerCalendar.itemAnimator = null
         imgNextMonth.setOnClickListener { viewModel.getNextMonth() }
         imgPreviousMonth.setOnClickListener { viewModel.getPreviousMonth() }
+
     }
 
     private fun setUpToolbarTexts() = with(today) {

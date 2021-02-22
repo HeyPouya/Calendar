@@ -2,13 +2,17 @@ package ir.apptune.calendar.features.calendar.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
 import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
 import ir.apptune.calendar.repository.local.MonthGeneratorClass
+import javax.inject.Inject
 
-class CalendarViewModel(private val monthGenerator: MonthGeneratorClass) : ViewModel() {
+@HiltViewModel
+class CalendarViewModel @Inject constructor(private val monthGenerator: MonthGeneratorClass) : ViewModel() {
 
     private val monthLiveData = MutableLiveData<List<CalendarModel>>()
 

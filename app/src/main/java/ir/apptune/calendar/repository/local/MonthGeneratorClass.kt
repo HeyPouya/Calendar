@@ -8,6 +8,7 @@ import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
 import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
 import ir.apptune.calendar.utils.CalendarTool
 import ir.apptune.calendar.utils.EMPTY_DATE
+import javax.inject.Inject
 
 const val MONDAY = 0
 const val TUESDAY = 1
@@ -22,7 +23,7 @@ const val SUNDAY = 6
  *
  * @property calendar: The object that holds the current date that the user is looking
  */
-class MonthGeneratorClass(private var calendar: CalendarTool, private val currentDate: CalendarModel) {
+class MonthGeneratorClass @Inject constructor(private var calendar: CalendarTool, private val currentDate: CalendarModel) {
 
     /**
      * Generates list of all days of the next or previous month

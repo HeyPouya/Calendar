@@ -9,10 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.R
 import ir.apptune.calendar.pojo.CalendarModel
-import ir.apptune.calendar.pojo.DateModel
 import ir.apptune.calendar.utils.CALENDAR_INTENT_TYPE
 import ir.apptune.calendar.utils.SELECTED_DAY_DETAILS
 import ir.apptune.calendar.utils.extensions.toEnglishMonth
@@ -20,27 +21,25 @@ import ir.apptune.calendar.utils.extensions.toPersianMonth
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
 import kotlinx.android.synthetic.main.fragment_dialog_date_details.*
-import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 import java.util.*
 
 /**
  * The activity that Pops-Up when user clicks on days, in MainPage calendar.
  */
+@AndroidEntryPoint
 class DateDetailsDialogFragment : DialogFragment() {
 
-    private val viewModel: DateDetailsViewModel by viewModel { parametersOf(date) }
-    private lateinit var date: CalendarModel
+    private val viewModel: DateDetailsViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_dialog_date_details, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        date = requireArguments().getParcelable(SELECTED_DAY_DETAILS)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val date = requireArguments().getParcelable<CalendarModel>(SELECTED_DAY_DETAILS)
                 ?: throw IllegalArgumentException("You must provide the selected date")
 
+        viewModel.getEvents(date)
         viewModel.getEventsLiveData().observe(viewLifecycleOwner, {
             txtDayEvents.text =
                     if (it.isNotEmpty()) it else getString(R.string.no_events)
@@ -72,6 +71,7 @@ class DateDetailsDialogFragment : DialogFragment() {
                 }
             }
         }
+
     }
 
     private fun setHolidayColors() {
