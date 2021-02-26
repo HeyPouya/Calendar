@@ -98,7 +98,7 @@ class CalendarTool {
     }
 
     /**
-     * getDayofWeek:
+     * getDayOfWeek:
      * Returns the week day number. Monday=0..Sunday=6;
      *
      * @return int
@@ -112,9 +112,9 @@ class CalendarTool {
      */
     fun nextDay() {
         jdn++
-        JDNToIranian()
-        JDNToJulian()
-        JDNToGregorian()
+        jdnToIranian()
+        jdnToJulian()
+        jdnToGregorian()
     }
 
     /**
@@ -126,20 +126,20 @@ class CalendarTool {
      */
     fun nextDay(days: Int) {
         jdn += days
-        JDNToIranian()
-        JDNToJulian()
-        JDNToGregorian()
+        jdnToIranian()
+        jdnToJulian()
+        jdnToGregorian()
     }
 
     /**
      * previousDay:
-     * Go to previous julian day number (JDN) and adjusts the otehr dates.
+     * Go to previous julian day number (JDN) and adjusts the other dates.
      */
     fun previousDay() {
         jdn--
-        JDNToIranian()
-        JDNToJulian()
-        JDNToGregorian()
+        jdnToIranian()
+        jdnToJulian()
+        jdnToGregorian()
     }
 
     /**
@@ -151,9 +151,9 @@ class CalendarTool {
      */
     fun previousDay(days: Int) {
         jdn -= days
-        JDNToIranian()
-        JDNToJulian()
-        JDNToGregorian()
+        jdnToIranian()
+        jdnToJulian()
+        jdnToGregorian()
     }
 
     /**
@@ -168,10 +168,10 @@ class CalendarTool {
         iranianYear = year
         iranianMonth = month
         iranianDay = day
-        jdn = IranianDateToJDN()
-        JDNToIranian()
-        JDNToJulian()
-        JDNToGregorian()
+        jdn = iranianDateToJDN()
+        jdnToIranian()
+        jdnToJulian()
+        jdnToGregorian()
     }
 
     /**
@@ -187,9 +187,9 @@ class CalendarTool {
         gregorianMonth = month
         gregorianDay = day
         jdn = gregorianDateToJDN(year, month, day)
-        JDNToIranian()
-        JDNToJulian()
-        JDNToGregorian()
+        jdnToIranian()
+        jdnToJulian()
+        jdnToGregorian()
     }
 
     /**
@@ -205,9 +205,9 @@ class CalendarTool {
         julianMonth = month
         julianDay = day
         jdn = julianDateToJDN(year, month, day)
-        JDNToIranian()
-        JDNToJulian()
-        JDNToGregorian()
+        jdnToIranian()
+        jdnToJulian()
+        jdnToGregorian()
     }
 
     /**
@@ -218,7 +218,7 @@ class CalendarTool {
      * ranges from (-61 to 3177).This method will set the following private data
      * members as follows:
      * leap: Number of years since the last leap year (0 to 4)
-     * Gy: Gregorian year of the begining of Iranian year
+     * Gy: Gregorian year of the beginning of Iranian year
      * march: The March day of Farvardin the 1st (first day of jaYear)
      */
     private fun iranianCalendar() {
@@ -242,7 +242,7 @@ class CalendarTool {
             j++
         } while (j < 20 && iranianYear >= jm)
         var n = iranianYear - jp
-        // Find the number of leap years from AD 621 to the begining of the current
+        // Find the number of leap years from AD 621 to the beginning of the current
         // Iranian year in the Iranian (Jalali) calendar
         leapJ += n / 33 * 8 + (n % 33 + 3) / 4
         if (jump % 33 == 4 && jump - n == 4) leapJ++
@@ -263,7 +263,7 @@ class CalendarTool {
      * ranges from (-61 to 3177).This method will set the following private data
      * members as follows:
      * leap: Number of years since the last leap year (0 to 4)
-     * Gy: Gregorian year of the begining of Iranian year
+     * Gy: Gregorian year of the beginning of Iranian year
      * march: The March day of Farvardin the 1st (first day of jaYear)
      */
     fun isLeap(irYear1: Int): Boolean {
@@ -287,7 +287,7 @@ class CalendarTool {
             j++
         } while (j < 20 && irYear1 >= jm)
         var n = irYear1 - jp
-        // Find the number of leap years from AD 621 to the begining of the current
+        // Find the number of leap years from AD 621 to the beginning of the current
         // Iranian year in the Iranian (Jalali) calendar
         leapJ += n / 33 * 8 + (n % 33 + 3) / 4
         if (jump % 33 == 4 && jump - n == 4) leapJ++
@@ -311,7 +311,7 @@ class CalendarTool {
      *
      * @return long (Julian Day Number)
      */
-    private fun IranianDateToJDN(): Int {
+    private fun iranianDateToJDN(): Int {
         iranianCalendar()
         return gregorianDateToJDN(gregorianYear, 3, march) + (iranianMonth - 1) * 31 - iranianMonth / 7 * (iranianMonth - 7) + iranianDay - 1
     }
@@ -323,12 +323,12 @@ class CalendarTool {
      * 'JDN' is set correctly. This method first converts the JDN to Gregorian
      * calendar and then to Iranian calendar.
      */
-    private fun JDNToIranian() {
-        JDNToGregorian()
+    private fun jdnToIranian() {
+        jdnToGregorian()
         iranianYear = gregorianYear - 621
         iranianCalendar() // This invocation will update 'leap' and 'march'
-        val JDN1F = gregorianDateToJDN(gregorianYear, 3, march)
-        var k = jdn - JDN1F
+        val jdn1F = gregorianDateToJDN(gregorianYear, 3, march)
+        var k = jdn - jdn1F
         if (k >= 0) {
             if (k <= 185) {
                 iranianMonth = 1 + k / 31
@@ -370,7 +370,7 @@ class CalendarTool {
      * D.A. Hatcher, Q.Jl.R.Astron.Soc. 25(1984), 53-55 slightly modified by K.M.
      * Borkowski, Post.Astron. 25(1987), 275-279).
      */
-    private fun JDNToJulian() {
+    private fun jdnToJulian() {
         val j = 4 * jdn + 139361631
         val i = j % 1461 / 4 * 5 + 308
         julianDay = i % 153 / 5 + 1
@@ -406,7 +406,7 @@ class CalendarTool {
      * D.A. Hatcher, Q.Jl.R.Astron.Soc. 25(1984), 53-55 slightly modified by K.M.
      * Borkowski, Post.Astron. 25(1987), 275-279).
      */
-    private fun JDNToGregorian() {
+    private fun jdnToGregorian() {
         var j = 4 * jdn + 139361631
         j += ((4 * jdn + 183187720) / 146097 * 3 / 4 * 4 - 3908)
         val i = j % 1461 / 4 * 5 + 308
@@ -481,9 +481,8 @@ class CalendarTool {
      *
      * @return int
      */
-    var julianYear // Year part of a Julian date
+    private var julianYear // Year part of a Julian date
             = 0
-        private set
 
     /**
      * getJulianMonth:
@@ -491,9 +490,8 @@ class CalendarTool {
      *
      * @return int
      */
-    var julianMonth // Month part of a Julian date
+    private var julianMonth // Month part of a Julian date
             = 0
-        private set
 
     /**
      * getJulianDay()
@@ -501,9 +499,8 @@ class CalendarTool {
      *
      * @return int
      */
-    var julianDay // Day part of a Julian date
+    private var julianDay // Day part of a Julian date
             = 0
-        private set
     private var leap // Number of years since the last leap year (0 to 4)
             = 0
     private var jdn // Julian Day Number

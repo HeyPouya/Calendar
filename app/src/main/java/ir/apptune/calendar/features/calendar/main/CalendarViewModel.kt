@@ -2,7 +2,6 @@ package ir.apptune.calendar.features.calendar.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.apptune.calendar.pojo.CalendarModel

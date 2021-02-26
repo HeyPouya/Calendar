@@ -7,12 +7,9 @@
     <string name="wednesdays">چهارشنبه</string>
     <string name="thursday">پنجشنبه</string>
     <string name="friday">جمعه</string>
-    <string name="title_activity_app_widget">ویجت</string>
     <string name="events_of_this_day">مناسبت های این روز :</string>
     <string name="set_a_work_to_do">کاری برای انجام در این روز تنظیم کنید</string>
-    <string name="no_events_today_google">رویدادهای شما(نیازمند اتصال به تقویم گوگل)</string>
     <string name="google_calendar_events">رویدادهای تقویم گوگل :</string>
-    <string name="please_login_from_main_page">لطفا ابتدا از صفحه ی اصلی به تقویم گوگل خود متصل شوید</string>
     <string name="last_month">ماه قبل</string>
     <string name="next_month">ماه بعد</string>
     <string name="farvardin">فروردین</string>
