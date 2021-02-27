@@ -17,6 +17,9 @@ import ir.apptune.calendar.utils.extensions.toPersianNumber
 import ir.apptune.calendar.utils.extensions.toPersianWeekDay
 import javax.inject.Inject
 
+/**
+ * Main view of the application that contains the calendar
+ */
 @AndroidEntryPoint
 class CalendarFragment : Fragment() {
 

@@ -12,10 +12,16 @@ import ir.apptune.calendar.utils.CalendarTool
 import java.util.*
 import javax.inject.Singleton
 
+/**
+ * This object contains hilt modules needed for injection
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object DateModule {
 
+    /**
+     * Provides current date details
+     */
     @Provides
     @Singleton
     fun todayProvider(calendar: GregorianCalendar): CalendarModel {
@@ -25,14 +31,23 @@ object DateModule {
         }
     }
 
+    /**
+     * Provides Gregorian calendar instance
+     */
     @Provides
     @Singleton
     fun gregorianCalendarProvider() = GregorianCalendar()
 
+    /**
+     * Provides CalendarTool instance to convert dates from Gregorian to Shamsi
+     */
     @Provides
     @Singleton
     fun calendarToolProvider(calendar: GregorianCalendar) = CalendarTool(calendar)
 
+    /**
+     * Provides local repository
+     */
     @Provides
     @Singleton
     fun monthGeneratorProvider(app: Application, calendarModel: CalendarModel, calendarTool: CalendarTool): MonthGeneratorClass {

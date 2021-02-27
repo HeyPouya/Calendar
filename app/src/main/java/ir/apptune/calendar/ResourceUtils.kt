@@ -20,6 +20,9 @@ private const val VACATION = "IsVacation"
 private const val X_CALENDAR = "XCalendar"
 private const val IS_VACATION = "1"
 
+/**
+ * This class reads xml files that contain holidays dates
+ */
 class ResourceUtils(c: Context) {
 
     private fun getHashMapResource(c: Context, hashMapResId: Int) {

@@ -24,7 +24,7 @@ import ir.apptune.calendar.utils.extensions.toPersianWeekDay
 import java.util.*
 
 /**
- * The activity that Pops-Up when user clicks on days, in MainPage calendar.
+ * Show details about the selected date in a popup form
  */
 @AndroidEntryPoint
 class DateDetailsDialogFragment : DialogFragment() {

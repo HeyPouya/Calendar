@@ -15,6 +15,9 @@ import ir.apptune.calendar.pojo.CalendarModel
 import ir.apptune.calendar.utils.EMPTY_DATE
 import ir.apptune.calendar.utils.extensions.toPersianNumber
 
+/**
+ * Adapter to show the calendar days
+ */
 class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<CalendarModel, CalendarViewHolder>(CalendarDiffUtils()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
@@ -28,6 +31,9 @@ class CalendarAdapter(val clickListener: (CalendarModel) -> Unit) : ListAdapter<
     inner class CalendarViewHolder(private val binding: CalendarItemBinding, containerView: View) :
             RecyclerView.ViewHolder(containerView) {
 
+        /**
+         * Binds views via ViewBinding
+         */
         fun onBind(dateModel: CalendarModel) {
             with(dateModel) {
                 with(binding) {
