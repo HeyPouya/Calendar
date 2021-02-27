@@ -3,6 +3,9 @@ package ir.apptune.calendar.utils.extensions
 import android.content.Context
 import ir.apptune.calendar.R
 
+/**
+ *
+ */
 fun Int.toPersianMonth(context: Context): String = when (this) {
     1 -> context.getString(R.string.farvardin)
     2 -> context.getString(R.string.ordibehesht)
