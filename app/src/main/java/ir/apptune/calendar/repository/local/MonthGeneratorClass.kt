@@ -1,29 +1,32 @@
 package ir.apptune.calendar.repository.local
 
-import ir.apptune.calendar.ResourceUtils
-import ir.apptune.calendar.pojo.CalendarModel
+import ir.apptune.calendar.core.utils.CalendarTool
+import ir.apptune.calendar.core.utils.EMPTY_DATE
+import ir.apptune.calendar.core.pojo.CalendarModel
+import ir.apptune.calendar.core.utils.ResourceUtils
 import ir.apptune.calendar.pojo.DateModel
 import ir.apptune.calendar.pojo.MonthType
 import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
 import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
-import ir.apptune.calendar.utils.CalendarTool
-import ir.apptune.calendar.utils.EMPTY_DATE
 import javax.inject.Inject
 
-const val MONDAY = 0
-const val TUESDAY = 1
-const val WEDNESDAY = 2
-const val THURSDAY = 3
-const val FRIDAY = 4
-const val SATURDAY = 5
-const val SUNDAY = 6
+private const val MONDAY = 0
+private const val TUESDAY = 1
+private const val WEDNESDAY = 2
+private const val THURSDAY = 3
+private const val FRIDAY = 4
+private const val SATURDAY = 5
+private const val SUNDAY = 6
 
 /**
  * This class generated a month before or after the current month that the user is looking at
  *
  * @property calendar: The object that holds the current date that the user is looking
  */
-class MonthGeneratorClass @Inject constructor(private var calendar: CalendarTool, private val currentDate: CalendarModel) {
+class MonthGeneratorClass @Inject constructor(
+    private var calendar: CalendarTool,
+    private val currentDate: CalendarModel
+) {
 
     /**
      * Generates list of all days of the next or previous month
@@ -38,10 +41,19 @@ class MonthGeneratorClass @Inject constructor(private var calendar: CalendarTool
         for (i in 1..month.dayNumber) {
             with(calendar) {
                 setIranianDate(month.year, month.month, i)
-                list.add(CalendarModel(iranianDay, iranianMonth, iranianYear, dayOfWeek, gregorianDay, gregorianMonth, gregorianYear).apply {
-                    checkIsHoliday(this)
-                    checkIsToday(this)
-                })
+                list.add(
+                    CalendarModel(
+                        iranianDay,
+                        iranianMonth,
+                        iranianYear,
+                        dayOfWeek,
+                        gregorianDay,
+                        gregorianMonth,
+                        gregorianYear
+                    ).apply {
+                        checkIsHoliday(this)
+                        checkIsToday(this)
+                    })
             }
         }
         return list
@@ -52,7 +64,10 @@ class MonthGeneratorClass @Inject constructor(private var calendar: CalendarTool
     }
 
     private fun checkIsHoliday(calendarModel: CalendarModel) = with(calendarModel) {
-        if (dayOfWeek == FRIDAY || (iranianYear == currentDate.iranianYear && ResourceUtils.vacationP.containsKey(iranianMonth * 100 + iranianDay)))
+        if (dayOfWeek == FRIDAY || (iranianYear == currentDate.iranianYear && ResourceUtils.vacationP.containsKey(
+                iranianMonth * 100 + iranianDay
+            ))
+        )
             isHoliday = true
     }
 
@@ -68,7 +83,8 @@ class MonthGeneratorClass @Inject constructor(private var calendar: CalendarTool
         }
 
         calendar.setIranianDate(year, month, 1)
-        val dayNumber = if (month <= 6) 31 else if (month == 12 && !calendar.isLeap(calendar.iranianYear)) 29 else 30
+        val dayNumber =
+            if (month <= 6) 31 else if (month == 12 && !calendar.isLeap(calendar.iranianYear)) 29 else 30
         return DateModel(year, month, dayNumber)
     }
 
@@ -84,7 +100,8 @@ class MonthGeneratorClass @Inject constructor(private var calendar: CalendarTool
         }
 
         calendar.setIranianDate(year, month, 1)
-        val dayNumber = if (month <= 6) 31 else if (month == 12 && !calendar.isLeap(calendar.iranianYear)) 29 else 30
+        val dayNumber =
+            if (month <= 6) 31 else if (month == 12 && !calendar.isLeap(calendar.iranianYear)) 29 else 30
         return DateModel(year, month, dayNumber)
     }
 
@@ -102,10 +119,19 @@ class MonthGeneratorClass @Inject constructor(private var calendar: CalendarTool
     private fun emptyDayMaker(dayOfWeek: Int): ArrayList<CalendarModel> {
         val list = arrayListOf<CalendarModel>()
         for (i in 1..dayOfWeek) {
-            list.add(CalendarModel(EMPTY_DATE, EMPTY_DATE, EMPTY_DATE, EMPTY_DATE, EMPTY_DATE, EMPTY_DATE, EMPTY_DATE))
+            list.add(
+                CalendarModel(
+                    EMPTY_DATE,
+                    EMPTY_DATE,
+                    EMPTY_DATE,
+                    EMPTY_DATE,
+                    EMPTY_DATE,
+                    EMPTY_DATE,
+                    EMPTY_DATE
+                )
+            )
         }
         return list
     }
-
 }
 

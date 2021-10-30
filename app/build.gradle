@@ -1,3 +1,5 @@
+import ir.apptune.calendar.buildsrc.Libs
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -5,12 +7,12 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
     defaultConfig {
         applicationId "ir.apptune.calendar"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 500
         versionName "5.0.0"
     }
@@ -24,41 +26,33 @@ android {
     buildFeatures {
         viewBinding true
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
+    implementation project (":features:widget")
+    implementation project (":core")
+    implementation project (":features:calendar-details")
     // Kotlin
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Libs.AndroidX.core
+    implementation Libs.Kotlin.stdlib
 
     // Support
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.fragment:fragment-ktx:1.3.0'
+    implementation Libs.AndroidX.appcompat
+    implementation Libs.AndroidX.constraintLayout
+    implementation Libs.Material.android
 
     // ViewModel + LiveData
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation Libs.Lifecycle.viewModel
+    implementation Libs.Lifecycle.liveData
 
     // Navigation Components
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation Libs.Navigation.navigation
+    implementation Libs.Navigation.navigationUi
 
     // Hilt Library
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewModel_version"
-    kapt "androidx.hilt:hilt-compiler:$hilt_viewModel_version"
+    implementation Libs.Hilt.android
+    kapt Libs.Hilt.androidCompiler
+    kapt Libs.Hilt.compiler
 
 }

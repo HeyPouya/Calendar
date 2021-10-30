@@ -10,11 +10,10 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.R
 import ir.apptune.calendar.databinding.CalendarFragmentBinding
-import ir.apptune.calendar.pojo.CalendarModel
-import ir.apptune.calendar.utils.SELECTED_DAY_DETAILS
-import ir.apptune.calendar.utils.extensions.toPersianMonth
-import ir.apptune.calendar.utils.extensions.toPersianNumber
-import ir.apptune.calendar.utils.extensions.toPersianWeekDay
+import ir.apptune.calendar.core.pojo.CalendarModel
+import ir.apptune.calendar.core.utils.extensions.toPersianMonth
+import ir.apptune.calendar.core.utils.extensions.toPersianNumber
+import ir.apptune.calendar.core.utils.extensions.toPersianWeekDay
 import javax.inject.Inject
 
 /**
@@ -30,7 +29,7 @@ class CalendarFragment : Fragment() {
     lateinit var today: CalendarModel
     private val adapter: CalendarAdapter = CalendarAdapter {
         val data = Bundle().apply {
-            putParcelable(SELECTED_DAY_DETAILS, it)
+            putParcelable(ir.apptune.calendar.core.utils.SELECTED_DAY_DETAILS, it)
         }
         findNavController().navigate(R.id.action_calendarFragment_to_onClickDialogActivity, data)
     }

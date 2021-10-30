@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.apptune.calendar.pojo.CalendarModel
+import ir.apptune.calendar.core.pojo.CalendarModel
 import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
 import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
 import ir.apptune.calendar.repository.local.MonthGeneratorClass

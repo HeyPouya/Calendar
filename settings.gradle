@@ -1,1 +1,4 @@
 include ':app'
+include ':features:widget'
+include ':core'
+include ':features:calendar-details'

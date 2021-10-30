@@ -5,10 +5,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.apptune.calendar.ResourceUtils
-import ir.apptune.calendar.pojo.CalendarModel
+import ir.apptune.calendar.core.pojo.CalendarModel
+import ir.apptune.calendar.core.utils.CalendarTool
+import ir.apptune.calendar.core.utils.ResourceUtils
 import ir.apptune.calendar.repository.local.MonthGeneratorClass
-import ir.apptune.calendar.utils.CalendarTool
 import java.util.*
 import javax.inject.Singleton
 
@@ -43,14 +43,15 @@ object DateModule {
      */
     @Provides
     @Singleton
-    fun calendarToolProvider(calendar: GregorianCalendar) = CalendarTool(calendar)
+    fun calendarToolProvider(calendar: GregorianCalendar) =
+        CalendarTool(calendar)
 
     /**
      * Provides local repository
      */
     @Provides
     @Singleton
-    fun monthGeneratorProvider(app: Application, calendarModel: CalendarModel, calendarTool: CalendarTool): MonthGeneratorClass {
+    fun monthGeneratorProvider(app: Application, calendarModel: CalendarModel, calendarTool: ir.apptune.calendar.core.utils.CalendarTool): MonthGeneratorClass {
         ResourceUtils(app)
         return MonthGeneratorClass(calendarTool, calendarModel)
     }
