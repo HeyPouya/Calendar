@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.core.pojo.CalendarModel
@@ -18,7 +18,7 @@ import ir.apptune.calendar.core.utils.extensions.toPersianMonth
 import ir.apptune.calendar.core.utils.extensions.toPersianNumber
 import ir.apptune.calendar.core.utils.extensions.toPersianWeekDay
 import ir.apptune.calendar.details.databinding.FragmentDialogDateDetailsBinding
-import java.util.*
+import java.util.GregorianCalendar
 
 
 private const val CALENDAR_INTENT_TYPE = "vnd.android.cursor.item/event"
@@ -29,7 +29,7 @@ private const val CALENDAR_INTENT_TYPE = "vnd.android.cursor.item/event"
 @AndroidEntryPoint
 class DateDetailsDialogFragment : DialogFragment() {
 
-    private val viewModel: DateDetailsViewModel by viewModels()
+    private val viewModel by lazy { ViewModelProvider(requireActivity())[DateDetailsViewModel::class.java] }
     private lateinit var binding: FragmentDialogDateDetailsBinding
 
     override fun onCreateView(
