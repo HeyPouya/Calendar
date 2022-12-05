@@ -9,11 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.R
-import ir.apptune.calendar.databinding.CalendarFragmentBinding
 import ir.apptune.calendar.core.pojo.CalendarModel
+import ir.apptune.calendar.core.utils.SELECTED_DAY_DETAILS
 import ir.apptune.calendar.core.utils.extensions.toPersianMonth
 import ir.apptune.calendar.core.utils.extensions.toPersianNumber
 import ir.apptune.calendar.core.utils.extensions.toPersianWeekDay
+import ir.apptune.calendar.databinding.CalendarFragmentBinding
 import javax.inject.Inject
 
 /**
@@ -29,13 +30,15 @@ class CalendarFragment : Fragment() {
     lateinit var today: CalendarModel
     private val adapter: CalendarAdapter = CalendarAdapter {
         val data = Bundle().apply {
-            putParcelable(ir.apptune.calendar.core.utils.SELECTED_DAY_DETAILS, it)
+            putParcelable(SELECTED_DAY_DETAILS, it)
         }
         findNavController().navigate(R.id.action_calendarFragment_to_onClickDialogActivity, data)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = CalendarFragmentBinding.inflate(inflater)
         return binding.root
     }
@@ -45,9 +48,9 @@ class CalendarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbarTexts()
 
-        viewModel.getMonthLiveData().observe(viewLifecycleOwner, {
+        viewModel.getMonthLiveData().observe(viewLifecycleOwner) {
             showCalendar(it.toMutableList())
-        })
+        }
         binding.recyclerCalendar.adapter = adapter
         binding.recyclerCalendar.itemAnimator = null
         binding.imgNextMonth.setOnClickListener { viewModel.getNextMonth() }
@@ -65,6 +68,4 @@ class CalendarFragment : Fragment() {
         binding.txtYear.text = list.last().iranianYear.toPersianNumber()
         adapter.submitList(list)
     }
-
-
 }

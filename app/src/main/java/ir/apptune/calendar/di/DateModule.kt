@@ -27,7 +27,16 @@ object DateModule {
     fun todayProvider(calendar: GregorianCalendar): CalendarModel {
         val calendarTool = CalendarTool(calendar)
         return with(calendarTool) {
-            CalendarModel(iranianDay, iranianMonth, iranianYear, dayOfWeek, gregorianDay, gregorianMonth, gregorianYear, today = true)
+            CalendarModel(
+                iranianDay,
+                iranianMonth,
+                iranianYear,
+                dayOfWeek,
+                gregorianDay,
+                gregorianMonth,
+                gregorianYear,
+                today = true
+            )
         }
     }
 
@@ -51,7 +60,11 @@ object DateModule {
      */
     @Provides
     @Singleton
-    fun monthGeneratorProvider(app: Application, calendarModel: CalendarModel, calendarTool: ir.apptune.calendar.core.utils.CalendarTool): MonthGeneratorClass {
+    fun monthGeneratorProvider(
+        app: Application,
+        calendarModel: CalendarModel,
+        calendarTool: CalendarTool
+    ): MonthGeneratorClass {
         ResourceUtils(app)
         return MonthGeneratorClass(calendarTool, calendarModel)
     }

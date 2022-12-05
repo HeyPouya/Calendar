@@ -13,11 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ir.apptune.calendar.core.pojo.CalendarModel
+import ir.apptune.calendar.core.utils.SELECTED_DAY_DETAILS
 import ir.apptune.calendar.core.utils.extensions.toEnglishMonth
 import ir.apptune.calendar.core.utils.extensions.toPersianMonth
 import ir.apptune.calendar.core.utils.extensions.toPersianNumber
 import ir.apptune.calendar.core.utils.extensions.toPersianWeekDay
 import ir.apptune.calendar.details.databinding.FragmentDialogDateDetailsBinding
+import ir.apptune.calendar.details.utils.parcelable
 import java.util.GregorianCalendar
 
 
@@ -44,14 +46,14 @@ class DateDetailsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val date =
-            requireArguments().getParcelable<CalendarModel>(ir.apptune.calendar.core.utils.SELECTED_DAY_DETAILS)
+            requireArguments().parcelable<CalendarModel>(SELECTED_DAY_DETAILS)
                 ?: throw IllegalArgumentException("You must provide the selected date")
 
         viewModel.getEvents(date)
-        viewModel.getEventsLiveData().observe(viewLifecycleOwner, {
+        viewModel.getEventsLiveData().observe(viewLifecycleOwner) {
             binding.txtDayEvents.text =
-                if (it.isNotEmpty()) it else getString(R.string.no_events)
-        })
+                it.ifEmpty { getString(R.string.no_events) }
+        }
         with(date) {
             binding.txtPersianDate.text = getString(
                 R.string.persian_full_date,

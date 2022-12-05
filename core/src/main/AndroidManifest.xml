@@ -1,4 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="ir.apptune.calendar.core">
-
-</manifest>
+<manifest package="ir.apptune.calendar.core" />

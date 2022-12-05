@@ -1,6 +1,7 @@
 package ir.apptune.calendar.core.utils
 
-import java.util.*
+import java.util.Calendar
+import java.util.GregorianCalendar
 
 /**
  * The Class THat converts Gregorian calendar to Shamsi calendar
@@ -12,9 +13,11 @@ class CalendarTool {
      * other private members of the class (Iranian and Julian dates).
      */
     constructor(calendar: GregorianCalendar) {
-        setGregorianDate(calendar[Calendar.YEAR],
-                calendar[Calendar.MONTH] + 1,
-                calendar[Calendar.DAY_OF_MONTH])
+        setGregorianDate(
+            calendar[Calendar.YEAR],
+            calendar[Calendar.MONTH] + 1,
+            calendar[Calendar.DAY_OF_MONTH]
+        )
     }
 
     /**
@@ -74,13 +77,14 @@ class CalendarTool {
     private val weekDayStr: String
         get() {
             val weekDayStr = arrayOf(
-                    "دوشنبه",
-                    "سه شنبه",
-                    "چهارشنبه",
-                    "پنج شنبه",
-                    "جمعه",
-                    "شنبه",
-                    "یکشنبه")
+                "دوشنبه",
+                "سه شنبه",
+                "چهارشنبه",
+                "پنج شنبه",
+                "جمعه",
+                "شنبه",
+                "یکشنبه"
+            )
             return weekDayStr[dayOfWeek]
         }
 
@@ -223,8 +227,10 @@ class CalendarTool {
      */
     private fun iranianCalendar() {
         // Iranian years starting the 33-year rule
-        val breaks = intArrayOf(-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181,
-                1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178)
+        val breaks = intArrayOf(
+            -61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181,
+            1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178
+        )
 
         var jump: Int
         gregorianYear = iranianYear + 621
@@ -268,8 +274,10 @@ class CalendarTool {
      */
     fun isLeap(irYear1: Int): Boolean {
         // Iranian years starting the 33-year rule
-        val breaks = intArrayOf(-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181,
-                1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178)
+        val breaks = intArrayOf(
+            -61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181,
+            1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178
+        )
 
         var jump: Int
         gregorianYear = irYear1 + 621
@@ -313,7 +321,11 @@ class CalendarTool {
      */
     private fun iranianDateToJDN(): Int {
         iranianCalendar()
-        return gregorianDateToJDN(gregorianYear, 3, march) + (iranianMonth - 1) * 31 - iranianMonth / 7 * (iranianMonth - 7) + iranianDay - 1
+        return gregorianDateToJDN(
+            gregorianYear,
+            3,
+            march
+        ) + (iranianMonth - 1) * 31 - iranianMonth / 7 * (iranianMonth - 7) + iranianDay - 1
     }
 
     /**
@@ -393,7 +405,8 @@ class CalendarTool {
      * @return int
      */
     private fun gregorianDateToJDN(year: Int, month: Int, day: Int): Int {
-        var jdn = (year + (month - 8) / 6 + 100100) * 1461 / 4 + (153 * ((month + 9) % 12) + 2) / 5 + day - 34840408
+        var jdn =
+            (year + (month - 8) / 6 + 100100) * 1461 / 4 + (153 * ((month + 9) % 12) + 2) / 5 + day - 34840408
         jdn = jdn - (year + 100100 + (month - 8) / 6) / 100 * 3 / 4 + 752
         return jdn
     }

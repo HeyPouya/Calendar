@@ -14,7 +14,8 @@ import javax.inject.Inject
  * ViewModel of CalendarFragment
  */
 @HiltViewModel
-class CalendarViewModel @Inject constructor(private val monthGenerator: MonthGeneratorClass) : ViewModel() {
+class CalendarViewModel @Inject constructor(private val monthGenerator: MonthGeneratorClass) :
+    ViewModel() {
 
     private val monthLiveData = MutableLiveData<List<CalendarModel>>()
 

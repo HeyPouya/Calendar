@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/calendarFragment">
 
     <fragment
         android:id="@+id/calendarFragment"
         android:name="ir.apptune.calendar.features.calendar.main.CalendarFragment"
-        android:label="CalendarFragment" >
+        android:label="CalendarFragment">
         <action
             android:id="@+id/action_calendarFragment_to_onClickDialogActivity"
             app:destination="@id/onClickDialogActivity" />
@@ -14,7 +15,7 @@
     <dialog
         android:id="@+id/onClickDialogActivity"
         android:name="ir.apptune.calendar.details.DateDetailsDialogFragment"
-        android:label="OnClickDialogActivity" >
+        android:label="OnClickDialogActivity">
         <argument
             android:name="SelectedDayDetails"
             app:argType="ir.apptune.calendar.core.pojo.CalendarModel" />
