@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-parcelize")
 }
 
@@ -25,6 +25,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.appcompat)
     implementation(libs.material)
+
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso)

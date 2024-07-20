@@ -22,10 +22,9 @@ core= "1.13.1"
 junit = "4.13.2"
 androidJunit = "1.2.1"
 espresso = "3.6.1"
+ksp = "2.0.0-1.0.21"
 
 [libraries]
-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref="appcompat" }
 constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref="constraintLayout" }
 recyclerView = { group = "androidx.recyclerview", name = "recyclerview", version.ref="recyclerView" }
@@ -45,3 +44,12 @@ androidx-core = { group = "androidx.core", name = "core-ktx", version.ref="core"
 junit = { group = "junit", name = "junit", version.ref="junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref="androidJunit" }
 espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref="espresso" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hiltGradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

@@ -1,9 +1,9 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hiltGradle)
     id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -38,9 +38,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":features:widget"))
-    implementation(project(":core"))
-    implementation(project(":features:calendar-details"))
+    implementation(projects.features.widget)
+    implementation(projects.core)
+    implementation(projects.features.calendarDetails)
     // Kotlin
     implementation(libs.androidx.core)
 
@@ -59,10 +59,7 @@ dependencies {
 
     // Hilt Library
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
 
-}
-kapt {
-    correctErrorTypes = true
 }

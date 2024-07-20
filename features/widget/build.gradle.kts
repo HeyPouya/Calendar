@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hiltGradle)
 }
 
 android {
@@ -22,18 +22,18 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
+    implementation(projects.core)
+
     implementation(libs.androidx.core)
     implementation(libs.appcompat)
     implementation(libs.material)
 
     // Hilt Library
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso)
-
 }
