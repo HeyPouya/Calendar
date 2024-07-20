@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.apptune.calendar.core.pojo.CalendarModel
 import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
 import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
-import ir.apptune.calendar.repository.local.MonthGeneratorClass
+import ir.apptune.calendar.repository.MonthGeneratorClass
 import javax.inject.Inject
 
 /**

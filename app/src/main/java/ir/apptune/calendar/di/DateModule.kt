@@ -8,7 +8,7 @@ import dagger.hilt.components.SingletonComponent
 import ir.apptune.calendar.core.pojo.CalendarModel
 import ir.apptune.calendar.core.utils.CalendarTool
 import ir.apptune.calendar.core.utils.ResourceUtils
-import ir.apptune.calendar.repository.local.MonthGeneratorClass
+import ir.apptune.calendar.repository.MonthGeneratorClass
 import java.util.*
 import javax.inject.Singleton
 

@@ -1,4 +1,4 @@
-package ir.apptune.calendar.repository.local
+package ir.apptune.calendar.repository
 
 import ir.apptune.calendar.core.pojo.CalendarModel
 import ir.apptune.calendar.core.utils.CalendarTool
@@ -6,8 +6,6 @@ import ir.apptune.calendar.core.utils.EMPTY_DATE
 import ir.apptune.calendar.core.utils.ResourceUtils
 import ir.apptune.calendar.pojo.DateModel
 import ir.apptune.calendar.pojo.MonthType
-import ir.apptune.calendar.pojo.MonthType.NEXT_MONTH
-import ir.apptune.calendar.pojo.MonthType.PREVIOUS_MONTH
 import javax.inject.Inject
 
 private const val MONDAY = 0
@@ -36,7 +34,8 @@ class MonthGeneratorClass @Inject constructor(
      */
     fun getMonthList(monthType: MonthType): List<CalendarModel> {
         val list = arrayListOf<CalendarModel>()
-        val month = if (monthType == NEXT_MONTH) getNextMonthDate() else getPreviousMonthDate()
+        val month =
+            if (monthType == MonthType.NEXT_MONTH) getNextMonthDate() else getPreviousMonthDate()
         list.addAll(addEmptyDays(calendar.dayOfWeek))
         for (i in 1..month.dayNumber) {
             with(calendar) {
@@ -134,4 +133,3 @@ class MonthGeneratorClass @Inject constructor(
         return list
     }
 }
-
