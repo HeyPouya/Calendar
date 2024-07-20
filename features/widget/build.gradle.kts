@@ -18,7 +18,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-    namespace = "ir.apptune.calendar.widget"
+    namespace = "com.pouyaheydari.calendar.widget"
 }
 
 dependencies {

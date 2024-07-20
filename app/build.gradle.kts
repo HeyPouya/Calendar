@@ -9,7 +9,7 @@ plugins {
 android {
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
     defaultConfig {
-        applicationId = "ir.apptune.calendar"
+        applicationId = "com.pouyaheydari.calendar"
         minSdk = libs.versions.minSdkVersion.get().toInt()
         targetSdk = libs.versions.targetSdkVersion.get().toInt()
         versionCode = libs.versions.appVersion.get().toInt()
@@ -34,7 +34,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    namespace = "ir.apptune.calendar"
+    namespace = "com.pouyaheydari.calendar"
 }
 
 dependencies {

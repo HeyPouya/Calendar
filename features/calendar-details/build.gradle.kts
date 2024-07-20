@@ -20,7 +20,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    namespace = "ir.apptune.calendar.details"
+    namespace = "com.pouyaheydari.calendar.details"
 }
 
 dependencies {

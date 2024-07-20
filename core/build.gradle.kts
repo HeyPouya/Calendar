@@ -10,7 +10,7 @@ android {
         minSdk = libs.versions.minSdkVersion.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    namespace = "ir.apptune.calendar.core"
+    namespace = "com.pouyaheydari.calendar.core"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

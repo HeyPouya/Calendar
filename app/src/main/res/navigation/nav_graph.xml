@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="ir.apptune.calendar.features.calendar.main.CalendarFragment"
+        android:name="com.pouyaheydari.calendar.features.calendar.main.CalendarFragment"
         android:label="CalendarFragment">
         <action
             android:id="@+id/action_calendarFragment_to_onClickDialogActivity"
@@ -14,10 +14,10 @@
     </fragment>
     <dialog
         android:id="@+id/onClickDialogActivity"
-        android:name="ir.apptune.calendar.details.DateDetailsDialogFragment"
+        android:name="com.pouyaheydari.calendar.details.DateDetailsDialogFragment"
         android:label="OnClickDialogActivity">
         <argument
             android:name="SelectedDayDetails"
-            app:argType="ir.apptune.calendar.core.pojo.CalendarModel" />
+            app:argType="com.pouyaheydari.calendar.core.pojo.CalendarModel" />
     </dialog>
 </navigation>
