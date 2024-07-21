@@ -7,15 +7,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
-import dagger.hilt.android.AndroidEntryPoint
 import com.pouyaheydari.calendar.core.pojo.CalendarModel
 import com.pouyaheydari.calendar.core.utils.extensions.toEnglishMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianWeekDay
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-private const val MAIN_ACTIVITY = "ir.apptune.calendar.MainActivity"
+private const val MAIN_ACTIVITY = ".MainActivity"
 
 /**
  * The CLass that widget uses to show data
@@ -33,7 +33,7 @@ class AppWidget : AppWidgetProvider() {
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
-        val intent = Intent(context, Class.forName(MAIN_ACTIVITY))
+        val intent = Intent(context, Class.forName(context.packageName.plus(MAIN_ACTIVITY)))
         val flag = if (Build.VERSION.SDK_INT >= 23) PendingIntent.FLAG_IMMUTABLE else 0
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, flag)
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_layout).apply {
