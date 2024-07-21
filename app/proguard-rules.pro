@@ -17,4 +17,3 @@
 #}
 -keepattributes EnclosingMethod
 -keepattributes *Annotation*,Signature
--keep class com.pouyaheydari.calendar.pojo** {*;}
