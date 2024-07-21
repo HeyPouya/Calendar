@@ -39,64 +39,51 @@ class CalendarAdapter(private val clickListener: (CalendarModel) -> Unit) :
         fun onBind(dateModel: CalendarModel) {
             with(dateModel) {
                 with(binding) {
-                    txtIranianDate.isVisible =
-                        iranianDay != EMPTY_DATE
-                    txtGregorianDate.isVisible =
-                        iranianDay != EMPTY_DATE
-                    if (iranianDay == EMPTY_DATE) return
+                    txtIranianDate.isVisible = iranianDay != EMPTY_DATE
+                    txtGregorianDate.isVisible = iranianDay != EMPTY_DATE
 
+                    if (iranianDay == EMPTY_DATE) {
+                        itemView.isClickable = false
+                        return
+                    } else {
+                        itemView.isClickable = true
+                    }
                     itemView.setOnClickListener { clickListener(dateModel) }
                     txtIranianDate.text = iranianDay.toPersianNumber()
                     txtGregorianDate.text = gDay.toString()
                     txtIranianDate.setTextColor(
-                        ContextCompat.getColor(
-                            itemView.context,
-                            R.color.primaryTextColor
-                        )
+                        ContextCompat.getColor(itemView.context, R.color.primaryTextColor)
                     )
 
                     if (today) {
                         txtIranianDate.setTextColor(
-                            ContextCompat.getColor(
-                                itemView.context,
-                                android.R.color.white
-                            )
+                            ContextCompat.getColor(itemView.context, android.R.color.white)
                         )
                         txtGregorianDate.setTextColor(
-                            ContextCompat.getColor(
-                                itemView.context,
-                                android.R.color.white
-                            )
+                            ContextCompat.getColor(itemView.context, android.R.color.white)
                         )
                         cardDays.setCardBackgroundColor(
-                            ContextCompat.getColor(
-                                itemView.context,
-                                R.color.colorPrimary
-                            )
+                            ContextCompat.getColor(itemView.context, R.color.colorPrimary)
                         )
                     }
 
                     if (isHoliday)
                         txtIranianDate.setTextColor(
-                            ContextCompat.getColor(
-                                itemView.context,
-                                R.color.colorAccent
-                            )
+                            ContextCompat.getColor(itemView.context, R.color.colorAccent)
                         )
                 }
             }
         }
-
     }
 }
 
 private class CalendarDiffUtils : DiffUtil.ItemCallback<CalendarModel>() {
 
     override fun areItemsTheSame(oldItem: CalendarModel, newItem: CalendarModel) =
-        oldItem.iranianDay == newItem.iranianDay && oldItem.iranianMonth == newItem.iranianMonth
+        oldItem.iranianDay == newItem.iranianDay &&
+                oldItem.iranianMonth == newItem.iranianMonth
                 && oldItem.iranianYear == newItem.iranianYear
 
     override fun areContentsTheSame(oldItem: CalendarModel, newItem: CalendarModel) =
-        oldItem.iranianDay == newItem.iranianDay && oldItem.iranianMonth == newItem.iranianMonth
-                && oldItem.iranianYear == newItem.iranianYear
+        oldItem == newItem
 }
