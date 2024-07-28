@@ -33,7 +33,8 @@
     <string name="persian_full_date">%1s %2s %3s %4s</string>
     <string name="gregorian_full_date">%1s %2s %3s</string>
     <string name="events_of_this_day">مناسبت های این روز :</string>
-    <string name="set_a_work_to_do">کاری برای انجام در این روز تنظیم کنید</string>
-    <string name="google_calendar_events">رویدادهای تقویم گوگل :</string>
+    <string name="set_a_work_to_do">کاری برای انجام در تقویم تنظیم کنید</string>
+    <string name="no_events">مناسبتی برای این روز وجود ندارد</string>
+    <string name="google_calendar_is_not_installed">برای استفاده از این ویژگی نیاز است که برنامه تقویم گوگل را نصب نمایید</string>
 
 </resources>
