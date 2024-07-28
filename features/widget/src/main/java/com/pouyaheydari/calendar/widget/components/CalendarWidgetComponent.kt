@@ -13,8 +13,6 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
-import androidx.glance.preview.ExperimentalGlancePreviewApi
-import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
@@ -56,11 +54,4 @@ internal fun CalendarWidgetComponent(
             ),
         )
     }
-}
-
-@OptIn(ExperimentalGlancePreviewApi::class)
-@Preview(widthDp = 200, heightDp = 200)
-@Composable
-private fun Preview() {
-    CalendarWidgetComponent(persianDate = "یکشنبه ۷ مرداد ۱۴۰۳", gregorianDate = "۲۸ ژوییه ۲۰۲۴")
 }
