@@ -6,11 +6,17 @@ import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
 import com.pouyaheydari.calendar.core.pojo.CalendarModel
+import com.pouyaheydari.calendar.core.utils.extensions.toEnglishMonth
+import com.pouyaheydari.calendar.core.utils.extensions.toPersianMonth
+import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
+import com.pouyaheydari.calendar.core.utils.extensions.toPersianWeekDay
 import com.pouyaheydari.calendar.widget.components.CalendarWidgetComponent
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+
+private const val MAIN_ACTIVITY = ".MainActivity"
 
 class CalendarAppWidget : GlanceAppWidget() {
 
@@ -29,11 +35,39 @@ class CalendarAppWidget : GlanceAppWidget() {
             )
 
         val today = hiltEntryPoint.provideToday()
+        val persianDate = getPersianDate(context, today)
+        val gregorianDate = getGregorianDate(context, today)
+        val mainActivityPath = context.packageName.plus(MAIN_ACTIVITY)
 
         provideContent {
             GlanceTheme {
-                CalendarWidgetComponent(context, today)
+                CalendarWidgetComponent(
+                    persianDate = persianDate,
+                    gregorianDate = gregorianDate,
+                    mainActivityPath = mainActivityPath
+                )
             }
         }
+    }
+
+    private fun getPersianDate(context: Context, today: CalendarModel) = context.getString(
+        R.string.persian_full_date,
+        today.dayOfWeek.toPersianWeekDay(context),
+        today.iranianDay.toPersianNumber(),
+        today.iranianMonth.toPersianMonth(context),
+        today.iranianYear.toPersianNumber()
+    )
+
+    private fun getGregorianDate(context: Context, today: CalendarModel): String {
+
+        // We have to add this to prevent misplacement of dates when combining persian text with numbers
+        val rlm = '\u200F'
+
+        return rlm + context.getString(
+            R.string.gregorian_full_date,
+            today.gDay.toPersianNumber(),
+            today.gMonth.toEnglishMonth(context),
+            today.gYear.toPersianNumber()
+        )
     }
 }

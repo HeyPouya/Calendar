@@ -37,8 +37,11 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     ksp(libs.hilt.compiler)
 
+    // Glance
     implementation(libs.androidx.glance)
     implementation(libs.androidx.glance.appwidget)
+    debugImplementation(libs.androidx.glance.preview)
+    debugImplementation(libs.androidx.glance.appwidget.preview)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
