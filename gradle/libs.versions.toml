@@ -1,6 +1,7 @@
 [versions]
 appVersion = "600"
 compileSdkVersion = "34"
+glance = "1.1.0"
 minSdkVersion = "21"
 targetSdkVersion = "34"
 agp = "8.5.1"
@@ -25,6 +26,8 @@ espresso = "3.6.1"
 ksp = "2.0.0-1.0.21"
 
 [libraries]
+androidx-glance = { module = "androidx.glance:glance", version.ref = "glance" }
+androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref="appcompat" }
 constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref="constraintLayout" }
 recyclerView = { group = "androidx.recyclerview", name = "recyclerview", version.ref="recyclerView" }
