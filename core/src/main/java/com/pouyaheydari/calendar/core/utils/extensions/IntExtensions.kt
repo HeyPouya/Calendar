@@ -21,7 +21,7 @@ fun Int.toPersianMonth(context: Context): String = when (this) {
     10 -> context.getString(R.string.dey)
     11 -> context.getString(R.string.bahman)
     12 -> context.getString(R.string.esfand)
-    else -> throw IllegalArgumentException("Month number is grater than 12")
+    else -> throw IllegalArgumentException("Month number is grater than 12: $this")
 }
 
 /**

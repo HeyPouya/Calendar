@@ -26,12 +26,6 @@ class MonthGeneratorClass @Inject constructor(
     private val currentDate: CalendarModel
 ) {
 
-    /**
-     * Generates list of all days of the next or previous month
-     *
-     * @param monthType: it can be [NEXT_MONTH] or [PREVIOUS_MONTH]
-     * @return
-     */
     fun getMonthList(monthType: MonthType): List<CalendarModel> {
         val list = arrayListOf<CalendarModel>()
         val month =
@@ -59,7 +53,11 @@ class MonthGeneratorClass @Inject constructor(
     }
 
     private fun checkIsToday(calendarModel: CalendarModel) {
-        calendarModel.today = currentDate == calendarModel
+        calendarModel.today =
+            calendarModel.iranianDay != -1 &&
+                    currentDate.iranianYear == calendarModel.iranianYear &&
+                    currentDate.iranianMonth == calendarModel.iranianMonth &&
+                    currentDate.iranianDay == calendarModel.iranianDay
     }
 
     private fun checkIsHoliday(calendarModel: CalendarModel) = with(calendarModel) {
