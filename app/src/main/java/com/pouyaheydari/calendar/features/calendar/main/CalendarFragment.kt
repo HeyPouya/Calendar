@@ -30,10 +30,12 @@ class CalendarFragment : Fragment() {
                         val data = Bundle().apply {
                             putParcelable(SELECTED_DAY_DETAILS, it)
                         }
-                        findNavController().navigate(
-                            R.id.action_calendarFragment_to_onClickDialogActivity,
-                            data
-                        )
+                        if (findNavController().currentDestination?.id != R.id.onClickDialogActivity) {
+                            findNavController().navigate(
+                                R.id.action_calendarFragment_to_onClickDialogActivity,
+                                data
+                            )
+                        }
                     }
                 }
             }
