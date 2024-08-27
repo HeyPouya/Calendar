@@ -16,4 +16,5 @@
 #   public *;
 #}
 -keepattributes EnclosingMethod
+-keepattributes SourceFile,LineNumberTable
 -keepattributes *Annotation*,Signature

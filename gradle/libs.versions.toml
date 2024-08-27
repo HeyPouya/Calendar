@@ -1,5 +1,5 @@
 [versions]
-appVersion = "610"
+appVersion = "612"
 compileSdkVersion = "34"
 glance = "1.1.0"
 minSdkVersion = "21"
@@ -18,8 +18,8 @@ hiltCompiler = "1.2.0"
 coroutines = "1.8.1"
 navigation = "2.7.7"
 material = "1.12.0"
-lifecycle = "2.8.4"
-core= "1.13.1"
+lifecycle = "2.7.0"
+core = "1.13.1"
 junit = "4.13.2"
 androidJunit = "1.2.1"
 espresso = "3.6.1"
@@ -27,27 +27,30 @@ ksp = "2.0.0-1.0.22"
 glancePreview = "1.1.0"
 androidxComposeBom = "2024.08.00"
 composeActivity = "1.9.1"
+googleServices = "4.4.2"
+firebaseVersion = "33.2.0"
+crashlyticsVersion = "3.0.2"
 
 [libraries]
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref="appcompat" }
-constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref="constraintLayout" }
-recyclerView = { group = "androidx.recyclerview", name = "recyclerview", version.ref="recyclerView" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref="hilt" }
-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref="hilt" }
-hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref="hilt" }
-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref="hiltCompiler" }
-coroutine-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref="coroutines" }
-coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref="coroutines" }
-coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref="coroutines" }
-navigation = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref="navigation" }
-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref="navigation" }
-material = { group = "com.google.android.material", name = "material", version.ref="material" }
-lifecycle-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref="lifecycle" }
-lifecycle-liveData = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref="lifecycle" }
-androidx-core = { group = "androidx.core", name = "core-ktx", version.ref="core" }
-junit = { group = "junit", name = "junit", version.ref="junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref="androidJunit" }
-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref="espresso" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+recyclerView = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerView" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompiler" }
+coroutine-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+navigation = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+lifecycle-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-liveData = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidJunit" }
+espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 androidx-glance-preview = { group = "androidx.glance", name = "glance-preview", version.ref = "glancePreview" }
 androidx-glance-appwidget-preview = { group = "androidx.glance", name = "glance-appwidget-preview", version.ref = "glancePreview" }
 androidx-glance = { module = "androidx.glance:glance", version.ref = "glance" }
@@ -62,7 +65,9 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
 androidx-compose-ui-test-junit = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseVersion" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -72,3 +77,5 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hiltGradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsVersion" }

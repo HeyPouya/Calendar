@@ -31,7 +31,7 @@ fun CalendarScreen(
     onDaySelected: (CalendarModel) -> Unit
 ) {
     val date =
-        viewModel.getMonthLiveData().collectAsStateWithLifecycle(initialValue = emptyList()).value
+        viewModel.getMonthLiveData().collectAsStateWithLifecycle().value
     val context = LocalContext.current
     CalendarComponent(
         modifier,

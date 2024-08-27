@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hiltGradle)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.crashlytics)
     id("kotlin-parcelize")
 }
 
@@ -72,6 +74,11 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.lifecycle)
+
+    val firebaseBom = platform(libs.firebase.bom)
+    implementation(firebaseBom)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
     // testing and preview
     debugImplementation(libs.androidx.compose.ui.test.manifest)
