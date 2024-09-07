@@ -10,10 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pouyaheydari.calendar.features.calendar.main.theme.DarkBlue80
+import com.pouyaheydari.calendar.features.calendar.main.theme.TodayShape
 
 @Composable
 fun DayItemComponent(
@@ -30,6 +32,7 @@ fun DayItemComponent(
     Box(modifier = modifier
         .fillMaxSize()
         .clickable { onItemClicked() }
+        .clip(TodayShape)
         .background(background)
         .padding(4.dp)) {
         Text(
@@ -50,5 +53,5 @@ fun DayItemComponent(
 @Preview
 @Composable
 private fun Preview() {
-    DayItemComponent(persianDay = "۳۰", gregorianDay = "9")
+    DayItemComponent(persianDay = "۳۰", gregorianDay = "9", isToday = true)
 }
