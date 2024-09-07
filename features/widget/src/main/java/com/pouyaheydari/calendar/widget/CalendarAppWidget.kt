@@ -1,6 +1,7 @@
 package com.pouyaheydari.calendar.widget
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import androidx.glance.GlanceId
 import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
@@ -38,13 +39,14 @@ class CalendarAppWidget : GlanceAppWidget() {
         val persianDate = getPersianDate(context, today)
         val gregorianDate = getGregorianDate(context, today)
         val mainActivityPath = context.packageName.plus(MAIN_ACTIVITY)
+        val activity = (Class.forName(mainActivityPath).asSubclass(AppCompatActivity::class.java))
 
         provideContent {
             GlanceTheme {
                 CalendarWidgetComponent(
                     persianDate = persianDate,
                     gregorianDate = gregorianDate,
-                    mainActivityPath = mainActivityPath
+                    mainActivity = activity
                 )
             }
         }

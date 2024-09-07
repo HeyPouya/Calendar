@@ -40,8 +40,8 @@ dependencies {
     // Glance
     implementation(libs.androidx.glance)
     implementation(libs.androidx.glance.appwidget)
-    debugImplementation(libs.androidx.glance.preview)
-    debugImplementation(libs.androidx.glance.appwidget.preview)
+    implementation(libs.androidx.glance.preview)
+    implementation(libs.androidx.glance.appwidget.preview)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

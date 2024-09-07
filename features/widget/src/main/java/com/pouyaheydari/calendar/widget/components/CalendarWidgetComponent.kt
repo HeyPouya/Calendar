@@ -13,6 +13,8 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding
+import androidx.glance.preview.ExperimentalGlancePreviewApi
+import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
@@ -21,14 +23,14 @@ import androidx.glance.text.TextStyle
 internal fun CalendarWidgetComponent(
     persianDate: String = "",
     gregorianDate: String = "",
-    mainActivityPath: String = ""
+    mainActivity: Class<out AppCompatActivity>? = null
 ) {
-    val activity = (Class.forName(mainActivityPath).asSubclass(AppCompatActivity::class.java))
-
     Column(
         modifier = GlanceModifier
             .fillMaxSize()
-            .clickable(actionStartActivity(activity = activity))
+            .clickable {
+                mainActivity?.let { actionStartActivity(it) }
+            }
             .padding(16.dp)
             .background(GlanceTheme.colors.widgetBackground),
         horizontalAlignment = Alignment.Horizontal.CenterHorizontally
@@ -54,4 +56,15 @@ internal fun CalendarWidgetComponent(
             ),
         )
     }
+}
+
+@OptIn(ExperimentalGlancePreviewApi::class)
+@Preview
+@Composable
+private fun Preview() {
+    CalendarWidgetComponent(
+        persianDate = "شنبه ۲۸ اردیبهشت ۱۴۰۳",
+        gregorianDate = "۲۳ ژوئیه ۲۰۲۴",
+        mainActivity = null
+    )
 }
