@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
+import com.pouyaheydari.calendar.features.calendar.main.theme.HeaderShape
 import com.pouyaheydari.calendar.features.calendar.main.theme.PersianCalendarTheme
 
 @Composable
@@ -31,12 +31,7 @@ fun HeaderComponent(
         modifier = modifier
             .fillMaxWidth()
             .fillMaxHeight(0.3f),
-        shape = RoundedCornerShape(
-            topStart = 0.dp,
-            topEnd = 0.dp,
-            bottomEnd = 50.dp,
-            bottomStart = 50.dp
-        ),
+        shape = HeaderShape,
         colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.primary),
         elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
     ) {
