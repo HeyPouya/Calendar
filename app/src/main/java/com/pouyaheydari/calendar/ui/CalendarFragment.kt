@@ -1,4 +1,4 @@
-package com.pouyaheydari.calendar.features.calendar.main
+package com.pouyaheydari.calendar.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.pouyaheydari.calendar.R
-import com.pouyaheydari.calendar.core.pojo.CalendarModel
+import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.SELECTED_DAY_DETAILS
-import com.pouyaheydari.calendar.features.calendar.main.theme.PersianCalendarTheme
+import com.pouyaheydari.calendar.ui.theme.PersianCalendarTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class CalendarFragment : Fragment() {
 
     @Inject
-    lateinit var today: CalendarModel
+    lateinit var today: Day
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

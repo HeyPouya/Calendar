@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import com.pouyaheydari.calendar.core.pojo.CalendarModel
+import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.ResourceUtils
 import javax.inject.Inject
 
@@ -20,9 +20,9 @@ class DateDetailsViewModel @Inject constructor() : ViewModel() {
      * Checks if there are any events on the selected date
      * @param date the selected date
      */
-    fun getEvents(date: CalendarModel) {
-        val persianTemp = date.iranianMonth * 100 + date.iranianDay
-        val gregorianTemp = date.gMonth * 100 + date.gDay
+    fun getEvents(date: Day) {
+        val persianTemp = date.shamsiMonth * 100 + date.shamsiDay
+        val gregorianTemp = date.gregorianMonth * 100 + date.gregorianDay
         val persianEvents = ResourceUtils.eventP[persianTemp].orEmpty()
         val gregorianEvents = ResourceUtils.eventG[gregorianTemp].orEmpty()
         eventsLiveData.value = buildString {

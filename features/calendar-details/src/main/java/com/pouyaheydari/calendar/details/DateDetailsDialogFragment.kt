@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import com.pouyaheydari.calendar.core.pojo.CalendarModel
+import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.SELECTED_DAY_DETAILS
 import com.pouyaheydari.calendar.core.utils.extensions.toEnglishMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianMonth
@@ -46,7 +46,7 @@ class DateDetailsDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val date =
-            requireArguments().parcelable<CalendarModel>(SELECTED_DAY_DETAILS)
+            requireArguments().parcelable<Day>(SELECTED_DAY_DETAILS)
                 ?: throw IllegalArgumentException("You must provide the selected date")
 
         viewModel.getEvents(date)
@@ -57,19 +57,19 @@ class DateDetailsDialogFragment : DialogFragment() {
         with(date) {
             binding.txtPersianDate.text = getString(
                 R.string.persian_full_date,
-                dayOfWeek.toPersianWeekDay(requireContext()), date.iranianDay.toPersianNumber(),
-                iranianMonth.toPersianMonth(requireContext()),
-                date.iranianYear.toPersianNumber()
+                dayOfWeek.toPersianWeekDay(requireContext()), date.shamsiDay.toPersianNumber(),
+                shamsiMonth.toPersianMonth(requireContext()),
+                date.shamsiYear.toPersianNumber()
             )
             binding.txtGregorianDate.text = getString(
                 R.string.gregorian_full_date,
-                gDay.toPersianNumber(),
-                gMonth.toEnglishMonth(requireContext()),
-                gYear.toPersianNumber()
+                gregorianDay.toPersianNumber(),
+                gregorianMonth.toEnglishMonth(requireContext()),
+                gregorianYear.toPersianNumber()
             )
         }
 
-        if (date.isHoliday)
+        if (date.isShamsiHoliday)
             setHolidayColors()
 
         binding.btnAddEvent.setOnClickListener {
@@ -77,7 +77,7 @@ class DateDetailsDialogFragment : DialogFragment() {
                 type = CALENDAR_INTENT_TYPE
                 putExtra(
                     CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-                    GregorianCalendar(date.gYear, date.gMonth - 1, date.gDay).timeInMillis
+                    GregorianCalendar(date.gregorianYear, date.gregorianMonth - 1, date.gregorianDay).timeInMillis
                 )
                 try {
                     startActivity(this)

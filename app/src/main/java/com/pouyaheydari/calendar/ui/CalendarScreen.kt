@@ -1,4 +1,4 @@
-package com.pouyaheydari.calendar.features.calendar.main
+package com.pouyaheydari.calendar.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -13,25 +13,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pouyaheydari.calendar.R
-import com.pouyaheydari.calendar.core.pojo.CalendarModel
+import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.extensions.toEnglishMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianWeekDay
-import com.pouyaheydari.calendar.features.calendar.main.components.HeaderComponent
-import com.pouyaheydari.calendar.features.calendar.main.components.MonthComponent
-import com.pouyaheydari.calendar.features.calendar.main.components.MonthYearTitleComponent
-import com.pouyaheydari.calendar.features.calendar.main.components.WeekDaysComponent
+import com.pouyaheydari.calendar.ui.components.HeaderComponent
+import com.pouyaheydari.calendar.ui.components.MonthComponent
+import com.pouyaheydari.calendar.ui.components.MonthYearTitleComponent
+import com.pouyaheydari.calendar.ui.components.WeekDaysComponent
 
 @Composable
 fun CalendarScreen(
     modifier: Modifier = Modifier,
-    today: CalendarModel,
+    today: Day,
     viewModel: CalendarViewModel = viewModel(),
-    onDaySelected: (CalendarModel) -> Unit
+    onDaySelected: (Day) -> Unit
 ) {
-    val date =
-        viewModel.getMonthLiveData().collectAsStateWithLifecycle().value
+    val date = viewModel.screenState.collectAsStateWithLifecycle().value
     val context = LocalContext.current
     CalendarComponent(
         modifier,
@@ -46,10 +45,10 @@ fun CalendarScreen(
 @Composable
 fun CalendarComponent(
     modifier: Modifier = Modifier,
-    today: CalendarModel,
-    date: List<CalendarModel>?,
+    today: Day,
+    date: List<Day>?,
     context: Context,
-    onDaySelected: (CalendarModel) -> Unit,
+    onDaySelected: (Day) -> Unit,
     onNextMonthClicked: () -> Unit = {},
     onPreviousMonthClicked: () -> Unit = {}
 ) {
@@ -65,21 +64,21 @@ fun CalendarComponent(
             ),
             iranianDate = rlm + stringResource(
                 id = R.string.persian_day_month,
-                today.iranianDay.toPersianNumber(),
-                today.iranianMonth.toPersianMonth(context),
-                today.iranianYear.toPersianNumber()
+                today.shamsiDay.toPersianNumber(),
+                today.shamsiMonth.toPersianMonth(context),
+                today.shamsiYear.toPersianNumber()
             ),
             gregorianDate = rlm + stringResource(
                 id = R.string.gregorian_full_date,
-                today.gDay.toPersianNumber(),
-                today.gMonth.toEnglishMonth(context),
-                today.gYear.toPersianNumber()
+                today.gregorianDay.toPersianNumber(),
+                today.gregorianMonth.toEnglishMonth(context),
+                today.gregorianYear.toPersianNumber()
             )
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         MonthYearTitleComponent(
-            monthName = date?.lastOrNull()?.iranianMonth?.toPersianMonth(context).orEmpty(),
-            year = date?.lastOrNull()?.iranianYear?.toPersianNumber().orEmpty(),
+            monthName = date?.lastOrNull()?.shamsiMonth?.toPersianMonth(context).orEmpty(),
+            year = date?.lastOrNull()?.shamsiYear?.toPersianNumber().orEmpty(),
             onNextMonthClicked = onNextMonthClicked,
             onPreviousMonthClicked = onPreviousMonthClicked
         )

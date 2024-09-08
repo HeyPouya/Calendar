@@ -1,4 +1,4 @@
-package com.pouyaheydari.calendar.features.calendar.main.theme
+package com.pouyaheydari.calendar.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

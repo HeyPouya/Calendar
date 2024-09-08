@@ -1,4 +1,4 @@
-package com.pouyaheydari.calendar.features.calendar.main.components
+package com.pouyaheydari.calendar.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,8 +17,8 @@ import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
-import com.pouyaheydari.calendar.features.calendar.main.theme.HeaderShape
-import com.pouyaheydari.calendar.features.calendar.main.theme.PersianCalendarTheme
+import com.pouyaheydari.calendar.ui.theme.HeaderShape
+import com.pouyaheydari.calendar.ui.theme.PersianCalendarTheme
 
 @Composable
 fun HeaderComponent(

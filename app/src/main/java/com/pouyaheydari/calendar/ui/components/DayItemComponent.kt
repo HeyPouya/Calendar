@@ -1,4 +1,4 @@
-package com.pouyaheydari.calendar.features.calendar.main.components
+package com.pouyaheydari.calendar.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
-import com.pouyaheydari.calendar.features.calendar.main.theme.DarkBlue80
-import com.pouyaheydari.calendar.features.calendar.main.theme.TodayShape
+import com.pouyaheydari.calendar.ui.theme.DarkBlue80
+import com.pouyaheydari.calendar.ui.theme.TodayShape
 
 @Composable
 fun DayItemComponent(
@@ -50,7 +52,9 @@ fun DayItemComponent(
     }
 }
 
-@Preview
+@PreviewScreenSizes
+@PreviewFontScale
+@PreviewLightDark
 @Composable
 private fun Preview() {
     DayItemComponent(persianDay = "۳۰", gregorianDay = "9", isToday = true)

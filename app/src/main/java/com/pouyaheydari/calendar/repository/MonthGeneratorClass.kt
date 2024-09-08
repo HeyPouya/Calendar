@@ -1,6 +1,6 @@
 package com.pouyaheydari.calendar.repository
 
-import com.pouyaheydari.calendar.core.pojo.CalendarModel
+import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.CalendarTool
 import com.pouyaheydari.calendar.core.utils.EMPTY_DATE
 import com.pouyaheydari.calendar.core.utils.ResourceUtils
@@ -23,11 +23,11 @@ private const val SUNDAY = 6
  */
 class MonthGeneratorClass @Inject constructor(
     private var calendar: CalendarTool,
-    private val currentDate: CalendarModel
+    private val currentDate: Day
 ) {
 
-    fun getMonthList(monthType: MonthType): List<CalendarModel> {
-        val list = arrayListOf<CalendarModel>()
+    fun getMonthList(monthType: MonthType): List<Day> {
+        val list = arrayListOf<Day>()
         val month =
             if (monthType == MonthType.NEXT_MONTH) getNextMonthDate() else getPreviousMonthDate()
         list.addAll(addEmptyDays(calendar.dayOfWeek))
@@ -35,7 +35,7 @@ class MonthGeneratorClass @Inject constructor(
             with(calendar) {
                 setIranianDate(month.year, month.month, i)
                 list.add(
-                    CalendarModel(
+                    Day(
                         iranianDay,
                         iranianMonth,
                         iranianYear,
@@ -52,20 +52,20 @@ class MonthGeneratorClass @Inject constructor(
         return list
     }
 
-    private fun checkIsToday(calendarModel: CalendarModel) {
-        calendarModel.today =
-            calendarModel.iranianDay != -1 &&
-                    currentDate.iranianYear == calendarModel.iranianYear &&
-                    currentDate.iranianMonth == calendarModel.iranianMonth &&
-                    currentDate.iranianDay == calendarModel.iranianDay
+    private fun checkIsToday(day: Day) {
+        day.today =
+            day.shamsiDay != -1 &&
+                    currentDate.shamsiYear == day.shamsiYear &&
+                    currentDate.shamsiMonth == day.shamsiMonth &&
+                    currentDate.shamsiDay == day.shamsiDay
     }
 
-    private fun checkIsHoliday(calendarModel: CalendarModel) = with(calendarModel) {
-        if (dayOfWeek == FRIDAY || (iranianYear == currentDate.iranianYear && ResourceUtils.vacationP.containsKey(
-                iranianMonth * 100 + iranianDay
+    private fun checkIsHoliday(day: Day) = with(day) {
+        if (dayOfWeek == FRIDAY || (shamsiYear == currentDate.shamsiYear && ResourceUtils.vacationP.containsKey(
+                shamsiMonth * 100 + shamsiDay
             ))
         )
-            isHoliday = true
+            isShamsiHoliday = true
     }
 
     private fun getNextMonthDate(): DateModel {
@@ -102,7 +102,7 @@ class MonthGeneratorClass @Inject constructor(
         return DateModel(year, month, dayNumber)
     }
 
-    private fun addEmptyDays(dayOfWeek: Int): ArrayList<CalendarModel> = when (dayOfWeek) {
+    private fun addEmptyDays(dayOfWeek: Int): ArrayList<Day> = when (dayOfWeek) {
         MONDAY -> emptyDayMaker(2)
         TUESDAY -> emptyDayMaker(3)
         WEDNESDAY -> emptyDayMaker(4)
@@ -113,11 +113,11 @@ class MonthGeneratorClass @Inject constructor(
         else -> throw IllegalArgumentException("Day is not defined in the week!")
     }
 
-    private fun emptyDayMaker(dayOfWeek: Int): ArrayList<CalendarModel> {
-        val list = arrayListOf<CalendarModel>()
+    private fun emptyDayMaker(dayOfWeek: Int): ArrayList<Day> {
+        val list = arrayListOf<Day>()
         for (i in 1..dayOfWeek) {
             list.add(
-                CalendarModel(
+                Day(
                     EMPTY_DATE,
                     EMPTY_DATE,
                     EMPTY_DATE,

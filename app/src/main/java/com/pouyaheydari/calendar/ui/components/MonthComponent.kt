@@ -1,4 +1,4 @@
-package com.pouyaheydari.calendar.features.calendar.main.components
+package com.pouyaheydari.calendar.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,17 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.pouyaheydari.calendar.core.pojo.CalendarModel
+import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
 
 @Composable
 fun MonthComponent(
     modifier: Modifier = Modifier,
-    list: List<CalendarModel>,
-    onItemClicked: (CalendarModel) -> Unit = {}
+    list: List<Day>,
+    onItemClicked: (Day) -> Unit = {}
 ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         LazyVerticalGrid(
@@ -31,13 +33,13 @@ fun MonthComponent(
             contentPadding = PaddingValues(4.dp)
         ) {
             items(list) {
-                if (it.iranianDay != -1) {
+                if (it.shamsiDay != -1) {
                     DayItemComponent(
                         modifier = Modifier.fillMaxSize(),
-                        persianDay = it.iranianDay.toPersianNumber(),
-                        gregorianDay = it.gDay.toString(),
+                        persianDay = it.shamsiDay.toPersianNumber(),
+                        gregorianDay = it.gregorianDay.toString(),
                         onItemClicked = { onItemClicked(it) },
-                        isHoliday = it.isHoliday,
+                        isHoliday = it.isShamsiHoliday,
                         isToday = it.today
                     )
                 }
@@ -46,20 +48,22 @@ fun MonthComponent(
     }
 }
 
-@Preview
+@PreviewScreenSizes
+@PreviewFontScale
+@PreviewLightDark
 @Composable
 private fun Preview() {
-    val list = mutableListOf<CalendarModel>()
+    val list = mutableListOf<Day>()
     repeat(30) {
         list.add(
-            CalendarModel(
-                iranianDay = 1,
-                iranianMonth = 1,
-                iranianYear = 1402,
+            Day(
+                shamsiDay = 1,
+                shamsiMonth = 1,
+                shamsiYear = 1402,
                 dayOfWeek = 2,
-                gDay = 20,
-                gMonth = 4,
-                gYear = 2022
+                gregorianDay = 20,
+                gregorianMonth = 4,
+                gregorianYear = 2022
             ),
         )
     }

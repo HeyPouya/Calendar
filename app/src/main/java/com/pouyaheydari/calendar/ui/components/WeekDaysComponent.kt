@@ -1,4 +1,4 @@
-package com.pouyaheydari.calendar.features.calendar.main.components
+package com.pouyaheydari.calendar.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -8,8 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import com.pouyaheydari.calendar.features.calendar.main.theme.PersianCalendarTheme
+import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import com.pouyaheydari.calendar.ui.theme.PersianCalendarTheme
 
 @Composable
 fun WeekDaysComponent(modifier: Modifier = Modifier, weekDays: List<String>) {
@@ -26,7 +28,9 @@ fun WeekDaysComponent(modifier: Modifier = Modifier, weekDays: List<String>) {
     }
 }
 
-@Preview
+@PreviewScreenSizes
+@PreviewFontScale
+@PreviewLightDark
 @Composable
 private fun Preview() {
     PersianCalendarTheme {

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.pouyaheydari.calendar.features.calendar.main.CalendarFragment"
+        android:name="com.pouyaheydari.calendar.ui.CalendarFragment"
         android:label="CalendarFragment">
         <action
             android:id="@+id/action_calendarFragment_to_onClickDialogActivity"
@@ -18,6 +18,6 @@
         android:label="OnClickDialogActivity">
         <argument
             android:name="SelectedDayDetails"
-            app:argType="com.pouyaheydari.calendar.core.pojo.CalendarModel" />
+            app:argType="com.pouyaheydari.calendar.core.pojo.Day" />
     </dialog>
 </navigation>

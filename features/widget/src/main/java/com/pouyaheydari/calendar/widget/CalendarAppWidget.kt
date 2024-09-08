@@ -6,7 +6,7 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
-import com.pouyaheydari.calendar.core.pojo.CalendarModel
+import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.extensions.toEnglishMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
@@ -24,7 +24,7 @@ class CalendarAppWidget : GlanceAppWidget() {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface CalendarAppWidgetEntryPoint {
-        fun provideToday(): CalendarModel
+        fun provideToday(): Day
     }
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -52,24 +52,24 @@ class CalendarAppWidget : GlanceAppWidget() {
         }
     }
 
-    private fun getPersianDate(context: Context, today: CalendarModel) = context.getString(
+    private fun getPersianDate(context: Context, today: Day) = context.getString(
         R.string.persian_full_date,
         today.dayOfWeek.toPersianWeekDay(context),
-        today.iranianDay.toPersianNumber(),
-        today.iranianMonth.toPersianMonth(context),
-        today.iranianYear.toPersianNumber()
+        today.shamsiDay.toPersianNumber(),
+        today.shamsiMonth.toPersianMonth(context),
+        today.shamsiYear.toPersianNumber()
     )
 
-    private fun getGregorianDate(context: Context, today: CalendarModel): String {
+    private fun getGregorianDate(context: Context, today: Day): String {
 
         // We have to add this to prevent misplacement of dates when combining persian text with numbers
         val rlm = '\u200F'
 
         return rlm + context.getString(
             R.string.gregorian_full_date,
-            today.gDay.toPersianNumber(),
-            today.gMonth.toEnglishMonth(context),
-            today.gYear.toPersianNumber()
+            today.gregorianDay.toPersianNumber(),
+            today.gregorianMonth.toEnglishMonth(context),
+            today.gregorianYear.toPersianNumber()
         )
     }
 }

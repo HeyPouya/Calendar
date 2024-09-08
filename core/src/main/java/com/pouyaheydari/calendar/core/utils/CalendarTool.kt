@@ -6,31 +6,14 @@ import java.util.GregorianCalendar
 /**
  * The Class THat converts Gregorian calendar to Shamsi calendar
  */
-class CalendarTool {
-    /**
-     * JavaSource_Calendar:
-     * The default constructor uses the current Gregorian date to initialize the
-     * other private members of the class (Iranian and Julian dates).
-     */
-    constructor(calendar: GregorianCalendar) {
+class CalendarTool(calendar: GregorianCalendar) {
+
+    init {
         setGregorianDate(
             calendar[Calendar.YEAR],
             calendar[Calendar.MONTH] + 1,
             calendar[Calendar.DAY_OF_MONTH]
         )
-    }
-
-    /**
-     * JavaSource_Calendar:
-     * This constructor receives a Gregorian date and initializes the other private
-     * members of the class accordingly.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
-     */
-    constructor(year: Int, month: Int, day: Int) {
-        setGregorianDate(year, month, day)
     }
 
     /**
@@ -41,14 +24,6 @@ class CalendarTool {
      */
     private val iranianDate: String
         get() = "$iranianYear/$iranianMonth/$iranianDay"
-    val iranianLongDate: Long
-        get() {
-            val year = iranianYear.toString()
-            val month = iranianMonth.toString()
-            val day = iranianDay.toString()
-            val result = year + month + day
-            return java.lang.Long.valueOf(result)
-        }
 
     /**
      * getGregorianDate:
