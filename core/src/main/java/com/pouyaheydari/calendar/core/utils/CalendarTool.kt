@@ -1,139 +1,50 @@
 package com.pouyaheydari.calendar.core.utils
 
-import java.util.Calendar
-import java.util.GregorianCalendar
+import com.pouyaheydari.calendar.core.pojo.GregorianDate
+import com.pouyaheydari.calendar.core.pojo.IranianDate
+import javax.inject.Inject
+
+const val MONDAY = 0
+const val TUESDAY = 1
+const val WEDNESDAY = 2
+const val THURSDAY = 3
+const val FRIDAY = 4
+const val SATURDAY = 5
+const val SUNDAY = 6
 
 /**
- * The Class THat converts Gregorian calendar to Shamsi calendar
+ * The Class That converts Gregorian calendar to Shamsi calendar
  */
-class CalendarTool(calendar: GregorianCalendar) {
+class CalendarTool @Inject constructor() {
 
-    init {
-        setGregorianDate(
-            calendar[Calendar.YEAR],
-            calendar[Calendar.MONTH] + 1,
-            calendar[Calendar.DAY_OF_MONTH]
+    private var iranianYear = 0
+    private var iranianMonth = 0
+    private var iranianDay = 0
+    private var gregorianYear = 0
+    private var gregorianMonth = 0
+    private var gregorianDay = 0
+    private var julianYear = 0
+    private var julianMonth = 0
+    private var julianDay = 0
+    private var leap = 0
+    private var jdn = 0
+    private var march = 0
+
+    fun getIranianDate() =
+        IranianDate(
+            year = iranianYear,
+            month = iranianMonth,
+            day = iranianDay,
+            dayOfWeek = getDayOfWeek()
         )
-    }
 
-    /**
-     * getIranianDate:
-     * Returns a string version of Iranian date
-     *
-     * @return String
-     */
-    private val iranianDate: String
-        get() = "$iranianYear/$iranianMonth/$iranianDay"
-
-    /**
-     * getGregorianDate:
-     * Returns a string version of Gregorian date
-     *
-     * @return String
-     */
-    private val gregorianDate: String
-        get() = "$gregorianYear/$gregorianMonth/$gregorianDay"
-
-    /**
-     * getJulianDate:
-     * Returns a string version of Julian date
-     *
-     * @return String
-     */
-    private val julianDate: String
-        get() = "$julianYear/$julianMonth/$julianDay"
-
-    /**
-     * getWeekDayStr:
-     * Returns the week day name.
-     *
-     * @return String
-     */
-    private val weekDayStr: String
-        get() {
-            val weekDayStr = arrayOf(
-                "دوشنبه",
-                "سه شنبه",
-                "چهارشنبه",
-                "پنج شنبه",
-                "جمعه",
-                "شنبه",
-                "یکشنبه"
-            )
-            return weekDayStr[dayOfWeek]
-        }
-
-    /**
-     * toString:
-     * Overrides the default toString() method to return all dates.
-     *
-     * @return String
-     */
-    override fun toString(): String {
-        return weekDayStr +
-                ", Gregorian:[" + gregorianDate +
-                "], Julian:[" + julianDate +
-                "], Iranian:[" + iranianDate + "]"
-    }
-
-    /**
-     * getDayOfWeek:
-     * Returns the week day number. Monday=0..Sunday=6;
-     *
-     * @return int
-     */
-    val dayOfWeek: Int
-        get() = jdn % 7
-
-    /**
-     * nextDay:
-     * Go to icNext julian day number (JDN) and adjusts the other dates.
-     */
-    fun nextDay() {
-        jdn++
-        jdnToIranian()
-        jdnToJulian()
-        jdnToGregorian()
-    }
-
-    /**
-     * nextDay:
-     * Overload the nextDay() method to accept the number of days to go ahead and
-     * adjusts the other dates accordingly.
-     *
-     * @param days int
-     */
-    fun nextDay(days: Int) {
-        jdn += days
-        jdnToIranian()
-        jdnToJulian()
-        jdnToGregorian()
-    }
-
-    /**
-     * previousDay:
-     * Go to previous julian day number (JDN) and adjusts the other dates.
-     */
-    fun previousDay() {
-        jdn--
-        jdnToIranian()
-        jdnToJulian()
-        jdnToGregorian()
-    }
-
-    /**
-     * previousDay:
-     * Overload the previousDay() method to accept the number of days to go backward
-     * and adjusts the other dates accordingly.
-     *
-     * @param days int
-     */
-    fun previousDay(days: Int) {
-        jdn -= days
-        jdnToIranian()
-        jdnToJulian()
-        jdnToGregorian()
-    }
+    fun getGregorianDate() =
+        GregorianDate(
+            year = gregorianYear,
+            month = gregorianMonth,
+            day = gregorianDay,
+            dayOfWeek = getDayOfWeek()
+        )
 
     /**
      * setIranianDate:
@@ -161,29 +72,11 @@ class CalendarTool(calendar: GregorianCalendar) {
      * @param month int
      * @param day   int
      */
-    private fun setGregorianDate(year: Int, month: Int, day: Int) {
+    fun setGregorianDate(year: Int, month: Int, day: Int) {
         gregorianYear = year
         gregorianMonth = month
         gregorianDay = day
         jdn = gregorianDateToJDN(year, month, day)
-        jdnToIranian()
-        jdnToJulian()
-        jdnToGregorian()
-    }
-
-    /**
-     * setJulianDate:
-     * Sets the date according to the Julian calendar and adjusts the other dates.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
-     */
-    fun setJulianDate(year: Int, month: Int, day: Int) {
-        julianYear = year
-        julianMonth = month
-        julianDay = day
-        jdn = julianDateToJDN(year, month, day)
         jdnToIranian()
         jdnToJulian()
         jdnToGregorian()
@@ -200,6 +93,9 @@ class CalendarTool(calendar: GregorianCalendar) {
      * Gy: Gregorian year of the beginning of Iranian year
      * march: The March day of Farvardin the 1st (first day of jaYear)
      */
+
+    private fun getDayOfWeek() = jdn % 7
+
     private fun iranianCalendar() {
         // Iranian years starting the 33-year rule
         val breaks = intArrayOf(
@@ -247,7 +143,7 @@ class CalendarTool(calendar: GregorianCalendar) {
      * Gy: Gregorian year of the beginning of Iranian year
      * march: The March day of Farvardin the 1st (first day of jaYear)
      */
-    fun isLeap(irYear1: Int): Boolean {
+    fun isLeapYear(irYear: Int): Boolean {
         // Iranian years starting the 33-year rule
         val breaks = intArrayOf(
             -61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181,
@@ -255,7 +151,7 @@ class CalendarTool(calendar: GregorianCalendar) {
         )
 
         var jump: Int
-        gregorianYear = irYear1 + 621
+        gregorianYear = irYear + 621
         var leapJ = -14
         var jp = breaks[0]
         // Find the limiting years for the Iranian year 'irYear'
@@ -263,13 +159,13 @@ class CalendarTool(calendar: GregorianCalendar) {
         do {
             val jm = breaks[j]
             jump = jm - jp
-            if (irYear1 >= jm) {
+            if (irYear >= jm) {
                 leapJ += jump / 33 * 8 + jump % 33 / 4
                 jp = jm
             }
             j++
-        } while (j < 20 && irYear1 >= jm)
-        var n = irYear1 - jp
+        } while (j < 20 && irYear >= jm)
+        var n = irYear - jp
         // Find the number of leap years from AD 621 to the beginning of the current
         // Iranian year in the Iranian (Jalali) calendar
         leapJ += n / 33 * 8 + (n % 33 + 3) / 4
@@ -332,24 +228,6 @@ class CalendarTool(calendar: GregorianCalendar) {
     }
 
     /**
-     * julianDateToJDN:
-     * Calculates the julian day number (JDN) from Julian calendar dates. This
-     * integer number corresponds to the noon of the date (i.e. 12 hours of
-     * Universal Time). This method was tested to be good (valid) since 1 March,
-     * -100100 (of both calendars) up to a few millions (10^6) years into the
-     * future. The algorithm is based on D.A.Hatcher, Q.Jl.R.Astron.Soc. 25(1984),
-     * 53-55 slightly modified by K.M. Borkowski, Post.Astron. 25(1987), 275-279.
-     *
-     * @param year  int
-     * @param month int
-     * @param day   int
-     * @return int
-     */
-    private fun julianDateToJDN(year: Int, month: Int, day: Int): Int {
-        return (year + (month - 8) / 6 + 100100) * 1461 / 4 + (153 * ((month + 9) % 12) + 2) / 5 + day - 34840408
-    }
-
-    /**
      * JDNToJulian:
      * Calculates Julian calendar dates from the julian day number (JDN) for the
      * period since JDN=-34839655 (i.e. the year -100100 of both calendars) to
@@ -402,97 +280,4 @@ class CalendarTool(calendar: GregorianCalendar) {
         gregorianMonth = i / 153 % 12 + 1
         gregorianYear = j / 1461 - 100100 + (8 - gregorianMonth) / 6
     }
-
-    /**
-     * getIranianYear:
-     * Returns the 'year' part of the Iranian date.
-     *
-     * @return int
-     */
-    var iranianYear // Year part of a Iranian date
-            = 0
-        private set
-
-    /**
-     * getIranianMonth:
-     * Returns the 'month' part of the Iranian date.
-     *
-     * @return int
-     */
-    var iranianMonth // Month part of a Iranian date
-            = 0
-        private set
-
-    /**
-     * getIranianDay:
-     * Returns the 'day' part of the Iranian date.
-     *
-     * @return int
-     */
-    var iranianDay // Day part of a Iranian date
-            = 0
-        private set
-
-    /**
-     * getGregorianYear:
-     * Returns the 'year' part of the Gregorian date.
-     *
-     * @return int
-     */
-    var gregorianYear // Year part of a Gregorian date
-            = 0
-        private set
-
-    /**
-     * getGregorianMonth:
-     * Returns the 'month' part of the Gregorian date.
-     *
-     * @return int
-     */
-    var gregorianMonth // Month part of a Gregorian date
-            = 0
-        private set
-
-    /**
-     * getGregorianDay:
-     * Returns the 'day' part of the Gregorian date.
-     *
-     * @return int
-     */
-    var gregorianDay // Day part of a Gregorian date
-            = 0
-        private set
-
-    /**
-     * getJulianYear:
-     * Returns the 'year' part of the Julian date.
-     *
-     * @return int
-     */
-    private var julianYear // Year part of a Julian date
-            = 0
-
-    /**
-     * getJulianMonth:
-     * Returns the 'month' part of the Julian date.
-     *
-     * @return int
-     */
-    private var julianMonth // Month part of a Julian date
-            = 0
-
-    /**
-     * getJulianDay()
-     * Returns the 'day' part of the Julian date.
-     *
-     * @return int
-     */
-    private var julianDay // Day part of a Julian date
-            = 0
-    private var leap // Number of years since the last leap year (0 to 4)
-            = 0
-    private var jdn // Julian Day Number
-            = 0
-    private var march // The march day of Farvardin the first (First day of jaYear)
-            = 0
 }

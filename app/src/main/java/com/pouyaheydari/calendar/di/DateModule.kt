@@ -1,15 +1,20 @@
 package com.pouyaheydari.calendar.di
 
 import android.app.Application
+import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.utils.CalendarTool
+import com.pouyaheydari.calendar.core.utils.ResourceUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import com.pouyaheydari.calendar.core.pojo.Day
-import com.pouyaheydari.calendar.core.utils.CalendarTool
-import com.pouyaheydari.calendar.core.utils.ResourceUtils
-import com.pouyaheydari.calendar.repository.MonthGeneratorClass
-import java.util.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.isoDayNumber
+import kotlinx.datetime.toLocalDateTime
 import javax.inject.Singleton
 
 @Module
@@ -17,40 +22,32 @@ import javax.inject.Singleton
 object DateModule {
 
     @Provides
-    @Singleton
-    fun todayProvider(calendar: GregorianCalendar): Day {
-        val calendarTool = CalendarTool(calendar)
-        return with(calendarTool) {
-            Day(
-                iranianDay,
-                iranianMonth,
-                iranianYear,
-                dayOfWeek,
-                gregorianDay,
-                gregorianMonth,
-                gregorianYear,
-                today = true
-            )
-        }
+    fun todayProvider(localDate: LocalDate, calendarTool: CalendarTool): Day {
+        val gregorianDay = localDate.dayOfMonth
+        val gregorianMonth = localDate.monthNumber
+        val gregorianYear = localDate.year
+        calendarTool.setGregorianDate(year = gregorianYear, month = gregorianMonth, day = gregorianDay)
+        val iranianDate = calendarTool.getIranianDate()
+        return Day(
+            iranianDate.day,
+            iranianDate.month,
+            iranianDate.year,
+            localDate.dayOfWeek.isoDayNumber,
+            gregorianDay,
+            gregorianMonth,
+            gregorianYear,
+            today = true
+        )
+    }
+
+    @Provides
+    fun gregorianCalendarProvider(): LocalDate {
+        val currentMoment: Instant = Clock.System.now()
+        val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.UTC)
+        return LocalDate(datetimeInUtc.year, datetimeInUtc.month, datetimeInUtc.dayOfMonth)
     }
 
     @Provides
     @Singleton
-    fun gregorianCalendarProvider() = GregorianCalendar()
-
-    @Provides
-    @Singleton
-    fun calendarToolProvider(calendar: GregorianCalendar) =
-        CalendarTool(calendar)
-
-    @Provides
-    @Singleton
-    fun monthGeneratorProvider(
-        app: Application,
-        day: Day,
-        calendarTool: CalendarTool
-    ): MonthGeneratorClass {
-        ResourceUtils(app)
-        return MonthGeneratorClass(calendarTool, day)
-    }
+    fun resourceUtilsProvider(app: Application) = ResourceUtils(app)
 }

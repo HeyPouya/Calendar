@@ -47,6 +47,7 @@ dependencies {
     implementation(projects.core)
     implementation(projects.features.calendarDetails)
     implementation(libs.androidx.core)
+    implementation(libs.kotlinx.datetime)
 
     // Support
     implementation(libs.appcompat)

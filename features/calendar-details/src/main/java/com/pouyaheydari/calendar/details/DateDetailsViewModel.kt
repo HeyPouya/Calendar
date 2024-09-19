@@ -12,7 +12,7 @@ import javax.inject.Inject
  * ViewModel Of DateDetailsDialogFragment
  */
 @HiltViewModel
-class DateDetailsViewModel @Inject constructor() : ViewModel() {
+class DateDetailsViewModel @Inject constructor(private val resourceUtils: ResourceUtils) : ViewModel() {
 
     private val eventsLiveData = MutableLiveData<String>()
 
@@ -23,8 +23,8 @@ class DateDetailsViewModel @Inject constructor() : ViewModel() {
     fun getEvents(date: Day) {
         val persianTemp = date.shamsiMonth * 100 + date.shamsiDay
         val gregorianTemp = date.gregorianMonth * 100 + date.gregorianDay
-        val persianEvents = ResourceUtils.eventP[persianTemp].orEmpty()
-        val gregorianEvents = ResourceUtils.eventG[gregorianTemp].orEmpty()
+        val persianEvents = resourceUtils.eventP[persianTemp].orEmpty()
+        val gregorianEvents = resourceUtils.eventG[gregorianTemp].orEmpty()
         eventsLiveData.value = buildString {
             if (persianEvents.isNotEmpty()) append(persianEvents)
             if (gregorianEvents.isNotEmpty()) append("\n$gregorianEvents")

@@ -29,6 +29,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.lifecycle.liveData)
     implementation(libs.lifecycle.viewModel)

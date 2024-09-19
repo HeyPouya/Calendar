@@ -26,6 +26,26 @@ private const val IS_VACATION = "1"
  */
 class ResourceUtils(c: Context) {
 
+    var eventG = hashMapOf<Int, String>()
+        private set
+    var eventH = hashMapOf<Int, String>()
+        private set
+    var eventP = hashMapOf<Int, String>()
+        private set
+    var vacationG = hashMapOf<Int, Boolean>()
+        private set
+    var vacationH = hashMapOf<Int, Boolean>()
+        private set
+    var vacationP = hashMapOf<Int, Boolean>()
+        private set
+
+    init {
+        getHashMapResource(c, R.xml.events_gregorian)
+        getHashMapResource(c, R.xml.events_persian)
+        getHashMapResource(c, R.xml.events_misc)
+        getHashMapResource(c, R.xml.events_arabic)
+    }
+
     private fun getHashMapResource(c: Context, hashMapResId: Int) {
         val parser = c.resources.getXml(hashMapResId)
         var title: String?
@@ -78,21 +98,5 @@ class ResourceUtils(c: Context) {
             e.printStackTrace()
             return
         }
-    }
-
-    companion object {
-        var eventG = hashMapOf<Int, String>()
-        var eventH = hashMapOf<Int, String>()
-        var eventP = hashMapOf<Int, String>()
-        var vacationG = hashMapOf<Int, Boolean>()
-        var vacationH = hashMapOf<Int, Boolean>()
-        var vacationP = hashMapOf<Int, Boolean>()
-    }
-
-    init {
-        getHashMapResource(c, R.xml.events_gregorian)
-        getHashMapResource(c, R.xml.events_persian)
-        getHashMapResource(c, R.xml.events_misc)
-        getHashMapResource(c, R.xml.events_arabic)
     }
 }

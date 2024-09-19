@@ -3,7 +3,6 @@ package com.pouyaheydari.calendar.core.utils.extensions
 import android.content.Context
 import com.pouyaheydari.calendar.core.R
 
-
 /**
  * Turns the month number to its Persian equivalent
  * @param context To use getString method
