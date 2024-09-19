@@ -1,9 +1,12 @@
 package com.pouyaheydari.calendar.core.utils
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.pouyaheydari.calendar.core.R
 import org.xmlpull.v1.XmlPullParser
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * This class returns Persian Calendar events , with parsing the xml's inside the app.
@@ -24,7 +27,8 @@ private const val IS_VACATION = "1"
 /**
  * This class reads xml files that contain holidays dates
  */
-class ResourceUtils(c: Context) {
+@Singleton
+class ResourceUtils @Inject constructor(app: Application) {
 
     var eventG = hashMapOf<Int, String>()
         private set
@@ -40,10 +44,10 @@ class ResourceUtils(c: Context) {
         private set
 
     init {
-        getHashMapResource(c, R.xml.events_gregorian)
-        getHashMapResource(c, R.xml.events_persian)
-        getHashMapResource(c, R.xml.events_misc)
-        getHashMapResource(c, R.xml.events_arabic)
+        getHashMapResource(app, R.xml.events_gregorian)
+        getHashMapResource(app, R.xml.events_persian)
+        getHashMapResource(app, R.xml.events_misc)
+        getHashMapResource(app, R.xml.events_arabic)
     }
 
     private fun getHashMapResource(c: Context, hashMapResId: Int) {

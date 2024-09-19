@@ -46,8 +46,4 @@ object DateModule {
         val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.UTC)
         return LocalDate(datetimeInUtc.year, datetimeInUtc.month, datetimeInUtc.dayOfMonth)
     }
-
-    @Provides
-    @Singleton
-    fun resourceUtilsProvider(app: Application) = ResourceUtils(app)
 }
