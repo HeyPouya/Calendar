@@ -14,9 +14,9 @@ data class Day(
     val shamsiMonth: ShamsiMonths,
     val shamsiYear: Int,
     val dayOfWeek: Int,
-    var gregorianDay: Int,
+    val gregorianDay: Int,
     val gregorianMonth: GregorianMonths,
     val gregorianYear: Int,
-    var isShamsiHoliday: Boolean = false,
-    var today: Boolean = false
+    val isShamsiHoliday: Boolean = false,
+    val today: Boolean = false
 ) : Parcelable
