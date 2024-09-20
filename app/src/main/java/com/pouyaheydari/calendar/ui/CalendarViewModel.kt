@@ -27,11 +27,8 @@ class CalendarViewModel @Inject constructor(
 
     private val _screenState = MutableStateFlow<List<Day>>(emptyList())
     val screenState: StateFlow<List<Day>> = _screenState
-        .onStart {
-            _screenState.update {
-                generateDaysOfMonthUseCase(currentDisplayedDate.first, currentDisplayedDate.second)
-            }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        .onStart { updateDisplayedDate() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     /**
      * Fetches and publishes the next month (from the month that currently user is watching) as a list of days
@@ -39,9 +36,7 @@ class CalendarViewModel @Inject constructor(
     fun getNextMonth() {
         currentDisplayedDate =
             calculateNextMonthUseCase(currentDisplayedDate.first, currentDisplayedDate.second)
-        _screenState.update {
-            generateDaysOfMonthUseCase(currentDisplayedDate.first, currentDisplayedDate.second)
-        }
+        updateDisplayedDate()
     }
 
     /**
@@ -50,6 +45,10 @@ class CalendarViewModel @Inject constructor(
     fun getPreviousMonth() {
         currentDisplayedDate =
             calculatePreviousMonthUseCase(currentDisplayedDate.first, currentDisplayedDate.second)
+        updateDisplayedDate()
+    }
+
+    private fun updateDisplayedDate() {
         _screenState.update {
             generateDaysOfMonthUseCase(currentDisplayedDate.first, currentDisplayedDate.second)
         }
