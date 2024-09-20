@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.glance.GlanceId
 import androidx.glance.GlanceTheme
+import androidx.glance.action.actionStartActivity
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
 import com.pouyaheydari.calendar.core.pojo.Day
@@ -46,7 +47,7 @@ class CalendarAppWidget : GlanceAppWidget() {
                 CalendarWidgetComponent(
                     persianDate = persianDate,
                     gregorianDate = gregorianDate,
-                    mainActivity = activity
+                    startActivityAction = actionStartActivity(activity)
                 )
             }
         }

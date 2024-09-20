@@ -1,11 +1,12 @@
 package com.pouyaheydari.calendar.widget.components
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.action.Action
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.background
@@ -23,14 +24,12 @@ import androidx.glance.text.TextStyle
 internal fun CalendarWidgetComponent(
     persianDate: String = "",
     gregorianDate: String = "",
-    mainActivity: Class<out AppCompatActivity>? = null
+    startActivityAction: Action
 ) {
     Column(
         modifier = GlanceModifier
             .fillMaxSize()
-            .clickable {
-                mainActivity?.let { actionStartActivity(it) }
-            }
+            .clickable(startActivityAction)
             .padding(16.dp)
             .background(GlanceTheme.colors.widgetBackground),
         horizontalAlignment = Alignment.Horizontal.CenterHorizontally
@@ -65,6 +64,6 @@ private fun Preview() {
     CalendarWidgetComponent(
         persianDate = "شنبه ۲۸ اردیبهشت ۱۴۰۳",
         gregorianDate = "۲۳ ژوئیه ۲۰۲۴",
-        mainActivity = null
+        startActivityAction = actionStartActivity<Activity>()
     )
 }
