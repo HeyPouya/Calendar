@@ -2,17 +2,10 @@ package com.pouyaheydari.calendar.core.utils
 
 import com.pouyaheydari.calendar.core.pojo.GregorianDate
 import com.pouyaheydari.calendar.core.pojo.GregorianMonths
-import com.pouyaheydari.calendar.core.pojo.IranianDate
+import com.pouyaheydari.calendar.core.pojo.ShamsiDate
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
+import com.pouyaheydari.calendar.core.pojo.WeekDay
 import javax.inject.Inject
-
-const val MONDAY = 0
-const val TUESDAY = 1
-const val WEDNESDAY = 2
-const val THURSDAY = 3
-const val FRIDAY = 4
-const val SATURDAY = 5
-const val SUNDAY = 6
 
 /**
  * The Class That converts Gregorian calendar to Shamsi calendar
@@ -33,11 +26,11 @@ class CalendarTool @Inject constructor() {
     private var march = 0
 
     fun getIranianDate() =
-        IranianDate(
+        ShamsiDate(
             year = iranianYear,
             month = ShamsiMonths.entries.first { it.monthNumber == iranianMonth },
             day = iranianDay,
-            dayOfWeek = getDayOfWeek()
+            weekDay = getDayOfWeek()
         )
 
     fun getGregorianDate() =
@@ -45,7 +38,7 @@ class CalendarTool @Inject constructor() {
             year = gregorianYear,
             month = GregorianMonths.entries.first { it.monthNumber == gregorianMonth },
             day = gregorianDay,
-            dayOfWeek = getDayOfWeek()
+            weekDay = getDayOfWeek()
         )
 
     /**
@@ -96,7 +89,7 @@ class CalendarTool @Inject constructor() {
      * march: The March day of Farvardin the 1st (first day of jaYear)
      */
 
-    private fun getDayOfWeek() = jdn % 7
+    private fun getDayOfWeek() = WeekDay.entries.first { it.weekDayNumber == jdn % 7 }
 
     private fun iranianCalendar() {
         // Iranian years starting the 33-year rule

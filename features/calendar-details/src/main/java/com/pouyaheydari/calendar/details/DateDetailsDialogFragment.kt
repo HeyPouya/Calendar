@@ -13,8 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.SELECTED_DAY_DETAILS
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianWeekDay
+import com.pouyaheydari.calendar.core.utils.toPersianNumber
 import com.pouyaheydari.calendar.details.databinding.FragmentDialogDateDetailsBinding
 import com.pouyaheydari.calendar.details.utils.parcelable
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +53,7 @@ class DateDetailsDialogFragment : DialogFragment() {
         with(date) {
             binding.txtPersianDate.text = getString(
                 R.string.persian_full_date,
-                dayOfWeek.toPersianWeekDay(requireContext()), date.shamsiDay.toPersianNumber(),
+                weekDay.getName(requireContext()), date.shamsiDay.toPersianNumber(),
                 shamsiMonth.getName(requireContext()),
                 date.shamsiYear.toPersianNumber()
             )

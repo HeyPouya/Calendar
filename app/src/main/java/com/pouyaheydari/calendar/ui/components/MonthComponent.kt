@@ -19,7 +19,8 @@ import androidx.compose.ui.unit.dp
 import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.pojo.GregorianMonths
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
+import com.pouyaheydari.calendar.core.pojo.WeekDay
+import com.pouyaheydari.calendar.core.utils.toPersianNumber
 
 @Composable
 fun MonthComponent(
@@ -62,7 +63,7 @@ private fun Preview() {
                 shamsiDay = 1,
                 shamsiMonth = ShamsiMonths.Farwarding,
                 shamsiYear = 1402,
-                dayOfWeek = 2,
+                weekDay = WeekDay.Monday,
                 gregorianDay = 20,
                 gregorianMonth = GregorianMonths.April,
                 gregorianYear = 2022

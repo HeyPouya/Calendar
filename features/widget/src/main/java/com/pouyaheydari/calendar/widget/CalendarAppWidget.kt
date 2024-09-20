@@ -8,8 +8,7 @@ import androidx.glance.action.actionStartActivity
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
 import com.pouyaheydari.calendar.core.pojo.Day
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianWeekDay
+import com.pouyaheydari.calendar.core.utils.toPersianNumber
 import com.pouyaheydari.calendar.widget.components.CalendarWidgetComponent
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -53,7 +52,7 @@ class CalendarAppWidget : GlanceAppWidget() {
 
     private fun getPersianDate(context: Context, today: Day) = context.getString(
         R.string.persian_full_date,
-        today.dayOfWeek.toPersianWeekDay(context),
+        today.weekDay.getName(context),
         today.shamsiDay.toPersianNumber(),
         today.shamsiMonth.getName(context),
         today.shamsiYear.toPersianNumber()

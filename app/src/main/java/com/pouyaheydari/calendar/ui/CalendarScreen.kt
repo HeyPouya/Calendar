@@ -14,8 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pouyaheydari.calendar.R
 import com.pouyaheydari.calendar.core.pojo.Day
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianWeekDay
+import com.pouyaheydari.calendar.core.utils.toPersianNumber
 import com.pouyaheydari.calendar.ui.components.HeaderComponent
 import com.pouyaheydari.calendar.ui.components.MonthComponent
 import com.pouyaheydari.calendar.ui.components.MonthYearTitleComponent
@@ -58,7 +57,7 @@ fun CalendarComponent(
         HeaderComponent(
             dayOfWeek = stringResource(
                 id = R.string.today_is_day_of_week,
-                today.dayOfWeek.toPersianWeekDay(context)
+                today.weekDay.getName(context)
             ),
             iranianDate = rlm + stringResource(
                 id = R.string.persian_day_month,

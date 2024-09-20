@@ -4,5 +4,5 @@ data class GregorianDate(
     val year: Int,
     val month: GregorianMonths,
     val day: Int,
-    val dayOfWeek: Int
+    val weekDay: WeekDay
 )

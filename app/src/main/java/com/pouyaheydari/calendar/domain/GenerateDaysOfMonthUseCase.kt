@@ -4,16 +4,10 @@ import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.pojo.GregorianDate
 import com.pouyaheydari.calendar.core.pojo.GregorianMonths
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
+import com.pouyaheydari.calendar.core.pojo.WeekDay
 import com.pouyaheydari.calendar.core.utils.CalendarTool
 import com.pouyaheydari.calendar.core.utils.EMPTY_DATE
-import com.pouyaheydari.calendar.core.utils.FRIDAY
-import com.pouyaheydari.calendar.core.utils.MONDAY
 import com.pouyaheydari.calendar.core.utils.ResourceUtils
-import com.pouyaheydari.calendar.core.utils.SATURDAY
-import com.pouyaheydari.calendar.core.utils.SUNDAY
-import com.pouyaheydari.calendar.core.utils.THURSDAY
-import com.pouyaheydari.calendar.core.utils.TUESDAY
-import com.pouyaheydari.calendar.core.utils.WEDNESDAY
 import javax.inject.Inject
 
 class GenerateDaysOfMonthUseCase @Inject constructor(
@@ -28,18 +22,22 @@ class GenerateDaysOfMonthUseCase @Inject constructor(
         calendarTool.setIranianDate(iranianYear, shamsiMonth.monthNumber, day = 1)
         val firstDay = calendarTool.getIranianDate()
 
-        val addEmptyDays = addEmptyDays(firstDay.dayOfWeek)
+        val addEmptyDays = emptyDayMaker(firstDay.weekDay.distanceFromFirstDayOfWeek)
         addAll(addEmptyDays)
 
         for (shamsiDay in 1..days) {
-            calendarTool.setIranianDate(year = iranianYear, month = shamsiMonth.monthNumber, day = shamsiDay)
+            calendarTool.setIranianDate(
+                year = iranianYear,
+                month = shamsiMonth.monthNumber,
+                day = shamsiDay
+            )
             val gregorianDay = calendarTool.getGregorianDate()
             add(
                 Day(
                     shamsiDay = shamsiDay,
                     shamsiMonth = shamsiMonth,
                     shamsiYear = iranianYear,
-                    dayOfWeek = gregorianDay.dayOfWeek,
+                    weekDay = gregorianDay.weekDay,
                     gregorianDay = gregorianDay.day,
                     gregorianMonth = gregorianDay.month,
                     gregorianYear = gregorianDay.year,
@@ -48,7 +46,7 @@ class GenerateDaysOfMonthUseCase @Inject constructor(
                         iranianYear,
                         shamsiMonth,
                         shamsiDay,
-                        gregorianDay.dayOfWeek
+                        gregorianDay.weekDay
                     )
                 )
             )
@@ -59,24 +57,13 @@ class GenerateDaysOfMonthUseCase @Inject constructor(
         iranianYear: Int,
         shamsiMonth: ShamsiMonths,
         iranianDay: Int,
-        dayOfWeek: Int
-    ) = dayOfWeek == FRIDAY || (iranianYear == today.shamsiYear &&
+        weekDay: WeekDay
+    ) = weekDay == WeekDay.Friday || (iranianYear == today.shamsiYear &&
             resourceUtils.vacationP.containsKey(shamsiMonth.monthNumber * 100 + iranianDay)
             )
 
     private fun checkToday(gregorianDay: GregorianDate) =
         today.gregorianYear == gregorianDay.year && today.gregorianMonth == gregorianDay.month && today.gregorianDay == gregorianDay.day
-
-    private fun addEmptyDays(dayOfWeek: Int): ArrayList<Day> = when (dayOfWeek) {
-        MONDAY -> emptyDayMaker(2)
-        TUESDAY -> emptyDayMaker(3)
-        WEDNESDAY -> emptyDayMaker(4)
-        THURSDAY -> emptyDayMaker(5)
-        FRIDAY -> emptyDayMaker(6)
-        SATURDAY -> emptyDayMaker(0)
-        SUNDAY -> emptyDayMaker(1)
-        else -> throw IllegalArgumentException("Day is not defined in the week!")
-    }
 
     private fun emptyDayMaker(dayOfWeek: Int): ArrayList<Day> {
         val list = arrayListOf<Day>()
@@ -86,7 +73,7 @@ class GenerateDaysOfMonthUseCase @Inject constructor(
                     EMPTY_DATE,
                     ShamsiMonths.Farwarding,
                     EMPTY_DATE,
-                    EMPTY_DATE,
+                    WeekDay.Monday,
                     EMPTY_DATE,
                     GregorianMonths.January,
                     EMPTY_DATE

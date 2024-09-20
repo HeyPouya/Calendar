@@ -1,6 +1,7 @@
 package com.pouyaheydari.calendar.di
 
 import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.pojo.WeekDay
 import com.pouyaheydari.calendar.core.utils.CalendarTool
 import dagger.Module
 import dagger.Provides
@@ -31,7 +32,7 @@ object DateModule {
             shamsiDate.day,
             shamsiDate.month,
             shamsiDate.year,
-            localDate.dayOfWeek.isoDayNumber,
+            WeekDay.entries.first { it.weekDayNumber == localDate.dayOfWeek.isoDayNumber },
             gregorianDate.day,
             gregorianDate.month,
             gregorianDate.year,
