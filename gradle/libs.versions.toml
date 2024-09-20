@@ -1,5 +1,5 @@
 [versions]
-appVersion = "613"
+appVersion = "614"
 compileSdkVersion = "34"
 glance = "1.1.0"
 javaxInject = "1"
