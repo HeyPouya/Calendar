@@ -21,8 +21,8 @@ class DateDetailsViewModel @Inject constructor(private val resourceUtils: Resour
      * @param date the selected date
      */
     fun getEvents(date: Day) {
-        val persianTemp = date.shamsiMonth * 100 + date.shamsiDay
-        val gregorianTemp = date.gregorianMonth * 100 + date.gregorianDay
+        val persianTemp = date.shamsiMonth.monthNumber * 100 + date.shamsiDay
+        val gregorianTemp = date.gregorianMonth.monthNumber * 100 + date.gregorianDay
         val persianEvents = resourceUtils.eventP[persianTemp].orEmpty()
         val gregorianEvents = resourceUtils.eventG[gregorianTemp].orEmpty()
         eventsLiveData.value = buildString {

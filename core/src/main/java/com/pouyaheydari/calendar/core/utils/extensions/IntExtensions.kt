@@ -4,26 +4,6 @@ import android.content.Context
 import com.pouyaheydari.calendar.core.R
 
 /**
- * Turns the month number to its Persian equivalent
- * @param context To use getString method
- */
-fun Int.toPersianMonth(context: Context): String = when (this) {
-    1 -> context.getString(R.string.farvardin)
-    2 -> context.getString(R.string.ordibehesht)
-    3 -> context.getString(R.string.khordad)
-    4 -> context.getString(R.string.tir)
-    5 -> context.getString(R.string.mordad)
-    6 -> context.getString(R.string.shahrivar)
-    7 -> context.getString(R.string.mehr)
-    8 -> context.getString(R.string.aban)
-    9 -> context.getString(R.string.azar)
-    10 -> context.getString(R.string.dey)
-    11 -> context.getString(R.string.bahman)
-    12 -> context.getString(R.string.esfand)
-    else -> throw IllegalArgumentException("Month number is grater than 12: $this")
-}
-
-/**
  * Turns the day number to its Persian equivalent.
  * Days must start from 0(Monday) to 6(Sunday)
  * @param context To use getString method
@@ -37,26 +17,6 @@ fun Int.toPersianWeekDay(context: Context): String = when (this) {
     5 -> context.getString(R.string.saturday)
     6 -> context.getString(R.string.sunday)
     else -> throw IllegalArgumentException("Week day number is grater than 6: $this")
-}
-
-/**
- * Turns the month number to its Gregorian equivalent in Persian
- * @param context To use getString method
- */
-fun Int.toEnglishMonth(context: Context): String = when (this) {
-    1 -> context.getString(R.string.january)
-    2 -> context.getString(R.string.february)
-    3 -> context.getString(R.string.march)
-    4 -> context.getString(R.string.april)
-    5 -> context.getString(R.string.may)
-    6 -> context.getString(R.string.jun)
-    7 -> context.getString(R.string.july)
-    8 -> context.getString(R.string.august)
-    9 -> context.getString(R.string.september)
-    10 -> context.getString(R.string.october)
-    11 -> context.getString(R.string.november)
-    12 -> context.getString(R.string.december)
-    else -> throw IllegalArgumentException("Month number is grater than 12")
 }
 
 /**

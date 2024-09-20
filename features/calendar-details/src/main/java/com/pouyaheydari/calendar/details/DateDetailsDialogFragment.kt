@@ -11,17 +11,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.AndroidEntryPoint
 import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.core.utils.SELECTED_DAY_DETAILS
-import com.pouyaheydari.calendar.core.utils.extensions.toEnglishMonth
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianWeekDay
 import com.pouyaheydari.calendar.details.databinding.FragmentDialogDateDetailsBinding
 import com.pouyaheydari.calendar.details.utils.parcelable
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.GregorianCalendar
-
 
 private const val CALENDAR_INTENT_TYPE = "vnd.android.cursor.item/event"
 
@@ -58,13 +55,13 @@ class DateDetailsDialogFragment : DialogFragment() {
             binding.txtPersianDate.text = getString(
                 R.string.persian_full_date,
                 dayOfWeek.toPersianWeekDay(requireContext()), date.shamsiDay.toPersianNumber(),
-                shamsiMonth.toPersianMonth(requireContext()),
+                shamsiMonth.getName(requireContext()),
                 date.shamsiYear.toPersianNumber()
             )
             binding.txtGregorianDate.text = getString(
                 R.string.gregorian_full_date,
                 gregorianDay.toPersianNumber(),
-                gregorianMonth.toEnglishMonth(requireContext()),
+                gregorianMonth.getName(requireContext()),
                 gregorianYear.toPersianNumber()
             )
         }
@@ -77,7 +74,11 @@ class DateDetailsDialogFragment : DialogFragment() {
                 type = CALENDAR_INTENT_TYPE
                 putExtra(
                     CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-                    GregorianCalendar(date.gregorianYear, date.gregorianMonth - 1, date.gregorianDay).timeInMillis
+                    GregorianCalendar(
+                        date.gregorianYear,
+                        date.gregorianMonth.monthNumber - 1,
+                        date.gregorianDay
+                    ).timeInMillis
                 )
                 try {
                     startActivity(this)
@@ -91,7 +92,6 @@ class DateDetailsDialogFragment : DialogFragment() {
                 }
             }
         }
-
     }
 
     private fun setHolidayColors() {

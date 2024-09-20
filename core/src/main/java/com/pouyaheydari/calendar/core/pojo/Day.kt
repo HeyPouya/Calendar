@@ -11,11 +11,11 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Day(
     val shamsiDay: Int,
-    val shamsiMonth: Int,
+    val shamsiMonth: ShamsiMonths,
     val shamsiYear: Int,
     val dayOfWeek: Int,
     var gregorianDay: Int,
-    val gregorianMonth: Int,
+    val gregorianMonth: GregorianMonths,
     val gregorianYear: Int,
     var isShamsiHoliday: Boolean = false,
     var today: Boolean = false

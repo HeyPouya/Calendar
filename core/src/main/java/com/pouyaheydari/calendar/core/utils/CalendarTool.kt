@@ -1,7 +1,9 @@
 package com.pouyaheydari.calendar.core.utils
 
 import com.pouyaheydari.calendar.core.pojo.GregorianDate
+import com.pouyaheydari.calendar.core.pojo.GregorianMonths
 import com.pouyaheydari.calendar.core.pojo.IranianDate
+import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import javax.inject.Inject
 
 const val MONDAY = 0
@@ -33,7 +35,7 @@ class CalendarTool @Inject constructor() {
     fun getIranianDate() =
         IranianDate(
             year = iranianYear,
-            month = iranianMonth,
+            month = ShamsiMonths.entries.first { it.monthNumber == iranianMonth },
             day = iranianDay,
             dayOfWeek = getDayOfWeek()
         )
@@ -41,7 +43,7 @@ class CalendarTool @Inject constructor() {
     fun getGregorianDate() =
         GregorianDate(
             year = gregorianYear,
-            month = gregorianMonth,
+            month = GregorianMonths.entries.first { it.monthNumber == gregorianMonth },
             day = gregorianDay,
             dayOfWeek = getDayOfWeek()
         )

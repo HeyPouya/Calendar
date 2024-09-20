@@ -20,23 +20,21 @@ object DateModule {
 
     @Provides
     fun todayProvider(localDate: LocalDate, calendarTool: CalendarTool): Day {
-        val gregorianDay = localDate.dayOfMonth
-        val gregorianMonth = localDate.monthNumber
-        val gregorianYear = localDate.year
         calendarTool.setGregorianDate(
-            year = gregorianYear,
-            month = gregorianMonth,
-            day = gregorianDay
+            year = localDate.year,
+            month = localDate.monthNumber,
+            day = localDate.dayOfMonth
         )
-        val iranianDate = calendarTool.getIranianDate()
+        val shamsiDate = calendarTool.getIranianDate()
+        val gregorianDate = calendarTool.getGregorianDate()
         return Day(
-            iranianDate.day,
-            iranianDate.month,
-            iranianDate.year,
+            shamsiDate.day,
+            shamsiDate.month,
+            shamsiDate.year,
             localDate.dayOfWeek.isoDayNumber,
-            gregorianDay,
-            gregorianMonth,
-            gregorianYear,
+            gregorianDate.day,
+            gregorianDate.month,
+            gregorianDate.year,
             today = true
         )
     }

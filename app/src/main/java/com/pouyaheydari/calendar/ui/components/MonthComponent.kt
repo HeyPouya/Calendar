@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.pojo.GregorianMonths
+import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
 
 @Composable
@@ -58,11 +60,11 @@ private fun Preview() {
         list.add(
             Day(
                 shamsiDay = 1,
-                shamsiMonth = 1,
+                shamsiMonth = ShamsiMonths.Farwarding,
                 shamsiYear = 1402,
                 dayOfWeek = 2,
                 gregorianDay = 20,
-                gregorianMonth = 4,
+                gregorianMonth = GregorianMonths.April,
                 gregorianYear = 2022
             ),
         )

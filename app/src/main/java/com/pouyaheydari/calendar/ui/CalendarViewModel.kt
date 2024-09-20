@@ -6,6 +6,7 @@ import com.pouyaheydari.calendar.core.pojo.Day
 import com.pouyaheydari.calendar.domain.CalculateNextMonthUseCase
 import com.pouyaheydari.calendar.domain.CalculatePreviousMonthUseCase
 import com.pouyaheydari.calendar.domain.GenerateDaysOfMonthUseCase
+import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,26 +24,26 @@ class CalendarViewModel @Inject constructor(
     today: Day
 ) : ViewModel() {
 
-    private var currentDisplayedDate: Pair<Int, Int> = today.shamsiYear to today.shamsiMonth
+    private var currentDisplayedDate: Pair<Int, ShamsiMonths> = today.shamsiYear to today.shamsiMonth
 
     private val _screenState = MutableStateFlow<List<Day>>(emptyList())
     val screenState: StateFlow<List<Day>> = _screenState
         .onStart { updateDisplayedDate() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    /**
-     * Fetches and publishes the next month (from the month that currently user is watching) as a list of days
-     */
-    fun getNextMonth() {
+    fun onIntent(intent: CalendarUserIntents) = when (intent) {
+        CalendarUserIntents.OnDayClicked -> {}
+        CalendarUserIntents.OnNextMonthClicked -> getNextMonth()
+        CalendarUserIntents.OnPreviousMonthClicked -> getPreviousMonth()
+    }
+
+    private fun getNextMonth() {
         currentDisplayedDate =
             calculateNextMonthUseCase(currentDisplayedDate.first, currentDisplayedDate.second)
         updateDisplayedDate()
     }
 
-    /**
-     * Fetches and publishes the previous month (from the month that currently user is watching) as a list of days
-     */
-    fun getPreviousMonth() {
+    private fun getPreviousMonth() {
         currentDisplayedDate =
             calculatePreviousMonthUseCase(currentDisplayedDate.first, currentDisplayedDate.second)
         updateDisplayedDate()

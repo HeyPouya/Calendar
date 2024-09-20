@@ -14,8 +14,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pouyaheydari.calendar.R
 import com.pouyaheydari.calendar.core.pojo.Day
-import com.pouyaheydari.calendar.core.utils.extensions.toEnglishMonth
-import com.pouyaheydari.calendar.core.utils.extensions.toPersianMonth
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianNumber
 import com.pouyaheydari.calendar.core.utils.extensions.toPersianWeekDay
 import com.pouyaheydari.calendar.ui.components.HeaderComponent
@@ -30,23 +28,23 @@ fun CalendarScreen(
     viewModel: CalendarViewModel = viewModel(),
     onDaySelected: (Day) -> Unit
 ) {
-    val date = viewModel.screenState.collectAsStateWithLifecycle().value
+    val days = viewModel.screenState.collectAsStateWithLifecycle().value
     val context = LocalContext.current
     CalendarComponent(
         modifier,
         today,
-        date,
+        days,
         context,
         onDaySelected = onDaySelected,
-        onNextMonthClicked = { viewModel.getNextMonth() },
-        onPreviousMonthClicked = { viewModel.getPreviousMonth() })
+        onNextMonthClicked = { viewModel.onIntent(CalendarUserIntents.OnNextMonthClicked) },
+        onPreviousMonthClicked = { viewModel.onIntent(CalendarUserIntents.OnPreviousMonthClicked) })
 }
 
 @Composable
 fun CalendarComponent(
     modifier: Modifier = Modifier,
     today: Day,
-    date: List<Day>?,
+    days: List<Day>?,
     context: Context,
     onDaySelected: (Day) -> Unit,
     onNextMonthClicked: () -> Unit = {},
@@ -65,26 +63,26 @@ fun CalendarComponent(
             iranianDate = rlm + stringResource(
                 id = R.string.persian_day_month,
                 today.shamsiDay.toPersianNumber(),
-                today.shamsiMonth.toPersianMonth(context),
+                today.shamsiMonth.getName(context),
                 today.shamsiYear.toPersianNumber()
             ),
             gregorianDate = rlm + stringResource(
                 id = R.string.gregorian_full_date,
                 today.gregorianDay.toPersianNumber(),
-                today.gregorianMonth.toEnglishMonth(context),
+                today.gregorianMonth.getName(context),
                 today.gregorianYear.toPersianNumber()
             )
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         MonthYearTitleComponent(
-            monthName = date?.lastOrNull()?.shamsiMonth?.toPersianMonth(context).orEmpty(),
-            year = date?.lastOrNull()?.shamsiYear?.toPersianNumber().orEmpty(),
+            monthName = days?.lastOrNull()?.shamsiMonth?.getName(context).orEmpty(),
+            year = days?.lastOrNull()?.shamsiYear?.toPersianNumber().orEmpty(),
             onNextMonthClicked = onNextMonthClicked,
             onPreviousMonthClicked = onPreviousMonthClicked
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         WeekDaysComponent(weekDays = getWeekDays())
-        MonthComponent(list = date.orEmpty(), onItemClicked = onDaySelected)
+        MonthComponent(list = days.orEmpty(), onItemClicked = onDaySelected)
     }
 }
 
