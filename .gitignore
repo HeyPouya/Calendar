@@ -40,4 +40,4 @@ google-services.json
 
 # Android Profiling
 *.hprof
-/app/release/app-release.aab
+/app/release
