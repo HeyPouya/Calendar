@@ -28,6 +28,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -47,6 +48,9 @@ dependencies {
     implementation(projects.core)
     implementation(projects.features.calendarDetails)
     implementation(libs.androidx.core)
+
+    // Datetime
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.kotlinx.datetime)
 
     // Support
