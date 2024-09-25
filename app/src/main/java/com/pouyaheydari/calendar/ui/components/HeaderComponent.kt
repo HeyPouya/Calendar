@@ -2,11 +2,11 @@ package com.pouyaheydari.calendar.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,15 +25,14 @@ fun HeaderComponent(
     modifier: Modifier = Modifier,
     dayOfWeek: String,
     iranianDate: String,
-    gregorianDate: String
+    gregorianDate: String,
+    elevation: CardElevation
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.3f),
+        modifier = modifier.fillMaxWidth(),
         shape = HeaderShape,
         colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.primary),
-        elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
+        elevation = elevation
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -57,6 +56,7 @@ private fun Preview() {
             dayOfWeek = "یکشنبه",
             iranianDate = "۲۸ مرداد",
             gregorianDate = "18 آگوست",
+            elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
         )
     }
 }

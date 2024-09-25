@@ -32,7 +32,7 @@ object DateModule {
             shamsiDate.day,
             shamsiDate.month,
             shamsiDate.year,
-            WeekDay.entries.first { it.weekDayNumber == localDate.dayOfWeek.isoDayNumber },
+            WeekDay.entries.first { it.weekDayNumber == localDate.dayOfWeek.isoDayNumber - 1 },
             gregorianDate.day,
             gregorianDate.month,
             gregorianDate.year,

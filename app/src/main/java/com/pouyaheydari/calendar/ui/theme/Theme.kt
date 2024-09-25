@@ -18,6 +18,7 @@ private val LightColorScheme = lightColorScheme(
     primary = DarkBlue80,
     onSurface = LightOnSurface,
     onPrimary = Color.White,
+    surface = Color.White,
     background = Black7,
 )
 

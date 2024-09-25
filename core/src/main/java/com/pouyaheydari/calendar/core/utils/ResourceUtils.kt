@@ -9,6 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val XCalendarP = "PersianCalendar"
+private const val XCalendarG = "GregorianCalendar"
 private const val EVENT = "Event"
 private const val TITLE = "Title"
 private const val DAY = "Day"
@@ -20,9 +21,9 @@ private const val IS_VACATION = "1"
 @Singleton
 class ResourceUtils @Inject constructor(app: Application) {
 
-    var eventG = hashMapOf<Int, String>()
+    var eventG = hashMapOf<Int, List<String>>()
         private set
-    var eventP = hashMapOf<Int, String>()
+    var eventP = hashMapOf<Int, List<String>>()
         private set
     var vacationP = hashMapOf<Int, Boolean>()
         private set
@@ -62,10 +63,26 @@ class ResourceUtils @Inject constructor(app: Application) {
                             var vacation = false
                             if (isVacation != null) if (isVacation == IS_VACATION) vacation = true
                             if (xCalendar == XCalendarP) {
-                                if (eventP.containsKey(dayMonth)) eventP[dayMonth] =
-                                    eventP[dayMonth].toString() + " " + title else eventP[dayMonth] =
-                                    title
+                                if (eventP.containsKey(dayMonth)) {
+                                    eventP[dayMonth] =
+                                        buildList {
+                                            addAll(eventP[dayMonth].orEmpty())
+                                            add(title)
+                                        }
+                                } else {
+                                    eventP[dayMonth] = listOf(title)
+                                }
                                 if (vacation) vacationP[dayMonth] = true
+                            }else if (xCalendar == XCalendarG) {
+                                if (eventG.containsKey(dayMonth)) {
+                                    eventG[dayMonth] =
+                                        buildList {
+                                            addAll(eventG[dayMonth].orEmpty())
+                                            add(title)
+                                        }
+                                } else {
+                                    eventG[dayMonth] = listOf(title)
+                                }
                             }
                         }
                     }

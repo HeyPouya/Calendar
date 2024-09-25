@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.crashlytics)
-    id("kotlin-parcelize")
 }
 
 android {
@@ -36,7 +35,6 @@ android {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
-        viewBinding = true
         buildConfig = true
         compose = true
     }
@@ -46,7 +44,6 @@ android {
 dependencies {
     implementation(projects.features.widget)
     implementation(projects.core)
-    implementation(projects.features.calendarDetails)
     implementation(libs.androidx.core)
 
     // Datetime
@@ -54,17 +51,7 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     // Support
-    implementation(libs.appcompat)
-    implementation(libs.constraintLayout)
     implementation(libs.material)
-
-    // ViewModel + LiveData
-    implementation(libs.lifecycle.liveData)
-    implementation(libs.lifecycle.viewModel)
-
-    // Navigation Components
-    implementation(libs.navigation.ui)
-    implementation(libs.navigation)
 
     // Hilt Library
     implementation(libs.hilt.android)
@@ -79,6 +66,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.lifecycle)
+    implementation(libs.androidx.compose.activity)
 
     val firebaseBom = platform(libs.firebase.bom)
     implementation(firebaseBom)

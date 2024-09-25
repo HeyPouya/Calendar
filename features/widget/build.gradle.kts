@@ -29,8 +29,6 @@ dependencies {
     implementation(projects.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.androidx.core)
-    implementation(libs.appcompat)
-    implementation(libs.material)
 
     // Hilt Library
     implementation(libs.hilt.android)

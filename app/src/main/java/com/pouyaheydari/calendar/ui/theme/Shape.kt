@@ -7,6 +7,6 @@ val TodayShape = RoundedCornerShape(15)
 val HeaderShape = RoundedCornerShape(
     topStart = 0.dp,
     topEnd = 0.dp,
-    bottomEnd = 50.dp,
-    bottomStart = 50.dp
+    bottomEnd = 30.dp,
+    bottomStart = 30.dp
 )
