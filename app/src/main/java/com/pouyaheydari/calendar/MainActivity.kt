@@ -7,9 +7,6 @@ import com.pouyaheydari.calendar.ui.CalendarScreen
 import com.pouyaheydari.calendar.ui.theme.PersianCalendarTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-/**
- * The single activity of the application
- */
 @AndroidEntryPoint
 open class MainActivity : ComponentActivity() {
 
