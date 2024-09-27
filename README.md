@@ -1,15 +1,14 @@
 # Persian Calendar
-A sample Android Calendar to learn latest technologies in Android world and also check the Persian Calendar ;)
+This is a user-friendly Shamsi-Gregorian calendar application for Android, designed to help users manage their schedules effectively.
 
 [![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
-[![Build Status](https://travis-ci.org/SirLordPouya/Calendar.svg?branch=master)](https://travis-ci.org/HeyPouya/Calendar)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ee50b298abb046448983618ad48fa4b8)](https://www.codacy.com/gh/HeyPouya/Calendar/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SirLordPouya/Calendar&amp;utm_campaign=Badge_Grade)
 <p align="center">
 <img src="https://raw.githubusercontent.com/HeyPouya/Calendar/master/pics/icon.png" width="250">
 </p>
 
-Persian Calendar is an Iranian calendar that includes Shamsi and Gregorian dates. Also it includes Persian holidays and some global events.
-Using this Calendar, users can add an event in their default Android calendar application.
+Persian Calendar is a hybrid Shamsi-Gregorian calendar that features Persian holidays alongside global events. 
+This application allows users to seamlessly add events to their default Android calendar, enhancing their scheduling experience.
 
 <img src="https://raw.githubusercontent.com/HeyPouya/Calendar/master/pics/Screenshot_1.png" width="250"> <img src="https://raw.githubusercontent.com/HeyPouya/Calendar/master/pics/Screenshot_2.png" width="250"> <img src="https://raw.githubusercontent.com/HeyPouya/Calendar/master/pics/Screenshot_3.png" width="250">
 
@@ -17,28 +16,20 @@ Using this Calendar, users can add an event in their default Android calendar ap
 
 Technologies used in this projects:
 
-*   MVVM
-*   Widget
-*   Dark Mode
-*   Dagger Hilt
-*   ViewModel
-*   Test
-*   Retrofit
-*   Coroutines
+*   MVI
+*   Widget with Glance
+*   Jetpack Compose
+*   Hilt
+*   Clean Architecture
 *   Kotlin
-*   LiveData
-*   Navigation Component
-*   Single Activity
-*   DiffUtils
-*   ListAdapter
 
-### Calculating Dates
+## Contributing
 
-This applications calculates dates based on the Gregorian calendar. The CalendarTool class that is used in the project, is responsible for converting the dates.
+Contributions are welcome! If you find any bugs or have suggestions for new features, please open an issue or submit a pull request.
 
 ### Download
 
-You can download the application itself from [GooglePlay](https://play.google.com/store/apps/details?id=com.pouyaheydari.calendar) store.
+You can download the Android app from [GooglePlay](https://play.google.com/store/apps/details?id=com.pouyaheydari.calendar) store.
 
 ## License
 
