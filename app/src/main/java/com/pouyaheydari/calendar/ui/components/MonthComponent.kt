@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.pojo.GregorianMonths
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import com.pouyaheydari.calendar.core.pojo.WeekDay
@@ -25,8 +25,8 @@ import com.pouyaheydari.calendar.core.utils.toPersianNumber
 @Composable
 fun MonthComponent(
     modifier: Modifier = Modifier,
-    list: List<Day>,
-    onItemClicked: (Day) -> Unit = {}
+    list: List<DayType>,
+    onItemClicked: (DayType.Day) -> Unit = {}
 ) {
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         LazyVerticalGrid(
@@ -36,7 +36,7 @@ fun MonthComponent(
             contentPadding = PaddingValues(4.dp)
         ) {
             items(list) {
-                if (it.shamsiDay != -1) {
+                if (it is DayType.Day) {
                     DayItemComponent(
                         modifier = Modifier.fillMaxSize(),
                         persianDay = it.shamsiDay.toPersianNumber(),
@@ -56,10 +56,10 @@ fun MonthComponent(
 @PreviewLightDark
 @Composable
 private fun Preview() {
-    val list = mutableListOf<Day>()
+    val list = mutableListOf<DayType.Day>()
     repeat(30) {
         list.add(
-            Day(
+            DayType.Day(
                 shamsiDay = 1,
                 shamsiMonth = ShamsiMonths.Farwarding,
                 shamsiYear = 1402,

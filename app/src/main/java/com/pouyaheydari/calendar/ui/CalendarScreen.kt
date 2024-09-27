@@ -23,7 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.material.snackbar.Snackbar
 import com.pouyaheydari.calendar.R
-import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.utils.toPersianNumber
 import com.pouyaheydari.calendar.ui.components.DayDetailsBottomSheet
 import com.pouyaheydari.calendar.ui.components.HeaderComponent
@@ -110,10 +110,10 @@ private fun handleIntentToDefaultCalendarApp(
 @Composable
 fun CalendarComponent(
     modifier: Modifier = Modifier,
-    today: Day,
-    days: List<Day>?,
+    today: DayType.Day,
+    days: List<DayType>?,
     context: Context,
-    onDaySelected: (Day) -> Unit,
+    onDaySelected: (DayType.Day) -> Unit,
     onNextMonthClicked: () -> Unit = {},
     onPreviousMonthClicked: () -> Unit = {}
 ) {
@@ -140,8 +140,8 @@ fun CalendarComponent(
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         MonthYearTitleComponent(
-            monthName = days?.lastOrNull()?.shamsiMonth?.getName(context).orEmpty(),
-            year = days?.lastOrNull()?.shamsiYear?.toPersianNumber().orEmpty(),
+            monthName = ((days?.lastOrNull()) as? DayType.Day)?.shamsiMonth?.getName(context).orEmpty(),
+            year = ((days?.lastOrNull()) as? DayType.Day)?.shamsiYear?.toPersianNumber().orEmpty(),
             onNextMonthClicked = onNextMonthClicked,
             onPreviousMonthClicked = onPreviousMonthClicked
         )

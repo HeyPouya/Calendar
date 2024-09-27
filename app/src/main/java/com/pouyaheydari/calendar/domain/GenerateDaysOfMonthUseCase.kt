@@ -1,12 +1,10 @@
 package com.pouyaheydari.calendar.domain
 
-import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.pojo.GregorianDate
-import com.pouyaheydari.calendar.core.pojo.GregorianMonths
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import com.pouyaheydari.calendar.core.pojo.WeekDay
 import com.pouyaheydari.calendar.core.utils.CalendarTool
-import com.pouyaheydari.calendar.core.utils.EMPTY_DATE
 import com.pouyaheydari.calendar.core.utils.ResourceUtils
 import javax.inject.Inject
 
@@ -14,7 +12,7 @@ class GenerateDaysOfMonthUseCase @Inject constructor(
     private val calculateDaysInMonthUseCase: CalculateDaysInMonthUseCase,
     private val calendarTool: CalendarTool,
     private val resourceUtils: ResourceUtils,
-    private val today: Day,
+    private val today: DayType.Day,
 ) {
     operator fun invoke(iranianYear: Int, shamsiMonth: ShamsiMonths) = buildList {
         val days = calculateDaysInMonthUseCase(iranianYear, shamsiMonth)
@@ -33,7 +31,7 @@ class GenerateDaysOfMonthUseCase @Inject constructor(
             )
             val gregorianDay = calendarTool.getGregorianDate()
             add(
-                Day(
+                DayType.Day(
                     shamsiDay = shamsiDay,
                     shamsiMonth = shamsiMonth,
                     shamsiYear = iranianYear,
@@ -65,21 +63,9 @@ class GenerateDaysOfMonthUseCase @Inject constructor(
     private fun checkToday(gregorianDay: GregorianDate) =
         today.gregorianYear == gregorianDay.year && today.gregorianMonth == gregorianDay.month && today.gregorianDay == gregorianDay.day
 
-    private fun emptyDayMaker(dayOfWeek: Int): ArrayList<Day> {
-        val list = arrayListOf<Day>()
-        for (i in 1..dayOfWeek) {
-            list.add(
-                Day(
-                    EMPTY_DATE,
-                    ShamsiMonths.Farwarding,
-                    EMPTY_DATE,
-                    WeekDay.Monday,
-                    EMPTY_DATE,
-                    GregorianMonths.January,
-                    EMPTY_DATE
-                )
-            )
+    private fun emptyDayMaker(dayOfWeek: Int) = buildList {
+        repeat(dayOfWeek) {
+            add(DayType.EmptyDay)
         }
-        return list
     }
 }

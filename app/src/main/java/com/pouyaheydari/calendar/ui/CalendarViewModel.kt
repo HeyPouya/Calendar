@@ -2,7 +2,7 @@ package com.pouyaheydari.calendar.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import com.pouyaheydari.calendar.domain.CalculateNextMonthUseCase
 import com.pouyaheydari.calendar.domain.CalculatePreviousMonthUseCase
@@ -24,7 +24,7 @@ class CalendarViewModel @Inject constructor(
     private val calculatePreviousMonthUseCase: CalculatePreviousMonthUseCase,
     private val generateDaysOfMonthUseCase: GenerateDaysOfMonthUseCase,
     private val getEventsByDayUseCase: GetEventsByDayUseCase,
-    today: Day
+    today: DayType.Day
 ) : ViewModel() {
 
     private var currentDisplayedDate: Pair<Int, ShamsiMonths> =

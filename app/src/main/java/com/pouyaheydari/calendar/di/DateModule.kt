@@ -1,6 +1,6 @@
 package com.pouyaheydari.calendar.di
 
-import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.pojo.WeekDay
 import com.pouyaheydari.calendar.core.utils.CalendarTool
 import dagger.Module
@@ -20,7 +20,7 @@ import kotlinx.datetime.toLocalDateTime
 object DateModule {
 
     @Provides
-    fun todayProvider(localDate: LocalDate, calendarTool: CalendarTool): Day {
+    fun todayProvider(localDate: LocalDate, calendarTool: CalendarTool): DayType.Day {
         calendarTool.setGregorianDate(
             year = localDate.year,
             month = localDate.monthNumber,
@@ -28,7 +28,7 @@ object DateModule {
         )
         val shamsiDate = calendarTool.getIranianDate()
         val gregorianDate = calendarTool.getGregorianDate()
-        return Day(
+        return DayType.Day(
             shamsiDate.day,
             shamsiDate.month,
             shamsiDate.year,

@@ -7,7 +7,7 @@ import androidx.glance.GlanceTheme
 import androidx.glance.action.actionStartActivity
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.provideContent
-import com.pouyaheydari.calendar.core.pojo.Day
+import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.utils.toPersianNumber
 import com.pouyaheydari.calendar.widget.components.CalendarWidgetComponent
 import dagger.hilt.EntryPoint
@@ -22,7 +22,7 @@ class CalendarAppWidget : GlanceAppWidget() {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface CalendarAppWidgetEntryPoint {
-        fun provideToday(): Day
+        fun provideToday(): DayType.Day
     }
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -50,7 +50,7 @@ class CalendarAppWidget : GlanceAppWidget() {
         }
     }
 
-    private fun getPersianDate(context: Context, today: Day) = context.getString(
+    private fun getPersianDate(context: Context, today: DayType.Day) = context.getString(
         R.string.persian_full_date,
         today.weekDay.getName(context),
         today.shamsiDay.toPersianNumber(),
@@ -58,7 +58,7 @@ class CalendarAppWidget : GlanceAppWidget() {
         today.shamsiYear.toPersianNumber()
     )
 
-    private fun getGregorianDate(context: Context, today: Day): String {
+    private fun getGregorianDate(context: Context, today: DayType.Day): String {
 
         // We have to add this to prevent misplacement of dates when combining persian text with numbers
         val rlm = '\u200F'
