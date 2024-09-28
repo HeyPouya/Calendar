@@ -8,7 +8,7 @@ import com.pouyaheydari.calendar.core.utils.CalendarTool
 import com.pouyaheydari.calendar.core.utils.ResourceUtils
 import javax.inject.Inject
 
-class GenerateDaysOfMonthUseCase @Inject constructor(
+class GenerateMonthUseCase @Inject constructor(
     private val calculateDaysInMonthUseCase: CalculateDaysInMonthUseCase,
     private val calendarTool: CalendarTool,
     private val resourceUtils: ResourceUtils,

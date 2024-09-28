@@ -6,7 +6,7 @@ import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import com.pouyaheydari.calendar.domain.CalculateNextMonthUseCase
 import com.pouyaheydari.calendar.domain.CalculatePreviousMonthUseCase
-import com.pouyaheydari.calendar.domain.GenerateDaysOfMonthUseCase
+import com.pouyaheydari.calendar.domain.GenerateMonthUseCase
 import com.pouyaheydari.calendar.domain.GetEventsByDayUseCase
 import com.pouyaheydari.calendar.ui.theme.CalendarScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class CalendarViewModel @Inject constructor(
     private val calculateNextMonthUseCase: CalculateNextMonthUseCase,
     private val calculatePreviousMonthUseCase: CalculatePreviousMonthUseCase,
-    private val generateDaysOfMonthUseCase: GenerateDaysOfMonthUseCase,
+    private val generateMonthUseCase: GenerateMonthUseCase,
     private val getEventsByDayUseCase: GetEventsByDayUseCase,
     today: DayType.Day
 ) : ViewModel() {
@@ -79,7 +79,7 @@ class CalendarViewModel @Inject constructor(
     private fun updateDisplayedDate() {
         _screenState.update {
             it.copy(
-                displayDays = generateDaysOfMonthUseCase(
+                displayDays = generateMonthUseCase(
                     currentDisplayedDate.first,
                     currentDisplayedDate.second
                 )
