@@ -18,18 +18,18 @@ enum class ShamsiMonths(val monthNumber: Int) {
     Esfand(12);
 
     fun getName(context: Context): String = when (monthNumber) {
-        1 -> context.getString(R.string.farvardin)
-        2 -> context.getString(R.string.ordibehesht)
-        3 -> context.getString(R.string.khordad)
-        4 -> context.getString(R.string.tir)
-        5 -> context.getString(R.string.mordad)
-        6 -> context.getString(R.string.shahrivar)
-        7 -> context.getString(R.string.mehr)
-        8 -> context.getString(R.string.aban)
-        9 -> context.getString(R.string.azar)
-        10 -> context.getString(R.string.dey)
-        11 -> context.getString(R.string.bahman)
-        12 -> context.getString(R.string.esfand)
+        Farwarding.monthNumber -> context.getString(R.string.farvardin)
+        Ordibehesht.monthNumber -> context.getString(R.string.ordibehesht)
+        Khordad.monthNumber -> context.getString(R.string.khordad)
+        Tir.monthNumber -> context.getString(R.string.tir)
+        Mordad.monthNumber -> context.getString(R.string.mordad)
+        Shahrivar.monthNumber -> context.getString(R.string.shahrivar)
+        Mehr.monthNumber -> context.getString(R.string.mehr)
+        Aban.monthNumber -> context.getString(R.string.aban)
+        Azar.monthNumber -> context.getString(R.string.azar)
+        Dey.monthNumber -> context.getString(R.string.dey)
+        Bahman.monthNumber -> context.getString(R.string.bahman)
+        Esfand.monthNumber -> context.getString(R.string.esfand)
         else -> throw IllegalArgumentException("Month number is grater than 12: $this")
     }
 }

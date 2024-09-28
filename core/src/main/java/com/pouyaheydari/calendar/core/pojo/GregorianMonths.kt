@@ -18,18 +18,18 @@ enum class GregorianMonths(val monthNumber: Int) {
     December(12);
 
     fun getName(context: Context): String = when (monthNumber) {
-        1 -> context.getString(R.string.january)
-        2 -> context.getString(R.string.february)
-        3 -> context.getString(R.string.march)
-        4 -> context.getString(R.string.april)
-        5 -> context.getString(R.string.may)
-        6 -> context.getString(R.string.jun)
-        7 -> context.getString(R.string.july)
-        8 -> context.getString(R.string.august)
-        9 -> context.getString(R.string.september)
-        10 -> context.getString(R.string.october)
-        11 -> context.getString(R.string.november)
-        12 -> context.getString(R.string.december)
+        January.monthNumber -> context.getString(R.string.january)
+        February.monthNumber -> context.getString(R.string.february)
+        March.monthNumber -> context.getString(R.string.march)
+        April.monthNumber -> context.getString(R.string.april)
+        May.monthNumber -> context.getString(R.string.may)
+        Jun.monthNumber -> context.getString(R.string.jun)
+        July.monthNumber -> context.getString(R.string.july)
+        August.monthNumber -> context.getString(R.string.august)
+        September.monthNumber -> context.getString(R.string.september)
+        October.monthNumber -> context.getString(R.string.october)
+        November.monthNumber -> context.getString(R.string.november)
+        December.monthNumber -> context.getString(R.string.december)
         else -> throw IllegalArgumentException("Month number is grater than 12")
     }
 }

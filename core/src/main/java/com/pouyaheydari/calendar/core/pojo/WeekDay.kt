@@ -13,13 +13,13 @@ enum class WeekDay(val weekDayNumber: Int, val distanceFromFirstDayOfWeek: Int) 
     Sunday(6, 1);
 
     fun getName(context: Context): String = when (weekDayNumber) {
-        0 -> context.getString(R.string.monday)
-        1 -> context.getString(R.string.tuesday)
-        2 -> context.getString(R.string.wednesdays)
-        3 -> context.getString(R.string.thursday)
-        4 -> context.getString(R.string.friday)
-        5 -> context.getString(R.string.saturday)
-        6 -> context.getString(R.string.sunday)
+        Monday.weekDayNumber -> context.getString(R.string.monday)
+        Tuesday.weekDayNumber -> context.getString(R.string.tuesday)
+        Wednesday.weekDayNumber -> context.getString(R.string.wednesdays)
+        Thursday.weekDayNumber -> context.getString(R.string.thursday)
+        Friday.weekDayNumber -> context.getString(R.string.friday)
+        Saturday.weekDayNumber -> context.getString(R.string.saturday)
+        Sunday.weekDayNumber -> context.getString(R.string.sunday)
         else -> throw IllegalArgumentException("Week day number is grater than 6: $this")
     }
 }
