@@ -8,7 +8,6 @@ import com.pouyaheydari.calendar.domain.CalculateNextMonthUseCase
 import com.pouyaheydari.calendar.domain.CalculatePreviousMonthUseCase
 import com.pouyaheydari.calendar.domain.GenerateMonthUseCase
 import com.pouyaheydari.calendar.domain.GetEventsByDayUseCase
-import com.pouyaheydari.calendar.ui.theme.CalendarScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -79,9 +78,13 @@ class CalendarViewModel @Inject constructor(
     private fun updateDisplayedDate() {
         _screenState.update {
             it.copy(
-                displayDays = generateMonthUseCase(
-                    currentDisplayedDate.first,
-                    currentDisplayedDate.second
+                displayMonth = Month(
+                    shamsiYear = currentDisplayedDate.first,
+                    shamsiMonth = currentDisplayedDate.second,
+                    days = generateMonthUseCase(
+                        currentDisplayedDate.first,
+                        currentDisplayedDate.second
+                    )
                 )
             )
         }

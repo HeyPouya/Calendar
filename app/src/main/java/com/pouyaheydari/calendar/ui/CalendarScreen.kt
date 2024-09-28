@@ -30,7 +30,6 @@ import com.pouyaheydari.calendar.ui.components.HeaderComponent
 import com.pouyaheydari.calendar.ui.components.MonthComponent
 import com.pouyaheydari.calendar.ui.components.MonthYearTitleComponent
 import com.pouyaheydari.calendar.ui.components.WeekDaysComponent
-import com.pouyaheydari.calendar.ui.theme.CalendarScreenState
 import java.util.GregorianCalendar
 
 // We have to add this to prevent misplacement of dates when combining persian text with numbers
@@ -47,10 +46,10 @@ fun CalendarScreen(
     val view = LocalView.current
 
     CalendarComponent(
-        modifier,
-        state.today,
-        state.displayDays,
-        context,
+        modifier = modifier,
+        today = state.today,
+        month = state.displayMonth,
+        context = context,
         onDaySelected = { viewModel.onIntent(CalendarUserIntents.OnDayClicked(it)) },
         onNextMonthClicked = { viewModel.onIntent(CalendarUserIntents.OnNextMonthClicked) },
         onPreviousMonthClicked = { viewModel.onIntent(CalendarUserIntents.OnPreviousMonthClicked) })
@@ -111,7 +110,7 @@ private fun handleIntentToDefaultCalendarApp(
 fun CalendarComponent(
     modifier: Modifier = Modifier,
     today: DayType.Day,
-    days: List<DayType>?,
+    month: Month,
     context: Context,
     onDaySelected: (DayType.Day) -> Unit,
     onNextMonthClicked: () -> Unit = {},
@@ -140,14 +139,14 @@ fun CalendarComponent(
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         MonthYearTitleComponent(
-            monthName = ((days?.lastOrNull()) as? DayType.Day)?.shamsiMonth?.getName(context).orEmpty(),
-            year = ((days?.lastOrNull()) as? DayType.Day)?.shamsiYear?.toPersianNumber().orEmpty(),
+            monthName = month.shamsiMonth.getName(context),
+            year = month.shamsiYear.toPersianNumber(),
             onNextMonthClicked = onNextMonthClicked,
             onPreviousMonthClicked = onPreviousMonthClicked
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         WeekDaysComponent(weekDays = getWeekDays())
-        MonthComponent(list = days.orEmpty(), onItemClicked = onDaySelected)
+        MonthComponent(list = month.days, onItemClicked = onDaySelected)
     }
 }
 
