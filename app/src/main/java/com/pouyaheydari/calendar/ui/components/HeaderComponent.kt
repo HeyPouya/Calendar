@@ -26,12 +26,13 @@ fun HeaderComponent(
     dayOfWeek: String,
     iranianDate: String,
     gregorianDate: String,
-    elevation: CardElevation
+    elevation: CardElevation,
+    headerColor: Color = MaterialTheme.colorScheme.primary
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = HeaderShape,
-        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.primary),
+        colors = CardDefaults.cardColors().copy(containerColor = headerColor),
         elevation = elevation
     ) {
         Column(

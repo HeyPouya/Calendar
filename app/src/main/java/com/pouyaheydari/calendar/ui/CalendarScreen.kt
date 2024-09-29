@@ -74,7 +74,8 @@ fun CalendarScreen(
         ),
         onSetReminderClicked = {
             handleIntentToDefaultCalendarApp(state, context, view)
-        }
+        },
+        isHoliday = state.selectedDay.isShamsiHoliday
     )
 }
 

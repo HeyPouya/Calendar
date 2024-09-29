@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -34,13 +35,14 @@ fun DayDetailsBottomSheet(
     onSetReminderClicked: () -> Unit = {},
     onBottomSheetDismissed: () -> Unit = {},
     shouldShowBottomSheet: Boolean = false,
+    isHoliday: Boolean = false,
 ) {
     AnimatedVisibility(visible = shouldShowBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = onBottomSheetDismissed,
             containerColor = MaterialTheme.colorScheme.surface,
-
-            ) {
+        ) {
+            val headerColor = if (isHoliday) Color.Red else MaterialTheme.colorScheme.primary
             HeaderComponent(
                 modifier = Modifier
                     .padding(8.dp)
@@ -48,7 +50,8 @@ fun DayDetailsBottomSheet(
                 dayOfWeek = dayOfWeek,
                 iranianDate = iranianDate,
                 gregorianDate = gregorianDate,
-                elevation = CardDefaults.cardElevation()
+                elevation = CardDefaults.cardElevation(),
+                headerColor = headerColor
             )
             LazyColumn(
                 modifier = Modifier
