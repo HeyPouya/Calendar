@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.pouyaheydari.calendar.R
 import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.utils.toPersianNumber
+import com.pouyaheydari.calendar.domain.Month
 import com.pouyaheydari.calendar.ui.components.DayDetailsBottomSheet
 import com.pouyaheydari.calendar.ui.components.HeaderComponent
 import com.pouyaheydari.calendar.ui.components.MonthComponent
@@ -140,14 +141,35 @@ fun CalendarComponent(
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         MonthYearTitleComponent(
-            monthName = month.shamsiMonth.getName(context),
-            year = month.shamsiYear.toPersianNumber(),
+            shamsiDate = stringResource(
+                R.string.month_year,
+                month.shamsiYear.toPersianNumber(),
+                month.shamsiMonth.getName(context)
+            ),
+            gregorianDate = generateDisplayedGregorianTitle(month, context),
             onNextMonthClicked = onNextMonthClicked,
             onPreviousMonthClicked = onPreviousMonthClicked
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         WeekDaysComponent(weekDays = getWeekDays())
         MonthComponent(list = month.days, onItemClicked = onDaySelected)
+    }
+}
+
+private fun generateDisplayedGregorianTitle(month: Month, context: Context) = buildString {
+    month.gregorianMonths.forEach {
+        append(it.getName(context))
+        if (it != month.gregorianMonths.last()) {
+            append(" - ")
+        } else {
+            append("  ")
+        }
+    }
+    month.gregorianYear.forEach {
+        append(it.toPersianNumber())
+        if (it != month.gregorianYear.last()) {
+            append(" - ")
+        }
     }
 }
 

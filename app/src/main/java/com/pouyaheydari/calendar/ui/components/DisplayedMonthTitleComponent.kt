@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
@@ -21,8 +24,8 @@ import com.pouyaheydari.calendar.R
 
 @Composable
 fun MonthYearTitleComponent(
-    monthName: String,
-    year: String,
+    shamsiDate: String = "",
+    gregorianDate: String = "",
     onNextMonthClicked: () -> Unit = {},
     onPreviousMonthClicked: () -> Unit = {}
 ) {
@@ -36,14 +39,17 @@ fun MonthYearTitleComponent(
         )
         Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = monthName,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface
+                text = shamsiDate,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center
             )
+            Spacer(modifier = Modifier.padding(4.dp))
             Text(
-                text = year,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurface
+                text = gregorianDate,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center
             )
         }
         Image(
@@ -60,5 +66,5 @@ fun MonthYearTitleComponent(
 @PreviewLightDark
 @Composable
 private fun Preview() {
-    MonthYearTitleComponent(monthName = "شهریور", year = "۱۴۰۲")
+    MonthYearTitleComponent(shamsiDate = "شهریور ۱۴۰۲", gregorianDate = "ژانویه - فوریه ۲۰۲۴")
 }

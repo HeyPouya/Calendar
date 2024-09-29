@@ -34,9 +34,9 @@
     <string name="persian_day_month">%1s %2s %3s</string>
     <string name="gregorian_full_date">%1s %2s %3s</string>
     <string name="today_is_day_of_week">امروز %1s</string>
+    <string name="month_year">%1$s %2$s</string>
     <string name="events_of_this_day">مناسبت های این روز :</string>
     <string name="set_a_work_to_do">کاری برای انجام در تقویم تنظیم کنید</string>
     <string name="no_events">مناسبتی برای این روز وجود ندارد</string>
     <string name="google_calendar_is_not_installed">برای استفاده از این ویژگی نیاز است که برنامه تقویم گوگل را نصب نمایید</string>
-
 </resources>

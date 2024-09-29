@@ -78,13 +78,9 @@ class CalendarViewModel @Inject constructor(
     private fun updateDisplayedDate() {
         _screenState.update {
             it.copy(
-                displayMonth = Month(
-                    shamsiYear = currentDisplayedDate.first,
-                    shamsiMonth = currentDisplayedDate.second,
-                    days = generateMonthUseCase(
-                        currentDisplayedDate.first,
-                        currentDisplayedDate.second
-                    )
+                displayMonth = generateMonthUseCase(
+                    currentDisplayedDate.first,
+                    currentDisplayedDate.second
                 )
             )
         }
