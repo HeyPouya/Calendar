@@ -28,7 +28,11 @@ fun DayItemComponent(
     isHoliday: Boolean = false,
     isToday: Boolean = false
 ) {
-    val textColor = if (isHoliday) Color.Red else MaterialTheme.colorScheme.onSurface
+    val textColor = when {
+        isHoliday -> Color.Red
+        isToday -> Color.White
+        else -> MaterialTheme.colorScheme.onSurface
+    }
     val background = if (isToday) DarkBlue80 else Color.Unspecified
 
     Box(modifier = modifier
