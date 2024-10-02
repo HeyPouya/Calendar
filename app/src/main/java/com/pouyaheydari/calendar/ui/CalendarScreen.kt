@@ -152,7 +152,12 @@ fun CalendarComponent(
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         WeekDaysComponent(weekDays = getWeekDays())
-        MonthComponent(list = month.days, onItemClicked = onDaySelected)
+        MonthComponent(
+            list = month.days,
+            onItemClicked = onDaySelected,
+            onSwipeToNextMonth = onNextMonthClicked,
+            onSwipeToPreviousMonth = onPreviousMonthClicked
+        )
     }
 }
 
