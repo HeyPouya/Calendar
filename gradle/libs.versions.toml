@@ -27,7 +27,7 @@ glancePreview = "1.1.0"
 androidxComposeBom = "2024.09.02"
 composeActivity = "1.9.2"
 googleServices = "4.4.2"
-firebaseVersion = "33.3.0"
+firebaseVersion = "33.4.0"
 crashlyticsVersion = "3.0.2"
 
 [libraries]
