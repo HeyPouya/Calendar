@@ -43,7 +43,7 @@ object DateModule {
     @Provides
     fun gregorianCalendarProvider(): LocalDate {
         val currentMoment: Instant = Clock.System.now()
-        val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.UTC)
+        val datetimeInUtc: LocalDateTime = currentMoment.toLocalDateTime(TimeZone.currentSystemDefault())
         return LocalDate(datetimeInUtc.year, datetimeInUtc.month, datetimeInUtc.dayOfMonth)
     }
 }
