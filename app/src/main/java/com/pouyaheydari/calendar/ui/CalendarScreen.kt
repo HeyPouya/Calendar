@@ -5,17 +5,23 @@ import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
 import android.view.View
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
 import androidx.core.content.ContextCompat.startActivity
@@ -27,6 +33,7 @@ import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.utils.toPersianNumber
 import com.pouyaheydari.calendar.domain.Month
 import com.pouyaheydari.calendar.ui.components.DayDetailsBottomSheet
+import com.pouyaheydari.calendar.ui.components.EventComponent
 import com.pouyaheydari.calendar.ui.components.HeaderComponent
 import com.pouyaheydari.calendar.ui.components.MonthComponent
 import com.pouyaheydari.calendar.ui.components.MonthYearTitleComponent
@@ -118,9 +125,11 @@ fun CalendarComponent(
     onNextMonthClicked: () -> Unit = {},
     onPreviousMonthClicked: () -> Unit = {}
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(modifier = modifier) {
         HeaderComponent(
-            modifier = Modifier.fillMaxHeight(0.3f),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
             dayOfWeek = stringResource(
                 id = R.string.today_is_day_of_week,
@@ -158,6 +167,27 @@ fun CalendarComponent(
             onSwipeToNextMonth = onNextMonthClicked,
             onSwipeToPreviousMonth = onPreviousMonthClicked
         )
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 8.dp, top = 16.dp),
+            text = stringResource(R.string.events, month.shamsiMonth.getName(context)),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            textAlign = TextAlign.End
+        )
+        LazyColumn(contentPadding = PaddingValues(top = 8.dp)) {
+            items(month.days) { day ->
+                if (day is DayType.Day) {
+                    day.events.forEach { event ->
+                        EventComponent(
+                            modifier = Modifier.clickable { onDaySelected(day) },
+                            event = event
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 

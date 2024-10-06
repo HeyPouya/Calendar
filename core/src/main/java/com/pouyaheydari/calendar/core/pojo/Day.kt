@@ -13,6 +13,7 @@ sealed interface DayType {
         val gregorianMonth: GregorianMonths,
         val gregorianYear: Int,
         val isShamsiHoliday: Boolean = false,
-        val today: Boolean = false
+        val today: Boolean = false,
+        val events: List<Event> = emptyList()
     ) : DayType
 }

@@ -1,7 +1,6 @@
 package com.pouyaheydari.calendar.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,7 +21,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.pouyaheydari.calendar.R
-import com.pouyaheydari.calendar.domain.Event
+import com.pouyaheydari.calendar.core.pojo.Event
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +45,7 @@ fun DayDetailsBottomSheet(
             HeaderComponent(
                 modifier = Modifier
                     .padding(8.dp)
-                    .fillMaxHeight(0.2f),
+                    .fillMaxWidth(),
                 dayOfWeek = dayOfWeek,
                 iranianDate = iranianDate,
                 gregorianDate = gregorianDate,

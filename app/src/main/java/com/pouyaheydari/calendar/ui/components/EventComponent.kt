@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.pouyaheydari.calendar.core.utils.toPersianNumber
-import com.pouyaheydari.calendar.domain.Event
+import com.pouyaheydari.calendar.core.pojo.Event
 
 @Composable
 fun EventComponent(modifier: Modifier = Modifier, event: Event) {
@@ -28,9 +28,9 @@ fun EventComponent(modifier: Modifier = Modifier, event: Event) {
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = event.day.toPersianNumber(), style = MaterialTheme.typography.titleMedium)
+            Text(text = event.day.toPersianNumber(), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurface)
             Spacer(modifier = Modifier.padding(8.dp))
-            Text(text = event.description, style = MaterialTheme.typography.titleSmall)
+            Text(text = event.description, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurface)
         }
     }
 }

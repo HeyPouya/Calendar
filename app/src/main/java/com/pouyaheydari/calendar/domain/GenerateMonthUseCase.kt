@@ -1,8 +1,10 @@
 package com.pouyaheydari.calendar.domain
 
 import com.pouyaheydari.calendar.core.pojo.DayType
+import com.pouyaheydari.calendar.core.pojo.Event
 import com.pouyaheydari.calendar.core.pojo.GregorianDate
 import com.pouyaheydari.calendar.core.pojo.GregorianMonths
+import com.pouyaheydari.calendar.core.pojo.ShamsiDate
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import com.pouyaheydari.calendar.core.pojo.WeekDay
 import com.pouyaheydari.calendar.core.utils.CalendarTool
@@ -11,6 +13,7 @@ import javax.inject.Inject
 
 class GenerateMonthUseCase @Inject constructor(
     private val calculateDaysInMonthUseCase: CalculateDaysInMonthUseCase,
+    private val getEventsByDayUseCase: GetEventsByDayUseCase,
     private val calendarTool: CalendarTool,
     private val resourceUtils: ResourceUtils,
     private val today: DayType.Day,
@@ -52,6 +55,10 @@ class GenerateMonthUseCase @Inject constructor(
                             shamsiMonth,
                             shamsiDay,
                             gregorianDay.weekDay
+                        ),
+                        events = generateEvents(
+                            calendarTool.getIranianDate(),
+                            calendarTool.getGregorianDate()
                         )
                     )
                 )
@@ -65,6 +72,9 @@ class GenerateMonthUseCase @Inject constructor(
             gregorianYear = gregorianYears
         )
     }
+
+    private fun generateEvents(iranianDate: ShamsiDate, gregorianDate: GregorianDate): List<Event> =
+        getEventsByDayUseCase(iranianDate, gregorianDate)
 
     private fun checkIsHoliday(
         iranianYear: Int,

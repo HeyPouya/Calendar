@@ -2,8 +2,7 @@ package com.pouyaheydari.calendar.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
@@ -30,19 +29,33 @@ fun HeaderComponent(
     headerColor: Color = MaterialTheme.colorScheme.primary
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
         shape = HeaderShape,
         colors = CardDefaults.cardColors().copy(containerColor = headerColor),
         elevation = elevation
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(dayOfWeek, color = Color.White, style = MaterialTheme.typography.headlineSmall)
-            Text(iranianDate, color = Color.White, style = MaterialTheme.typography.headlineSmall)
-            Text(gregorianDate, color = Color.White, style = MaterialTheme.typography.headlineSmall)
+            Text(
+                modifier = Modifier.padding(4.dp),
+                text = dayOfWeek,
+                color = Color.White,
+                style = MaterialTheme.typography.titleLarge
+            )
+            Text(
+                modifier = Modifier.padding(4.dp),
+                text = iranianDate,
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                modifier = Modifier.padding(4.dp),
+                text = gregorianDate,
+                color = Color.White,
+                style = MaterialTheme.typography.titleSmall
+            )
         }
     }
 }

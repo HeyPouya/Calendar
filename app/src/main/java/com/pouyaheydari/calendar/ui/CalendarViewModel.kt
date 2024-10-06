@@ -7,7 +7,6 @@ import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import com.pouyaheydari.calendar.domain.CalculateNextMonthUseCase
 import com.pouyaheydari.calendar.domain.CalculatePreviousMonthUseCase
 import com.pouyaheydari.calendar.domain.GenerateMonthUseCase
-import com.pouyaheydari.calendar.domain.GetEventsByDayUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,7 +21,6 @@ class CalendarViewModel @Inject constructor(
     private val calculateNextMonthUseCase: CalculateNextMonthUseCase,
     private val calculatePreviousMonthUseCase: CalculatePreviousMonthUseCase,
     private val generateMonthUseCase: GenerateMonthUseCase,
-    private val getEventsByDayUseCase: GetEventsByDayUseCase,
     today: DayType.Day
 ) : ViewModel() {
 
@@ -46,11 +44,10 @@ class CalendarViewModel @Inject constructor(
 
     fun onIntent(intent: CalendarUserIntents) = when (intent) {
         is CalendarUserIntents.OnDayClicked -> {
-            val events = getEventsByDayUseCase(day = intent.day)
             _screenState.update {
                 it.copy(
                     selectedDay = intent.day,
-                    selectedDayEvents = events,
+                    selectedDayEvents = intent.day.events,
                     shouldShowBottomSheet = true
                 )
             }
