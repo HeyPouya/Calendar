@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
 import android.view.View
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -161,12 +163,14 @@ fun CalendarComponent(
         )
         Spacer(modifier = Modifier.padding(all = 8.dp))
         WeekDaysComponent(weekDays = getWeekDays())
-        MonthComponent(
-            list = month.days,
-            onItemClicked = onDaySelected,
-            onSwipeToNextMonth = onNextMonthClicked,
-            onSwipeToPreviousMonth = onPreviousMonthClicked
-        )
+        AnimatedContent(month.days, label = "DaysAnimatedContent") {
+            MonthComponent(
+                list = it,
+                onItemClicked = onDaySelected,
+                onSwipeToNextMonth = onNextMonthClicked,
+                onSwipeToPreviousMonth = onPreviousMonthClicked
+            )
+        }
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -176,14 +180,19 @@ fun CalendarComponent(
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.End
         )
-        LazyColumn(contentPadding = PaddingValues(top = 8.dp)) {
-            items(month.days) { day ->
-                if (day is DayType.Day) {
-                    day.events.forEach { event ->
-                        EventComponent(
-                            modifier = Modifier.clickable { onDaySelected(day) },
-                            event = event
-                        )
+        AnimatedContent(month.days, label = "EventsAnimatedContent") {
+            LazyColumn(
+                modifier = Modifier.animateContentSize(),
+                contentPadding = PaddingValues(top = 8.dp)
+            ) {
+                items(it) { day ->
+                    if (day is DayType.Day) {
+                        day.events.forEach { event ->
+                            EventComponent(
+                                modifier = Modifier.clickable { onDaySelected(day) },
+                                event = event
+                            )
+                        }
                     }
                 }
             }

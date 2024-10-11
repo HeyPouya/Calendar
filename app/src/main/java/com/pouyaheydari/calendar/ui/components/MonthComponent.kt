@@ -1,5 +1,6 @@
 package com.pouyaheydari.calendar.ui.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -42,6 +43,7 @@ fun MonthComponent(
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         LazyVerticalGrid(
             modifier = modifier
+                .animateContentSize()
                 .pointerInput(Unit) {
                     detectHorizontalDragGestures(onHorizontalDrag = { _, amount ->
                         dragAmount = amount
