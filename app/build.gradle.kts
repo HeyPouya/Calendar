@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.googleServices)
     alias(libs.plugins.crashlytics)
+    alias(libs.plugins.baselineprofile)
 }
 
 android {
@@ -46,6 +47,10 @@ dependencies {
     implementation(projects.core)
     implementation(libs.androidx.core)
 
+    // Baseline Profile
+    implementation(libs.androidx.profileinstaller)
+    "baselineProfile"(projects.baselineprofile)
+
     // Datetime
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.kotlinx.datetime)
@@ -68,6 +73,7 @@ dependencies {
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.compose.activity)
 
+    // Firebase
     val firebaseBom = platform(libs.firebase.bom)
     implementation(firebaseBom)
     implementation(libs.firebase.analytics)
