@@ -28,28 +28,20 @@ class CalendarViewModel @Inject constructor(
         today.shamsiYear to today.shamsiMonth
 
     private val _screenState = MutableStateFlow(
-        CalendarScreenState(
-            today = today,
-            selectedDay = today
-        )
+        CalendarScreenState(today = today, selectedDay = today)
     )
     val screenState: StateFlow<CalendarScreenState> = _screenState
         .onStart { updateDisplayedDate() }
         .stateIn(
-            viewModelScope, SharingStarted.WhileSubscribed(5000), CalendarScreenState(
-                today = today,
-                selectedDay = today
-            )
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            CalendarScreenState(today = today, selectedDay = today)
         )
 
     fun onIntent(intent: CalendarUserIntents) = when (intent) {
         is CalendarUserIntents.OnDayClicked -> {
             _screenState.update {
-                it.copy(
-                    selectedDay = intent.day,
-                    selectedDayEvents = intent.day.events,
-                    shouldShowBottomSheet = true
-                )
+                it.copy(selectedDay = intent.day, shouldShowBottomSheet = true)
             }
         }
 

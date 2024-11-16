@@ -42,7 +42,7 @@ import com.pouyaheydari.calendar.ui.components.WeekDaysComponent
 import java.util.GregorianCalendar
 
 // We have to add this to prevent misplacement of dates when combining persian text with numbers
-private const val RLM = '\u200F'
+internal const val RLM = '\u200F'
 private const val CALENDAR_INTENT_TYPE = "vnd.android.cursor.item/event"
 
 @Composable
@@ -69,23 +69,7 @@ fun CalendarScreen(
         shouldShowBottomSheet = state.shouldShowBottomSheet,
         onBottomSheetDismissed = { viewModel.onIntent(CalendarUserIntents.OnBottomSheetDismissed) },
         setReminderText = stringResource(R.string.set_a_work_to_do),
-        events = state.selectedDayEvents,
-        dayOfWeek = state.selectedDay.weekDay.getName(context),
-        iranianDate = RLM + stringResource(
-            id = R.string.persian_day_month,
-            state.selectedDay.shamsiDay.toPersianNumber(),
-            state.selectedDay.shamsiMonth.getName(context),
-            state.selectedDay.shamsiYear.toPersianNumber()
-        ),
-        gregorianDate = RLM + stringResource(
-            id = R.string.gregorian_full_date,
-            state.selectedDay.gregorianDay.toPersianNumber(),
-            state.selectedDay.gregorianMonth.getName(context),
-            state.selectedDay.gregorianYear.toPersianNumber()
-        ),
-        onSetReminderClicked = {
-            handleIntentToDefaultCalendarApp(state, context, view)
-        },
+        onSetReminderClicked = { handleIntentToDefaultCalendarApp(state, context, view) },
         isHoliday = state.selectedDay.isShamsiHoliday,
         selectedDay = state.selectedDay
     )
@@ -120,7 +104,7 @@ private fun handleIntentToDefaultCalendarApp(
 }
 
 @Composable
-fun CalendarComponent(
+private fun CalendarComponent(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues,
     today: DayType.Day,
