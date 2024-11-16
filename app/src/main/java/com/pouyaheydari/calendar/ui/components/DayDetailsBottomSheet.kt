@@ -92,6 +92,6 @@ private fun Preview() {
         iranianDate = "۱۰ آذر ۱۴۰۲",
         gregorianDate = "۲۲ سپتامبر ۲۰۲۴",
         setReminderText = "کاری برای انجام در این روز تنظیم کنید",
-        events = listOf(Event(10, "روز جهانی درخت کاری")),
+        events = listOf(Event(10, "روز جهانی درخت کاری", true)),
     )
 }

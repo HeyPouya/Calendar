@@ -8,14 +8,12 @@ import com.pouyaheydari.calendar.core.pojo.ShamsiDate
 import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
 import com.pouyaheydari.calendar.core.pojo.WeekDay
 import com.pouyaheydari.calendar.core.utils.CalendarTool
-import com.pouyaheydari.calendar.core.utils.ResourceUtils
 import javax.inject.Inject
 
 class GenerateMonthUseCase @Inject constructor(
     private val calculateDaysInMonthUseCase: CalculateDaysInMonthUseCase,
     private val getEventsByDayUseCase: GetEventsByDayUseCase,
     private val calendarTool: CalendarTool,
-    private val resourceUtils: ResourceUtils,
     private val today: DayType.Day,
 ) {
     operator fun invoke(iranianYear: Int, shamsiMonth: ShamsiMonths): Month {
@@ -40,6 +38,10 @@ class GenerateMonthUseCase @Inject constructor(
                 val gregorianDay = calendarTool.getGregorianDate()
                 gregorianMonths.add(gregorianDay.month)
                 gregorianYears.add(gregorianDay.year)
+                val events = generateEvents(
+                    calendarTool.getIranianDate(),
+                    calendarTool.getGregorianDate(),
+                )
                 add(
                     DayType.Day(
                         shamsiDay = shamsiDay,
@@ -50,16 +52,8 @@ class GenerateMonthUseCase @Inject constructor(
                         gregorianMonth = gregorianDay.month,
                         gregorianYear = gregorianDay.year,
                         today = checkToday(gregorianDay),
-                        isShamsiHoliday = checkIsHoliday(
-                            iranianYear,
-                            shamsiMonth,
-                            shamsiDay,
-                            gregorianDay.weekDay
-                        ),
-                        events = generateEvents(
-                            calendarTool.getIranianDate(),
-                            calendarTool.getGregorianDate()
-                        )
+                        isShamsiHoliday = checkIsHoliday(events, gregorianDay.weekDay),
+                        events = events
                     )
                 )
             }
@@ -76,14 +70,8 @@ class GenerateMonthUseCase @Inject constructor(
     private fun generateEvents(iranianDate: ShamsiDate, gregorianDate: GregorianDate): List<Event> =
         getEventsByDayUseCase(iranianDate, gregorianDate)
 
-    private fun checkIsHoliday(
-        iranianYear: Int,
-        shamsiMonth: ShamsiMonths,
-        iranianDay: Int,
-        weekDay: WeekDay
-    ) = weekDay == WeekDay.Friday || (iranianYear == today.shamsiYear &&
-            resourceUtils.vacationP.containsKey(shamsiMonth.monthNumber * 100 + iranianDay)
-            )
+    private fun checkIsHoliday(events: List<Event>, weekDay: WeekDay) =
+        weekDay == WeekDay.Friday || events.any { it.isHoliday }
 
     private fun checkToday(gregorianDay: GregorianDate) =
         today.gregorianYear == gregorianDay.year && today.gregorianMonth == gregorianDay.month && today.gregorianDay == gregorianDay.day

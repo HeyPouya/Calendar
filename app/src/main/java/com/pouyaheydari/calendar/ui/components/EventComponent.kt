@@ -40,5 +40,5 @@ fun EventComponent(modifier: Modifier = Modifier, event: Event) {
 @PreviewLightDark
 @Composable
 private fun Preview() {
-    EventComponent(event = Event(day = 10, description = "روز جهانی درخت کاری"))
+    EventComponent(event = Event(day = 10, description = "روز جهانی درخت کاری", true))
 }

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -24,6 +25,15 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.javax.inject)
+
+    // Hilt Library
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
+
+    // Moshi
+    implementation(libs.moshi)
+    ksp(libs.moshi.kotlin.codegen)
 
     // Test
     testImplementation(libs.junit)
