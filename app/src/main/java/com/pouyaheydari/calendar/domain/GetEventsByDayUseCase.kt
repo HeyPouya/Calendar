@@ -18,29 +18,17 @@ class GetEventsByDayUseCase @Inject constructor(private val resourceUtils: Event
         return buildList {
             persianEvents.forEach {
                 add(
-                    Event(
-                        day = shamsiDate.day,
-                        description = it.description,
-                        isHoliday = it.isHoliday
-                    )
+                    Event(description = it.description, isHoliday = it.isHoliday)
                 )
             }
             gregorianEvents.forEach {
                 add(
-                    Event(
-                        day = shamsiDate.day,
-                        description = it.description,
-                        isHoliday = it.isHoliday
-                    )
+                    Event(description = it.description, isHoliday = it.isHoliday)
                 )
             }
             hijriEvents.forEach {
                 add(
-                    Event(
-                        day = shamsiDate.day,
-                        description = it.description,
-                        isHoliday = it.isHoliday
-                    )
+                    Event(description = it.description, isHoliday = it.isHoliday)
                 )
             }
         }

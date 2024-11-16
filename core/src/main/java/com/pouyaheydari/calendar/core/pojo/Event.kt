@@ -1,3 +1,3 @@
 package com.pouyaheydari.calendar.core.pojo
 
-data class Event(val day: Int, val description: String, val isHoliday: Boolean)
+data class Event(val description: String, val isHoliday: Boolean)

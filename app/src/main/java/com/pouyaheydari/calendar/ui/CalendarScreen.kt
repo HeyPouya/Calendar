@@ -49,6 +49,7 @@ private const val CALENDAR_INTENT_TYPE = "vnd.android.cursor.item/event"
 @Composable
 fun CalendarScreen(
     modifier: Modifier = Modifier,
+    paddingValues: PaddingValues = PaddingValues(0.dp),
     viewModel: CalendarViewModel = viewModel(),
 ) {
     val state = viewModel.screenState.collectAsStateWithLifecycle().value
@@ -57,6 +58,7 @@ fun CalendarScreen(
 
     CalendarComponent(
         modifier = modifier,
+        paddingValues = paddingValues,
         today = state.today,
         month = state.displayMonth,
         context = context,
@@ -85,7 +87,8 @@ fun CalendarScreen(
         onSetReminderClicked = {
             handleIntentToDefaultCalendarApp(state, context, view)
         },
-        isHoliday = state.selectedDay.isShamsiHoliday
+        isHoliday = state.selectedDay.isShamsiHoliday,
+        selectedDay = state.selectedDay
     )
 }
 
@@ -120,6 +123,7 @@ private fun handleIntentToDefaultCalendarApp(
 @Composable
 fun CalendarComponent(
     modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
     today: DayType.Day,
     month: Month,
     context: Context,
@@ -127,10 +131,12 @@ fun CalendarComponent(
     onNextMonthClicked: () -> Unit = {},
     onPreviousMonthClicked: () -> Unit = {}
 ) {
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier.padding(bottom = paddingValues.calculateBottomPadding())
+    ) {
         HeaderComponent(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(paddingValues)
                 .fillMaxWidth(),
             elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
             dayOfWeek = stringResource(
@@ -186,13 +192,11 @@ fun CalendarComponent(
                 contentPadding = PaddingValues(top = 8.dp)
             ) {
                 items(it) { day ->
-                    if (day is DayType.Day) {
-                        day.events.forEach { event ->
-                            EventComponent(
-                                modifier = Modifier.clickable { onDaySelected(day) },
-                                event = event
-                            )
-                        }
+                    if (day is DayType.Day && day.events.isNotEmpty()) {
+                        EventComponent(
+                            modifier = Modifier.clickable { onDaySelected(day) },
+                            day = day
+                        )
                     }
                 }
             }

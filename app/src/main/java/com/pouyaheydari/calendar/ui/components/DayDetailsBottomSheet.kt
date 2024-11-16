@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -21,7 +20,11 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.pouyaheydari.calendar.R
+import com.pouyaheydari.calendar.core.pojo.DayType
 import com.pouyaheydari.calendar.core.pojo.Event
+import com.pouyaheydari.calendar.core.pojo.GregorianMonths
+import com.pouyaheydari.calendar.core.pojo.ShamsiMonths
+import com.pouyaheydari.calendar.core.pojo.WeekDay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +38,7 @@ fun DayDetailsBottomSheet(
     onBottomSheetDismissed: () -> Unit = {},
     shouldShowBottomSheet: Boolean = false,
     isHoliday: Boolean = false,
+    selectedDay: DayType.Day,
 ) {
     AnimatedVisibility(visible = shouldShowBottomSheet) {
         ModalBottomSheet(
@@ -58,15 +62,16 @@ fun DayDetailsBottomSheet(
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(events) {
-                    EventComponent(event = it)
-                }
                 if (events.isEmpty()) {
                     item {
                         Text(
                             modifier = Modifier.padding(16.dp),
                             text = stringResource(R.string.no_events)
                         )
+                    }
+                } else {
+                    item {
+                        EventComponent(day = selectedDay)
                     }
                 }
                 item {
@@ -92,6 +97,18 @@ private fun Preview() {
         iranianDate = "۱۰ آذر ۱۴۰۲",
         gregorianDate = "۲۲ سپتامبر ۲۰۲۴",
         setReminderText = "کاری برای انجام در این روز تنظیم کنید",
-        events = listOf(Event(10, "روز جهانی درخت کاری", true)),
+        events = listOf(Event("روز جهانی درخت کاری", true)),
+        selectedDay = DayType.Day(
+            10,
+            ShamsiMonths.Farwarding,
+            1402,
+            WeekDay.Saturday,
+            22,
+            GregorianMonths.Jun,
+            2024,
+            false,
+            false,
+            listOf(Event("روز جهانی درخت کاری", true))
+        ),
     )
 }
