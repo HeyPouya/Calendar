@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.material.snackbar.Snackbar
@@ -109,7 +108,7 @@ private fun handleIntentToDefaultCalendarApp(
         )
     }
     try {
-        startActivity(context, intent, null)
+        context.startActivity(intent, null)
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
         Snackbar.make(
